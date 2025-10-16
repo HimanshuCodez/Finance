@@ -8,6 +8,7 @@ import TestimonialBoxes from '../Components/CustomerMarquee'
 import NewWay from '../Components/NewWay'
 import DigitalInsurance from '../Components/Experince'
 import Footer from '../Components/Footer'
+import ReadyToBuy from '../Components/ReadyToBuy'
 
 const Home = () => {
   return (
@@ -19,6 +20,7 @@ const Home = () => {
       <TestimonialBoxes/>
       <NewWay/>
       <div className='mt-9'><DigitalInsurance/></div>
+      <ReadyToBuy/>
       <Footer/>
       </div>
   )
