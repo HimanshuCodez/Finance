@@ -73,7 +73,7 @@ export default function HeroSection() {
           { title: "Product Liability", image: "https://images.bimakavach.com/products/ProductLiabilityInsuranceIcon.webp" },
           { title: "Fire Insurance", image: "https://images.bimakavach.com/products/FireInsuranceIcon.webp" },
           { title: "Contarctor's All Risks", image: "https://images.bimakavach.com/products/ContractorsAllRiskIcon.webp" },
-          { title: "Erection All Risks", image: "https://images.bimakavach.com/products/ProductLiabilityInsuranceIcon.webp" },
+          { title: "Erection All Risks", image: "https://images.bimakavach.com/products/ErectionAllRiskIcon.webp" },
         ].map((card, index) => (
           <motion.div
             key={index}
