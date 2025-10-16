@@ -32,8 +32,8 @@ const NewWay = () => {
         <div className="w-full bg-gray-50 p-6">
             <div className="relative grid grid-cols-1 md:grid-cols-3 gap-8 md:min-h-[150vh]">
                 {/* Left Part (Col 1) */}
-                <div className="md:sticky top-20 h-auto md:h-screen flex flex-col justify-center">
-                    <h2 className="text-3xl font-bold text-blue-900 mb-4 text-left">The <span className="text-yellow-500">New Way</span> of Business Insurance</h2>
+                <div className="md:sticky  border-r-2 border-yellow-500 top-20 h-auto md:h-screen flex flex-col justify-center">
+                    <h2 className="text-3xl font-bold text-blue-900 mt-16 mb-4 text-left">The <span className="text-yellow-500">New Way</span> of Business Insurance</h2>
                     <motion.div
                         initial={{ opacity: 0, x: -50 }}
                         animate={{ opacity: 1, x: 0 }}
