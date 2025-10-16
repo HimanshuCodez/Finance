@@ -5,6 +5,7 @@ import CertificateSection from '../Components/Licenses'
 import TestimonialCompanies from '../Components/Companies'
 
 import TestimonialBoxes from '../Components/CustomerMarquee'
+import NewWay from '../Components/NewWay'
 
 const Home = () => {
   return (
@@ -13,7 +14,8 @@ const Home = () => {
       <HeroSection/>
       <CertificateSection/>
       <TestimonialCompanies/>
-      <TestimonialBoxes/></div>
+      <TestimonialBoxes/>
+      <NewWay/></div>
   )
 }
 
