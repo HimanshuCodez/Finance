@@ -32,9 +32,7 @@ export default function Navbar() {
           {/* Right: Buttons */}
           <div className="hidden md:block">
             <div className="ml-4 flex items-center md:ml-6">
-              <button className="px-4 py-2 rounded-md border border-blue-600 text-blue-600 text-sm font-semibold hover:bg-blue-50">
-                Login
-              </button>
+             
               <button className="ml-3 flex items-center gap-2 px-4 py-2 rounded-md bg-[#09A858] text-white text-sm font-semibold hover:bg-green-700">
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
                   <path d="M16.98 14.58c-.27-.14-1.58-.78-1.82-.87-.24-.09-.42-.14-.6.14-.18.27-.69.87-.84 1.05-.15.18-.31.2-.58.07-.27-.14-1.14-.42-2.18-1.34-.8-.71-1.34-1.58-1.5-1.85-.15-.27-.02-.42.11-.55.11-.11.27-.31.4-.47.13-.16.18-.27.27-.45.09-.18.04-.34-.02-.48-.07-.14-.6-1.45-.82-1.98-.21-.51-.43-.44-.6-.45-.16-.01-.34-.01-.52-.01-.18 0-.48.07-.73.34-.25.27-.96.94-.96 2.29s.98 2.66 1.12 2.84c.14.18 1.94 2.96 4.71 4.15.66.29 1.18.46 1.58.59.66.21 1.26.18 1.73.11.53-.08 1.58-.65 1.81-1.27.22-.62.22-1.15.15-1.27-.07-.11-.25-.18-.52-.32z" />
