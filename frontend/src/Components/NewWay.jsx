@@ -29,23 +29,23 @@ const NewWay = () => {
     const [activeSection, setActiveSection] = useState(1);
 
     return (
-        <div className="w-full bg-gray-50 p-6">
-            <h2 className="text-3xl font-bold text-blue-900 mb-8 text-center">The <span className="text-yellow-500">New Way</span> of Business Insurance</h2>
+        <div className="w-full mt-16 bg-gray-50 p-6">
             <div className="relative grid grid-cols-1 md:grid-cols-2 gap-8" style={{ minHeight: '150vh' }}>
                 {/* Left Sticky Part */}
-                <div className="sticky top-20 h-screen flex items-center justify-center">
+                <div className="sticky top-20 h-screen flex flex-col justify-center">
+                    <h2 className="text-3xl font-bold text-blue-900 mb-4 text-left">The <span className="text-yellow-500">New Way</span> of Business Insurance</h2>
                     <motion.div
                         initial={{ opacity: 0, x: -50 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5 }}
                     >
-                        <img src="https://images.bimakavach.com/v4/homepage/BI_ProcessImg.webp" alt="Business Insurance Process" className="w-96 h-96 object-contain rounded-lg" />
+                        <img src="https://images.bimakavach.com/v4/homepage/BI_ProcessImg.webp" alt="Business Insurance Process" className="w-[500px] h-auto object-contain rounded-lg" />
                     </motion.div>
                 </div>
 
                 {/* Right Scrolling Part */}
                 <div className="relative">
-                    <div className="absolute top-1/2 -translate-y-1/2 right-0 z-10">
+                    <div className="absolute top-1/2 -translate-y-1/2 left-0 z-10">
                         <motion.img 
                             key={activeSection}
                             src={sections.find(s => s.id === activeSection)?.image}
