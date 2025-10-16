@@ -74,11 +74,7 @@ export default function Navbar() {
             <a href="#" className="text-gray-700 hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium">Contact</a>
           </div>
           <div className="pt-4 pb-3 border-t border-gray-200">
-            <div className="px-5">
-                <button className="w-full py-2 rounded-md border border-blue-600 text-blue-600 font-semibold hover:bg-blue-50">
-                    Login
-                </button>
-            </div>
+           
             <div className="mt-3 px-5">
                 <button className="w-full flex items-center justify-center gap-2 py-2 rounded-md bg-[#09A858] text-white font-semibold hover:bg-green-700">
                     <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
