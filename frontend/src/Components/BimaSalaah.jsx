@@ -16,7 +16,7 @@ const BimaSalaah = () => {
                     <div>
                         <div className="mb-8 mt-4">
                             <h2 className="text-4xl font-bold text-white bold">Bima  <span className='italic text-yellow-400'>Salaah </span></h2>
-                            <p className="mt-2 text-xl text-indigo-600 font-semibold">Free AI-Powered Insurance Advice</p>
+                            <p className="mt-2 text-xl text-amber-400 font-semibold">Free AI-Powered Insurance Advice</p>
                         </div>
                         <div className="space-y-8">
                             <motion.div 
@@ -29,7 +29,7 @@ const BimaSalaah = () => {
                                     <Briefcase size={24} />
                                 </div>
                                 <div className="ml-4">
-                                    <h3 className="text-xl font-bold text-indigo-900">Understands Your Business</h3>
+                                    <h3 className="text-xl font-bold text-white">Understands Your Business</h3>
                                 </div>
                             </motion.div>
                             <motion.div 
@@ -42,7 +42,7 @@ const BimaSalaah = () => {
                                     <FileText size={24} />
                                 </div>
                                 <div className="ml-4">
-                                    <h3 className="text-xl font-bold text-indigo-900">Suggests the Right Policies</h3>
+                                    <h3 className="text-xl font-bold text-white">Suggests the Right Policies</h3>
                                 </div>
                             </motion.div>
                             <motion.div 
@@ -55,7 +55,7 @@ const BimaSalaah = () => {
                                     <Zap size={24} />
                                 </div>
                                 <div className="ml-4">
-                                    <h3 className="text-xl font-bold text-indigo-900">Does It in Seconds & for Free</h3>
+                                    <h3 className="text-xl font-bold text-white">Does It in Seconds & for Free</h3>
                                 </div>
                             </motion.div>
                         </div>
