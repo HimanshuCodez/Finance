@@ -3,26 +3,26 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Minus } from 'lucide-react';
 
 const faqData = {
-    "BimaKavach": [
+    "SmrFinserv": [
         {
-            question: "What is BimaKavach and how does it work?",
-            answer: "BimaKavach is a digital insurance platform that simplifies business insurance. We help you get quotes, buy policies, and manage everything online."
+            question: "What is SmrFinserv and how does it work?",
+            answer: "SmrFinserv is a digital insurance platform that simplifies business insurance. We help you get quotes, buy policies, and manage everything online."
         },
         {
-            question: "Are there any extra fees for using BimaKavach, or is the service free?",
+            question: "Are there any extra fees for using SmrFinserv, or is the service free?",
             answer: "Our service is completely free for businesses. We earn a commission from the insurance companies, so you don't pay anything extra."
         }
     ],
     "Business Insurance": [
         {
-            question: "How can BimaKavach help my business save on insurance?",
+            question: "How can SmrFinserv help my business save on insurance?",
             answer: "By comparing quotes from multiple insurers and using our smart business model, we can help you find the best coverage at the most competitive prices, often saving you up to 40%."
         }
     ],
     "Insurance Policies": [
         {
             question: "What types of insurance do you offer for businesses?",
-            answer: "At BimaKavach, we offer a wide variety of corporate insurance policy options to cater to your business needs, including commercial business insurance, Property Insurance, Marine Insurance, Engineering Insurance, and corporate insurance policy for employees."
+            answer: "At SmrFinserv, we offer a wide variety of corporate insurance policy options to cater to your business needs, including commercial business insurance, Property Insurance, Marine Insurance, Engineering Insurance, and corporate insurance policy for employees."
         },
         {
             question: "Is the commercial insurance process fully digital?",
@@ -32,7 +32,7 @@ const faqData = {
 };
 
 const Faq = () => {
-    const [activeTab, setActiveTab] = useState('BimaKavach');
+    const [activeTab, setActiveTab] = useState('SmrFinserv');
     const [activeIndex, setActiveIndex] = useState(0);
 
     const handleAccordion = (index) => {
