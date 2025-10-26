@@ -14,14 +14,14 @@ const DigitalInsurance = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Business Insurance
+            Personal Insurance
           </motion.button>
           <motion.button
             className="bg-white text-gray-500 px-6 py-3 rounded-full shadow-md hover:bg-gray-100 transition font-semibold"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Health Insurance
+            Corporate Insurance
           </motion.button>
         </div>
         <ul className="space-y-3 text-indigo-900 pt-4">
