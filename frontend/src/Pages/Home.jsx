@@ -19,7 +19,7 @@ const Home = () => {
       <HeroSection/>
       <CertificateSection/>
       <TestimonialCompanies/>
-      <TestimonialBoxes/>
+      {/* <TestimonialBoxes/> */}
       <NewWay/>
       <div className='mt-9'><DigitalInsurance/></div>
       <BimaSalaah/>

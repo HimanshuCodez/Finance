@@ -21,12 +21,12 @@ export default function HeroSection() {
 
         {/* Main Heading */}
         <h1 className="text-4xl sm:text-5xl italic font-bold text-blue-700 leading-tight font-serif">
-          Unstoppable Businesses
+         Welcome to Our World
         </h1>
 
         {/* Subheading */}
         <p className="text-gray-500 text-lg">
-          Get Quotes in Seconds. Get Coverage in Minutes.
+         We offer Tailored Solutions to Meet Your Tailored Needs.
         </p>
 
         {/* Stats Container */}
@@ -65,15 +65,15 @@ export default function HeroSection() {
         className="grid grid-cols-2 lg:grid-cols-3 gap-4"
       >
         {[
-          { title: "Workmen’s Compensation", image: "https://images.bimakavach.com/products/WorkmensCompensationIcon.webp" },
-          { title: "Directors and Officers", image: "https://images.bimakavach.com/products/DirectorsAndOfficersInsuranceIcon.webp" },
-          { title: "Professional Indemnity", image: "https://images.bimakavach.com/products/ProfessionalIndemnityInsuranceIcon.webp" },
-          { title: "Cyber Insurance", image: "https://images.bimakavach.com/products/CyberInsuranceIcon.webp" },
-          { title: "General Liability", image: "https://images.bimakavach.com/products/GeneralLiabilityInsuranceIcon.webp" },
-          { title: "Product Liability", image: "https://images.bimakavach.com/products/ProductLiabilityInsuranceIcon.webp" },
-          { title: "Fire Insurance", image: "https://images.bimakavach.com/products/FireInsuranceIcon.webp" },
-          { title: "Contarctor's All Risks", image: "https://images.bimakavach.com/products/ContractorsAllRiskIcon.webp" },
-          { title: "Erection All Risks", image: "https://images.bimakavach.com/products/ErectionAllRiskIcon.webp" },
+          { title: "Personal Insurance", image: "https://images.bimakavach.com/products/GeneralLiabilityInsuranceIcon.webp" },
+          { title: "Corporate Insurance", image: "https://images.bimakavach.com/products/DirectorsAndOfficersInsuranceIcon.webp" },
+          // { title: "Professional Indemnity", image: "https://images.bimakavach.com/products/ProfessionalIndemnityInsuranceIcon.webp" },
+          // { title: "Cyber Insurance", image: "https://images.bimakavach.com/products/CyberInsuranceIcon.webp" },
+          // { title: "General Liability", image: "https://images.bimakavach.com/products/GeneralLiabilityInsuranceIcon.webp" },
+          // { title: "Product Liability", image: "https://images.bimakavach.com/products/ProductLiabilityInsuranceIcon.webp" },
+          // { title: "Fire Insurance", image: "https://images.bimakavach.com/products/FireInsuranceIcon.webp" },
+          // { title: "Contarctor's All Risks", image: "https://images.bimakavach.com/products/ContractorsAllRiskIcon.webp" },
+          // { title: "Erection All Risks", image: "https://images.bimakavach.com/products/ErectionAllRiskIcon.webp" },
         ].map((card, index) => (
           <motion.div
             key={index}
