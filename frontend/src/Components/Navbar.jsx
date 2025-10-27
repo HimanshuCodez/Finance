@@ -1,7 +1,28 @@
 import React, { useState } from "react";
 
-export default function Navbar() {
+export default function Navbar({ isInsuranceMenuOpen, setIsInsuranceMenuOpen }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [openSections, setOpenSections] = useState({});
+
+  const toggleSection = (section) => {
+    setOpenSections(prev => ({...prev, [section]: !prev[section]}));
+  }
+
+  const personalInsurance = {
+    "HEALTH INSURANCE": ["Health Insurance", "Cancer Insurance", "Critical Insurance", "Family Health Insurance", "OPD Health Insurance", "Personal Accident Insurance"],
+    "Term Life Insurance": ["Term Paln normal", "Term Plan with Return of Premium (ROP)", "Term plan (women)", "Term Plan (Self employed)"],
+    "Motor Insurance": ["Two-Wheeler insurance", "Private Car Insurance", "New Private Car Insurance", "Commercial Vehicle Insurance", "Taxi Insurance", "Bus Insurance"],
+    "Other Personal Insurance": ["Travel Insurance", "Home Insurance", "Pet Insurance", "Personal Cyber Insurance"]
+  };
+
+  const corporateInsurance = {
+      "INVESTMENT PLANS": ["LIC Plans", "Retirement Plans", "Child Saving's Plan", "Guranteed Return Plan", "Pension Plan", "ULIPS", "Tax Saving's Plan"],
+      "Marine Insurance": ["Marine Open Policy", "Marine Specific Policy"],
+      "Property Insurance": ["Fire and Bulgary Insurance", "Office Insurance", "Shop Insurance", "Home Insurance", "Factory Insurance"],
+      "SME INSURANCE": ["Employee Group Health (GHI)", "Employee Group Personal Accident (GPA)", "Employee Group Term Plan"],
+      "ENGINEERING": ["Contrator All Risk", "Contractor Plant & Machinery", "Worksmen Compensation"],
+      "LIABILITY": ["PI policy For Doctors", "PI policy For Companies", "General Liability", "Cyber Risk Insurance", "Office Liability"]
+  };
 
   return (
     <header className="relative bg-white z-20">
@@ -18,11 +39,57 @@ export default function Navbar() {
           {/* Center: Menu (hidden on small screens) */}
           <div className="hidden md:block">
             <nav className="ml-10 flex items-baseline space-x-4">
-              <div className="flex items-center gap-1 cursor-pointer px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
-                <span>Insurance Policies</span>
-                <svg className="w-4 h-4 text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
-                  <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 011.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" />
-                </svg>
+              <div 
+                className="relative"
+                onMouseEnter={() => setIsInsuranceMenuOpen(true)}
+                onMouseLeave={() => setIsInsuranceMenuOpen(false)}
+              >
+                <div className="flex items-center gap-1 cursor-pointer px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
+                  <span>Insurance Policies</span>
+                  <svg className="w-4 h-4 text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
+                    <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 011.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" />
+                  </svg>
+                </div>
+
+                {isInsuranceMenuOpen && (
+                  <>
+                    <div className="fixed inset-0 top-16 bg-black bg-opacity-25" onMouseEnter={() => setIsInsuranceMenuOpen(false)} />
+                    <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 w-screen max-w-6xl z-10">
+                      <div className="bg-white shadow-lg ring-1 ring-gray-900/5">
+                        <div className="grid grid-cols-2 gap-x-8 p-8">
+                          {/* Personal Insurance */}
+                          <div>
+                            <h3 className="text-base font-semibold text-[#0B2B57]">Personal Insurance</h3>
+                            <div className="mt-4 grid grid-cols-2 gap-y-4 gap-x-8">
+                              {Object.entries(personalInsurance).map(([title, links]) => (
+                                <div key={title}>
+                                  <h4 className="text-sm font-semibold text-gray-900">{title}</h4>
+                                  <ul className="mt-2 space-y-1">
+                                    {links.map(item => <li key={item}><a href="#" className="text-sm text-gray-600 hover:text-gray-900">{item}</a></li>)}
+                                  </ul>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                          {/* Corporate Insurance */}
+                          <div>
+                            <h3 className="text-base font-semibold text-[#0B2B57]">Corporate Insurance</h3>
+                            <div className="mt-4 grid grid-cols-3 gap-y-4 gap-x-8">
+                              {Object.entries(corporateInsurance).map(([title, links]) => (
+                                <div key={title}>
+                                  <h4 className="text-sm font-semibold text-gray-900">{title}</h4>
+                                  <ul className="mt-2 space-y-1">
+                                    {links.map(item => <li key={item}><a href="#" className="text-sm text-gray-600 hover:text-gray-900">{item}</a></li>)}
+                                  </ul>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
 
               <a href="#" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">Contact</a>
@@ -69,7 +136,60 @@ export default function Navbar() {
       {isMenuOpen && (
         <div className="md:hidden" id="mobile-menu">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <a href="#" className="text-gray-700 hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium">Insurance Policies</a>
+            <div>
+              <button onClick={() => toggleSection('personal')} className="w-full flex justify-between items-center text-gray-700 hover:bg-gray-50 px-3 py-2 rounded-md text-base font-medium">
+                <span>Personal Insurance</span>
+                <svg className={`w-5 h-5 transform transition-transform ${openSections['personal'] ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" />
+                </svg>
+              </button>
+              {openSections['personal'] && (
+                <div className="pl-4">
+                  {Object.entries(personalInsurance).map(([title, links]) => (
+                    <div key={title}>
+                      <button onClick={() => toggleSection(title)} className="w-full flex justify-between items-center text-gray-700 hover:bg-gray-50 px-3 py-2 rounded-md text-sm font-medium">
+                        <span>{title}</span>
+                        <svg className={`w-4 h-4 transform transition-transform ${openSections[title] ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                      {openSections[title] && (
+                        <ul className="pl-4">
+                          {links.map(link => <li key={link}><a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50">{link}</a></li>)}
+                        </ul>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+            <div>
+              <button onClick={() => toggleSection('corporate')} className="w-full flex justify-between items-center text-gray-700 hover:bg-gray-50 px-3 py-2 rounded-md text-base font-medium">
+                <span>Corporate Insurance</span>
+                <svg className={`w-5 h-5 transform transition-transform ${openSections['corporate'] ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" />
+                </svg>
+              </button>
+              {openSections['corporate'] && (
+                <div className="pl-4">
+                  {Object.entries(corporateInsurance).map(([title, links]) => (
+                    <div key={title}>
+                      <button onClick={() => toggleSection(title)} className="w-full flex justify-between items-center text-gray-700 hover:bg-gray-50 px-3 py-2 rounded-md text-sm font-medium">
+                        <span>{title}</span>
+                        <svg className={`w-4 h-4 transform transition-transform ${openSections[title] ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                      {openSections[title] && (
+                        <ul className="pl-4">
+                          {links.map(link => <li key={link}><a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50">{link}</a></li>)}
+                        </ul>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
 
             <a href="#" className="text-gray-700 hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium">Contact</a>
           </div>
