@@ -14,7 +14,7 @@ const ReadyToBuy = () => {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                     >
-                        Buy Policy In Minutes
+                        Buy Policy
                     </motion.button>
                 </div>
                 {/* Decorative gradients */}
