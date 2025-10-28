@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Navbar({ isInsuranceMenuOpen, setIsInsuranceMenuOpen }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -59,31 +60,11 @@ export default function Navbar({ isInsuranceMenuOpen, setIsInsuranceMenuOpen }) 
                         <div className="grid grid-cols-2 gap-x-8 p-8">
                           {/* Personal Insurance */}
                           <div>
-                            <h3 className="text-base font-semibold text-[#0B2B57]">Personal Insurance</h3>
-                            <div className="mt-4 grid grid-cols-2 gap-y-4 gap-x-8">
-                              {Object.entries(personalInsurance).map(([title, links]) => (
-                                <div key={title}>
-                                  <h4 className="text-sm font-semibold text-gray-900">{title}</h4>
-                                  <ul className="mt-2 space-y-1">
-                                    {links.map(item => <li key={item}><a href="#" className="text-sm text-gray-600 hover:text-gray-900">{item}</a></li>)}
-                                  </ul>
-                                </div>
-                              ))}
-                            </div>
+                            <Link to="/personal" className="text-base font-semibold text-[#0B2B57] hover:underline">Personal Insurance</Link>
                           </div>
                           {/* Corporate Insurance */}
                           <div>
-                            <h3 className="text-base font-semibold text-[#0B2B57]">Corporate Insurance</h3>
-                            <div className="mt-4 grid grid-cols-3 gap-y-4 gap-x-8">
-                              {Object.entries(corporateInsurance).map(([title, links]) => (
-                                <div key={title}>
-                                  <h4 className="text-sm font-semibold text-gray-900">{title}</h4>
-                                  <ul className="mt-2 space-y-1">
-                                    {links.map(item => <li key={item}><a href="#" className="text-sm text-gray-600 hover:text-gray-900">{item}</a></li>)}
-                                  </ul>
-                                </div>
-                              ))}
-                            </div>
+                            <Link to="/corporate" className="text-base font-semibold text-[#0B2B57] hover:underline">Corporate Insurance</Link>
                           </div>
                         </div>
                       </div>
@@ -137,58 +118,14 @@ export default function Navbar({ isInsuranceMenuOpen, setIsInsuranceMenuOpen }) 
         <div className="md:hidden" id="mobile-menu">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <div>
-              <button onClick={() => toggleSection('personal')} className="w-full flex justify-between items-center text-gray-700 hover:bg-gray-50 px-3 py-2 rounded-md text-base font-medium">
+              <Link to="/personal" className="w-full flex justify-between items-center text-gray-700 hover:bg-gray-50 px-3 py-2 rounded-md text-base font-medium">
                 <span>Personal Insurance</span>
-                <svg className={`w-5 h-5 transform transition-transform ${openSections['personal'] ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" />
-                </svg>
-              </button>
-              {openSections['personal'] && (
-                <div className="pl-4">
-                  {Object.entries(personalInsurance).map(([title, links]) => (
-                    <div key={title}>
-                      <button onClick={() => toggleSection(title)} className="w-full flex justify-between items-center text-gray-700 hover:bg-gray-50 px-3 py-2 rounded-md text-sm font-medium">
-                        <span>{title}</span>
-                        <svg className={`w-4 h-4 transform transition-transform ${openSections[title] ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" />
-                        </svg>
-                      </button>
-                      {openSections[title] && (
-                        <ul className="pl-4">
-                          {links.map(link => <li key={link}><a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50">{link}</a></li>)}
-                        </ul>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
+              </Link>
             </div>
             <div>
-              <button onClick={() => toggleSection('corporate')} className="w-full flex justify-between items-center text-gray-700 hover:bg-gray-50 px-3 py-2 rounded-md text-base font-medium">
+              <Link to="/corporate" className="w-full flex justify-between items-center text-gray-700 hover:bg-gray-50 px-3 py-2 rounded-md text-base font-medium">
                 <span>Corporate Insurance</span>
-                <svg className={`w-5 h-5 transform transition-transform ${openSections['corporate'] ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" />
-                </svg>
-              </button>
-              {openSections['corporate'] && (
-                <div className="pl-4">
-                  {Object.entries(corporateInsurance).map(([title, links]) => (
-                    <div key={title}>
-                      <button onClick={() => toggleSection(title)} className="w-full flex justify-between items-center text-gray-700 hover:bg-gray-50 px-3 py-2 rounded-md text-sm font-medium">
-                        <span>{title}</span>
-                        <svg className={`w-4 h-4 transform transition-transform ${openSections[title] ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" />
-                        </svg>
-                      </button>
-                      {openSections[title] && (
-                        <ul className="pl-4">
-                          {links.map(link => <li key={link}><a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50">{link}</a></li>)}
-                        </ul>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
+              </Link>
             </div>
 
             <a href="#" className="text-gray-700 hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium">Contact</a>
@@ -209,7 +146,7 @@ export default function Navbar({ isInsuranceMenuOpen, setIsInsuranceMenuOpen }) 
 
       {/* Blue band with gradient and wave bottom */}
       <div className="relative">
-        <div className="w-full h-12 md:h-14 bg-gradient-to-r from-[#0747A6] via-[#0E4DA4] to-[#083E8A]"></div>
+        <div className="w-full h-12 md:h-14 bg-gradient-to-r from-[#0747A6] via-[#0E4DA4] to-blue-400"></div>
         <div className="absolute left-0 right-0 bottom-0 -mb-1 overflow-hidden pointer-events-none">
           <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="w-full h-16 md:h-20">
             <path d="M0,0 C150,100 350,100 600,40 C850,-20 1050,40 1200,80 L1200,120 L0,120 Z" className="fill-current text-[#0A47A6]" />

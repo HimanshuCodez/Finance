@@ -77,7 +77,7 @@ export default function HeroSection({ onOpenInsuranceMenu }) {
        
 
         {/* Main Heading */}
-        <h1 className="text-4xl sm:text-5xl italic font-bold text-blue-700 leading-tight font-serif">
+        <h1 className="text-4xl sm:text-5xl italic font-bold text-blue-500 leading-tight font-serif">
          Welcome to Our World
         </h1>
 
