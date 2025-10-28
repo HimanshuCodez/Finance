@@ -142,23 +142,10 @@ const Footer = () => {
                 </div>
 
                 {/* Disclaimer */}
-                <div className="mt-12 border-t border-blue-800 pt-8 text-xs text-blue-300 space-y-4">
-                    <p><span className="font-semibold">Disclaimer:</span> BimaKavach Insurance Broking Pvt. Ltd. | CIN- U66010MP2022PTC059393 | Registered Office No. 601, Plot No. RCM - 09, Scheme No. 140 Sector -E Shanti Dazzle Building, Indore, Madhya Pradesh - 452016 Phone No.- 9036554785 | Email- support@bimakavach.com</p>
-                    <p>BimaKavach is registered as a Direct Broker | Registration No. 901, Registration Code No. IRDAI / DB 985/ 2022, Valid till 25/06/2026, License category- Direct Broker (General)</p>
-                    <p>Visitors are being informed that BimaKavach Insurance Broking Pvt. Ltd. holds the right to share the information submitted by you on the website with Insurers. Product information is genuine and exclusively based on information obtained from insurers.</p>
-                    <p>*The prices shown are estimates. Actual prices may be higher based on your business details and risk factors.</p>
-                </div>
+                
 
                 {/* Backed by */}
-                <div className="mt-8">
-                    <h3 className="text-lg font-semibold">Backed by</h3>
-                    <div className="flex space-x-4 mt-4">
-                        {/* Replace with actual logos */}
-                        <div className="w-24 h-12 bg-black rounded-md flex items-center justify-center text-blue-900"><img src="https://images.bimakavach.com/v3/Footer/backBestWhite3.webp" alt="" /></div>
-                        <div className="w-24 h-12 bg-black rounded-md flex items-center justify-center text-blue-900"><img src="https://images.bimakavach.com/v3/Footer/backBestWhite4.webp" alt="" /></div>
-                        <div className="w-24 h-12 bg-black rounded-md flex items-center justify-center text-blue-900"><img src="https://images.bimakavach.com/v3/Footer/backBestWhite2.webp" alt="" /></div>
-                    </div>
-                </div>
+                
             </div>
         </footer>
     );
