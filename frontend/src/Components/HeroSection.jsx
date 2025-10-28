@@ -74,13 +74,7 @@ export default function HeroSection({ onOpenInsuranceMenu }) {
         transition={{ duration: 0.6 }}
         className="space-y-6"
       >
-        {/* Small Heading */}
-        <div className="flex items-center gap-2 text-[#0E4DA4]">
-          <Zap size={20} className="text-[#00C389]" />
-          <span className="font-medium italic tracking-wide text-lg">
-            Fast Insurance for
-          </span>
-        </div>
+       
 
         {/* Main Heading */}
         <h1 className="text-4xl sm:text-5xl italic font-bold text-blue-700 leading-tight font-serif">
@@ -92,26 +86,6 @@ export default function HeroSection({ onOpenInsuranceMenu }) {
          We offer Tailored Solutions to Meet Your Tailored Needs.
         </p>
 
-        {/* Stats Container */}
-        <div className="mt-10 border border-yellow-400 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-around gap-4 w-full sm:w-fit bg-white shadow-sm">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-[#0E1633]">20,000+</h2>
-            <p className="text-gray-500 text-sm">Policies Sold</p>
-          </div>
-          <div className="w-full h-px sm:w-px sm:h-10 bg-yellow-300"></div>
-          <div className="text-center">
-            <div className="flex items-center justify-center gap-1">
-                <h2 className="text-2xl font-bold text-[#0E1633]">4.8</h2>
-                <Star className="text-yellow-400 fill-yellow-400" size={20} />
-            </div>
-            <p className="text-gray-500 text-sm">on Google</p>
-          </div>
-          <div className="w-full h-px sm:w-px sm:h-10 bg-yellow-300"></div>
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-[#0E1633]">₹43,000+ Cr.</h2>
-            <p className="text-gray-500 text-sm">Total Sum Insured</p>
-          </div>
-        </div>
 
         {/* View Products Button */}
         <button 

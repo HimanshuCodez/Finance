@@ -23,15 +23,16 @@ const Home = () => {
       <Navbar isInsuranceMenuOpen={isInsuranceMenuOpen} setIsInsuranceMenuOpen={setIsInsuranceMenuOpen} />
       <HeroSection onOpenInsuranceMenu={() => setIsInsuranceMenuOpen(true)} />
       <CertificateSection/>
-      <TestimonialCompanies/>
       <TestimonialBoxes/>
-      <NewWay/>
-      <div className='mt-9'><DigitalInsurance/></div>
-      <BimaSalaah/>
-      <ApplyForm/>
-      <Faq/>
-      <WhyChooseUs/>
+      <TestimonialCompanies/>
       <Coverage/>
+      {/* <NewWay/> */}
+      {/* <div className='mt-9'><DigitalInsurance/></div> */}
+      {/* <BimaSalaah/> */}
+      <ApplyForm/>
+      {/* <Faq/> */}
+      <WhyChooseUs/>
+      
       <ReadyToBuy/>
       <Footer/>
       </div>

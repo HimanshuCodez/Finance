@@ -2,6 +2,8 @@ import { useState } from "react";
 
 export default function ApplyForm() {
   const [formData, setFormData] = useState({
+    name: "",
+    email: "",
     mobile: "",
     pincode: "",
     employment: "",
@@ -18,6 +20,8 @@ export default function ApplyForm() {
     e.preventDefault();
     const newErrors = {};
 
+    if (!formData.name) newErrors.name = "Full Name is required";
+    if (!formData.name) newErrors.email = "Email is required";
     if (!formData.mobile) newErrors.mobile = "Mobile number is required";
     if (!formData.pincode) newErrors.pincode = "Pincode is required";
     if (!formData.employment) newErrors.employment = "Employment type is required";
@@ -38,6 +42,38 @@ export default function ApplyForm() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid md:grid-cols-3 gap-4">
+            {/* Full Name */}
+            <div>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Mobile Number *"
+                className={`w-full border ${
+                  errors.name ? "border-red-500" : "border-gray-300"
+                } rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400`}
+              />
+              {errors.name && (
+                <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+              )}
+            </div>
+            {/* Email */}
+            <div>
+              <input
+                type="text"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="John@gmail.com*"
+                className={`w-full border ${
+                  errors.email ? "border-red-500" : "border-gray-300"
+                } rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400`}
+              />
+              {errors.email && (
+                <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+              )}
+            </div>
             {/* Mobile Number */}
             <div>
               <input
