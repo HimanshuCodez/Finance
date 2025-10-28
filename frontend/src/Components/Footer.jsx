@@ -52,18 +52,7 @@ const Footer = () => {
     return (
         <footer className="bg-gradient-to-b from-blue-900 to-black text-white">
             {/* Stats Bar */}
-            <div className="bg-blue-800 py-6">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                        {stats.map((stat, index) => (
-                            <div key={index}>
-                                <p className="text-2xl md:text-3xl font-bold text-yellow-400">{stat.value}</p>
-                                <p className="text-sm text-blue-200">{stat.label}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
+            
 
             <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
