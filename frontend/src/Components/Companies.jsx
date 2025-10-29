@@ -21,7 +21,7 @@ const TestimonialCompanies = () => {
   return (
     <section className="py-16 px-6 bg-gray-50">
       <div className="max-w-6xl mx-auto text-center space-y-8">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
+        <h2 className="text-3xl md:text-4xl font-bold text-blue-600">
           OUR PARTNERS
         </h2>
 
