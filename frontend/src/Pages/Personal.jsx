@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ApplyForm from '../Components/ApplyForm';
 
 export default function Personal({ personalInsurance }) {
+  const [showApplyForm, setShowApplyForm] = useState(false);
+
+  const handlePlanClick = () => {
+    setShowApplyForm(true);
+  };
+
+  const handleCloseForm = () => {
+    setShowApplyForm(false);
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <h1 className="text-3xl font-bold text-blue-700 mb-8">Personal Insurance</h1>
@@ -10,7 +21,11 @@ export default function Personal({ personalInsurance }) {
             <h2 className="text-xl font-semibold text-blue-500 mb-4">{category}</h2>
             <ul className="space-y-2">
               {items.map(item => (
-                <li key={item} className="text-gray-700 hover:text-yellow-600 transition-colors duration-200">
+                <li
+                  key={item}
+                  className="text-gray-700 hover:text-yellow-600 transition-colors duration-200 cursor-pointer"
+                  onClick={handlePlanClick}
+                >
                   {item}
                 </li>
               ))}
@@ -18,6 +33,7 @@ export default function Personal({ personalInsurance }) {
           </div>
         ))}
       </div>
+      {showApplyForm && <ApplyForm onClose={handleCloseForm} />}
     </div>
   );
 }

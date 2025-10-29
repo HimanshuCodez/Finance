@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function ApplyForm() {
+export default function ApplyForm({ onClose }) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -30,12 +30,19 @@ export default function ApplyForm() {
 
     if (Object.keys(newErrors).length === 0) {
       alert("Form submitted!");
+      onClose();
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6">
-      <div className="bg-white shadow-md rounded-2xl w-full max-w-4xl p-8">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white shadow-md rounded-2xl w-full max-w-4xl p-8 relative">
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-2xl"
+        >
+          &times;
+        </button>
         <div className="bg-yellow-400 text-center py-3 rounded-t-xl font-semibold text-lg -mt-8 mb-6 shadow-sm">
           Apply Online
         </div>
@@ -49,7 +56,7 @@ export default function ApplyForm() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                placeholder="Mobile Number *"
+                placeholder="Full Name"
                 className={`w-full border ${
                   errors.name ? "border-red-500" : "border-gray-300"
                 } rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400`}
@@ -91,22 +98,7 @@ export default function ApplyForm() {
               )}
             </div>
 
-            {/* Pincode */}
-            <div>
-              <input
-                type="text"
-                name="pincode"
-                value={formData.pincode}
-                onChange={handleChange}
-                placeholder="Pincode(Current Address) *"
-                className={`w-full border ${
-                  errors.pincode ? "border-red-500" : "border-gray-300"
-                } rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400`}
-              />
-              {errors.pincode && (
-                <p className="text-red-500 text-xs mt-1">{errors.pincode}</p>
-              )}
-            </div>
+           
 
             {/* Employment Type */}
             <div>
@@ -132,7 +124,7 @@ export default function ApplyForm() {
           <div className="flex justify-center">
             <button
               type="submit"
-              className="bg-gray-200 text-gray-600 font-medium rounded-md py-3 px-12 hover:bg-yellow-400 hover:text-black transition"
+              className="bg-yellow-500 font-medium text-black  rounded-md py-3 px-12 hover:bg-blue-400 hover:text-black transition"
             >
               Apply Now
             </button>

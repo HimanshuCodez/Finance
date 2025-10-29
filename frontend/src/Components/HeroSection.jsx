@@ -66,13 +66,13 @@ export default function HeroSection({ onOpenInsuranceMenu }) {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-8 pb-12 md:pt-12 md:pb-20 grid md:grid-cols-2 gap-8 md:gap-12 items-start">
-      {/* ---------------- Left Content ---------------- */}
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-8 pb-12 md:pt-12 md:pb-20">
+      {/* ---------------- Content ---------------- */}
       <motion.div
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6 }}
-        className="space-y-6"
+        className="space-y-6 flex flex-col items-center text-center"
       >
        
 
@@ -110,7 +110,7 @@ export default function HeroSection({ onOpenInsuranceMenu }) {
             Back
           </button>
         )}
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4">
           {cardsToShow.map((card, index) => (
             <Card
               key={index}
@@ -122,9 +122,6 @@ export default function HeroSection({ onOpenInsuranceMenu }) {
         </div>
       </motion.div>
       </motion.div>
-
-      {/* ---------------- Right Content (Insurance Cards) ---------------- */}
-     
     </div>
   );
 }

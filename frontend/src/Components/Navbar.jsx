@@ -26,7 +26,7 @@ export default function Navbar({ isInsuranceMenuOpen, setIsInsuranceMenuOpen }) 
   };
 
   return (
-    <header className="relative bg-white z-20">
+    <header className="relative bg-white z-20 border-b-2 border-yellow-300">
       {/* Navbar content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
@@ -55,7 +55,7 @@ export default function Navbar({ isInsuranceMenuOpen, setIsInsuranceMenuOpen }) 
                 {isInsuranceMenuOpen && (
                   <>
                     <div className="fixed inset-0 top-16 bg-black bg-opacity-25" onMouseEnter={() => setIsInsuranceMenuOpen(false)} />
-                    <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 w-screen max-w-6xl z-10">
+                    <div className="absolute top-full pt-2 z-10 w-max">
                       <div className="bg-white shadow-lg ring-1 ring-gray-900/5">
                         <div className="grid grid-cols-2 gap-x-8 p-8">
                           {/* Personal Insurance */}
@@ -87,11 +87,14 @@ export default function Navbar({ isInsuranceMenuOpen, setIsInsuranceMenuOpen }) 
                 </svg>
                 WhatsApp Us
               </button>
-               <button className="ml-3 p-2 rounded-full border border-gray-200 hover:bg-gray-50">
-                <svg className="w-4 h-4 text-gray-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
-                  <path fillRule="evenodd" d="M12.79 5.23a.75.75 0 01.02 1.06L9.06 10l3.71 3.71a.75.75 0 11-1.06 1.06l-4.25-4.24a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.08.02z" clipRule="evenodd" />
-                </svg>
-              </button>
+                 <div className="flex ml-10 justify-center">
+            <button
+              type="submit"
+              className="bg-yellow-300 text-gray-600 font-medium rounded-md py-3 px-12 hover:bg-yellow-400 hover:text-black transition"
+            >
+              Apply Now
+            </button>
+          </div>
             </div>
           </div>
 
@@ -145,14 +148,8 @@ export default function Navbar({ isInsuranceMenuOpen, setIsInsuranceMenuOpen }) 
       )}
 
       {/* Blue band with gradient and wave bottom */}
-      <div className="relative">
-        <div className="w-full h-12 md:h-14 bg-gradient-to-r from-[#0747A6] via-[#0E4DA4] to-blue-400"></div>
-        <div className="absolute left-0 right-0 bottom-0 -mb-1 overflow-hidden pointer-events-none">
-          <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="w-full h-16 md:h-20">
-            <path d="M0,0 C150,100 350,100 600,40 C850,-20 1050,40 1200,80 L1200,120 L0,120 Z" className="fill-current text-[#0A47A6]" />
-          </svg>
-        </div>
-      </div>
+     
+   
     </header>
   );
 }
