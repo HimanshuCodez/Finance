@@ -34,7 +34,7 @@ export default function Coverage() {
       <div className="max-w-6xl mx-auto text-center">
         {/* Header */}
         <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-12">
-          OUR <span className="text-yellow-500">COVERAGE</span>
+          OUR <span className="text-blue-700">COVERAGE</span>
         </h2>
 
         {/* Cards */}
@@ -44,9 +44,9 @@ export default function Coverage() {
             return (
               <div
                 key={index}
-                className="bg-gray-50 hover:bg-yellow-50 border border-gray-200 rounded-2xl p-6 flex flex-col items-center text-center shadow-sm hover:shadow-lg transition"
+                className="bg-gray-50 hover:text-blue-400 border border-gray-200 rounded-2xl p-6 flex flex-col items-center text-center shadow-sm hover:shadow-lg transition"
               >
-                <div className="bg-yellow-100 text-yellow-600 w-14 h-14 flex items-center justify-center rounded-full mb-4">
+                <div className="bg-yellow-100 text-blue-700 w-14 h-14 flex items-center justify-center rounded-full mb-4">
                   <Icon className="w-7 h-7" />
                 </div>
                 <h3 className="text-lg font-semibold text-gray-800 mb-2">

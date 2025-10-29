@@ -90,7 +90,7 @@ export default function Navbar({ isInsuranceMenuOpen, setIsInsuranceMenuOpen }) 
                  <div className="flex ml-10 justify-center">
             <button
               type="submit"
-              className="bg-yellow-300 text-gray-600 font-medium rounded-md py-3 px-12 hover:bg-yellow-400 hover:text-black transition"
+              className="bg-blue-600 text-white font-medium rounded-md py-3 px-12 hover:bg-yellow-400 hover:text-black transition"
             >
               Apply Now
             </button>

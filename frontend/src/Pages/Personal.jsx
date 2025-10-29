@@ -12,6 +12,10 @@ export default function Personal({ personalInsurance }) {
     setShowApplyForm(false);
   };
 
+  const handleApplyNowClick = () => {
+    setShowApplyForm(true);
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <h1 className="text-3xl font-bold text-blue-700 mb-8">Personal Insurance</h1>
@@ -32,6 +36,14 @@ export default function Personal({ personalInsurance }) {
             </ul>
           </div>
         ))}
+      </div>
+      <div className="flex justify-center mt-8">
+        <button
+          onClick={handleApplyNowClick}
+          className="bg-blue-500 text-white font-medium rounded-md py-3 px-8 hover:bg-blue-600 transition"
+        >
+          Apply Now
+        </button>
       </div>
       {showApplyForm && <ApplyForm onClose={handleCloseForm} />}
     </div>

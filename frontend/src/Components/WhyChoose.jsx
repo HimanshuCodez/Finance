@@ -24,7 +24,7 @@ export default function WhyChooseUs() {
     <section className="bg-gray-50 py-16 px-6">
       <div className="max-w-6xl mx-auto text-center">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-10">
-          WHY CHOOSE <span className="text-yellow-500">US?</span>
+          WHY CHOOSE <span className="text-blue-500">US?</span>
         </h2>
 
         <div className="grid md:grid-cols-2 gap-8">
@@ -33,7 +33,7 @@ export default function WhyChooseUs() {
               key={index}
               className="bg-white rounded-2xl shadow-md p-6 flex items-start gap-4 hover:shadow-lg transition"
             >
-              <CheckCircle className="text-yellow-500 w-8 h-8 mt-1 flex-shrink-0" />
+              <CheckCircle className="text-blue-500 w-8 h-8 mt-1 flex-shrink-0" />
               <div className="text-left">
                 <h3 className="text-lg font-semibold text-gray-800 mb-1">
                   {item.title}

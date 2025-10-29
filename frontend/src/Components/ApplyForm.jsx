@@ -44,7 +44,7 @@ export default function ApplyForm({ onClose, isModal = true }) {
           &times;
         </button>
       )}
-      <div className="bg-yellow-400 text-center py-3 rounded-t-xl font-semibold text-lg -mt-8 mb-6 shadow-sm">
+      <div className="bg-blue-600 text-center  text-white py-3 rounded-t-xl font-semibold text-lg -mt-8 mb-6 shadow-sm">
         Apply Online
       </div>
 
@@ -125,7 +125,7 @@ export default function ApplyForm({ onClose, isModal = true }) {
         <div className="flex justify-center">
           <button
             type="submit"
-            className="bg-yellow-500 font-medium text-black  rounded-md py-3 px-12 hover:bg-blue-400 hover:text-black transition"
+            className="bg-blue-600 font-medium text-white  rounded-md py-3 px-12 hover:bg-blue-400 hover:text-black transition"
           >
             Apply Now
           </button>

@@ -21,11 +21,15 @@ const Home = () => {
     <div>
       <Navbar isInsuranceMenuOpen={isInsuranceMenuOpen} setIsInsuranceMenuOpen={setIsInsuranceMenuOpen} />
       <HeroSection onOpenInsuranceMenu={() => setIsInsuranceMenuOpen(true)} />
+      
       <ApplyForm isModal={false} /> {/* Render ApplyForm unconditionally as non-modal */}
+      
+      
       <JoinningUs/>
+            <TestimonialCompanies/>
       <CertificateSection/>
       <TestimonialBoxes/>
-      <TestimonialCompanies/>
+
       <Coverage/>
       {/* <NewWay/> */}
       {/* <div className='mt-9'><DigitalInsurance/></div> */}
