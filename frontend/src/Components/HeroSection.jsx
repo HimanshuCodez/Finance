@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Zap, Star, ArrowRight, ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const personalInsurance = {
   "HEALTH INSURANCE": ["Health Insurance", "Cancer Insurance", "Critical Insurance", "Family Health Insurance", "OPD Health Insurance", "Personal Accident Insurance"],
   "Term Life Insurance": ["Term Paln normal", "Term Plan with Return of Premium (ROP)", "Term plan (women)", "Term Plan (Self employed)"],
-  "Motor Insurance": ["Two-Wheeler insurance", "Private Car Insurance", "New Private Car Insurance", "Commercial Vehicle Insurance", "Taxi Insurance", "Bus Insurance"],
+  "Motor Insurance": ["Two-Wheeler insurance", "Private Car Insurance", "New Private Car Insurance", "Commercial Vehicle Insurance", "Taxi Insurance", "Taxi Insurance", "Bus Insurance"],
   "Other Personal Insurance": ["Travel Insurance", "Home Insurance", "Pet Insurance", "Personal Cyber Insurance"]
 };
 
@@ -40,10 +41,11 @@ const Card = ({ title, image, onClick }) => (
 
 export default function HeroSection({ onOpenInsuranceMenu }) {
   const [currentView, setCurrentView] = useState('initial');
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const initialCards = [
-    { title: "Personal Insurance", image: "https://images.bimakavach.com/products/GeneralLiabilityInsuranceIcon.webp", view: 'personal' },
-    { title: "Corporate Insurance", image: "https://images.bimakavach.com/products/DirectorsAndOfficersInsuranceIcon.webp", view: 'corporate' },
+    { title: "Personal Insurance", image: "https://images.bimakavach.com/products/GeneralLiabilityInsuranceIcon.webp", view: 'personal', path: '/personal' }, // Add path
+    { title: "Corporate Insurance", image: "https://images.bimakavach.com/products/DirectorsAndOfficersInsuranceIcon.webp", view: 'corporate', path: '/corporate' }, // Add path
   ];
 
   const personalCards = Object.keys(personalInsurance).map(title => ({
@@ -116,7 +118,13 @@ export default function HeroSection({ onOpenInsuranceMenu }) {
               key={index}
               title={card.title}
               image={card.image}
-              onClick={() => card.view && setCurrentView(card.view)}
+              onClick={() => {
+                if (currentView === 'initial' && card.path) {
+                  navigate(card.path);
+                } else if (card.view) {
+                  setCurrentView(card.view);
+                }
+              }}
             />
           ))}
         </div>
