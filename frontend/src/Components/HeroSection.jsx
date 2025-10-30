@@ -19,28 +19,25 @@ const corporateInsurance = {
   "LIABILITY": ["PI Policy For Doctors", "PI Policy For Companies", "General Liability", "Cyber Risk Insurance", "Office Liability"]
 };
 
+
 // ---------- CARD COMPONENT ----------
 const Card = ({ title, image, onClick }) => (
   <motion.div
     onClick={onClick}
-    whileHover={{ scale: 1.03 }}
-    className="bg-white rounded-2xl shadow-md border p-6 flex flex-col md:flex-row items-center md:items-start gap-6 hover:shadow-lg transition cursor-pointer"
+    whileHover={{ scale: 1.05 }}
+    className="bg-white rounded-2xl shadow-md border p-6 flex flex-col items-center justify-between gap-4 hover:shadow-lg transition cursor-pointer h-64 w-full md:w-72"
   >
     <img
       src={image}
       alt={title}
-      className="h-20 w-20 md:h-24 md:w-24 object-contain"
+      className="h-24 w-24 object-contain"
     />
-    <div className="text-center md:text-left space-y-2">
-      <h3 className="font-semibold text-[#0E1633] text-lg md:text-xl">
-        {title}
-      </h3>
-      <div className="bg-green-100 text-green-700 text-sm font-medium px-3 py-1 rounded-full inline-flex items-center gap-1">
-        <Zap size={14} /> Immediate Purchase
-      </div>
-    </div>
+    <h3 className="font-semibold text-[#0E1633] text-lg md:text-xl text-center">
+      {title}
+    </h3>
   </motion.div>
 );
+
 
 // ---------- MAIN HERO ----------
 export default function HeroSection() {
@@ -74,28 +71,45 @@ export default function HeroSection() {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-[#F9FAFB] px-6 py-12">
-      {/* Heading Section */}
-      <motion.div
-        initial={{ opacity: 0, y: -30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="text-center max-w-3xl space-y-6"
-      >
-        <h1 className="text-4xl sm:text-5xl font-bold italic text-blue-600 font-serif">
-          Welcome to Our World
-        </h1>
-        <p className="text-gray-600 text-lg">
-          We offer Tailored Solutions to Meet Your Tailored Needs.
-        </p>
+  
+   {/* Heading Section with Background Video */}
+<div className="relative w-full flex items-center justify-center overflow-hidden py-20">
+  {/* Background Video */}
+  <video
+    autoPlay
+   
+    muted
+    playsInline
+    className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-70"
+  >
+    <source src="./hand.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
 
-        <button
-          onClick={handleViewAllProductsClick}
-          className="mt-4 border-2 border-blue-500 text-blue-700 rounded-full px-8 py-3 flex items-center justify-center gap-2 font-medium hover:bg-blue-50 transition mx-auto"
-        >
-          View All Products
-          <ArrowRight size={18} />
-        </button>
-      </motion.div>
+  {/* Content Section */}
+  <motion.div
+    initial={{ opacity: 0, y: -30 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6 }}
+    className="relative z-10 text-center max-w-3xl space-y-6 px-4"
+  >
+    <h1 className="text-4xl sm:text-5xl font-bold italic text-blue-600 font-serif">
+      Welcome to Our World
+    </h1>
+    <p className="text-white text-xl font-medium">
+      We offer Tailored Solutions to Meet Your Tailored Needs.
+    </p>
+
+    <button
+      onClick={handleViewAllProductsClick}
+      className="mt-4 border-2 border-blue-400 text-white rounded-full px-8 py-3 flex items-center justify-center gap-2 font-medium hover:bg-blue-600/40 transition mx-auto backdrop-blur-sm"
+    >
+      View All Products
+      <ArrowRight size={18} />
+    </button>
+  </motion.div>
+</div>
+
 
       {/* Cards Section */}
       <motion.div

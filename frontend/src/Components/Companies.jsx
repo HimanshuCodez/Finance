@@ -11,15 +11,15 @@ const companies = [
   { id: 8, name: "Company 8", imgSrc: "https://imgs.search.brave.com/yOXVdErh-USLHpq2I_zfrW8e73DFKcbgEmCNs_OSvyM/rs:fit:0:180:1:0/g:ce/aHR0cHM6Ly9pbWcu/ZXRpbWcuY29tL3Ro/dW1iL21zaWQtMTIz/NTAxNzcyLHdpZHRo/LTE2MCxoZWlnaHQt/MTIwL3N0b2NrLXJh/ZGFyLXRoZS1uZXct/aW5kaWEtYXNzdXJh/bmNlLWNvbXBhbnkt/c3RvY2stdGFrZXMt/c3VwcG9ydC1hYm92/ZS01MC1kbWEtZm9y/bWluZy1pbnZlcnNl/LWhlYWQtc2hvdWxk/ZXJzLXBhdHRlcm4u/anBn" },
   { id: 9, name: "Company 8", imgSrc: "https://imgs.search.brave.com/27phMAUg4oRPFBx-qSrL2X-BQFUxmXNAz8AI-jvN9rQ/rs:fit:0:180:1:0/g:ce/aHR0cHM6Ly9jZG4u/cG9saWN5eC5jb20v/Y21zLW1lZGlhL2lj/aWNpLXRlcm0taW5z/dXJhbmNlLWxvZ28t/d2ViJTIwKDEpMzky/NC0xNzI3NjgwMDkz/MTI5MC0xNzMyNzkz/MTQ4LndlYnA" },
   { id: 10, name: "Company 8", imgSrc: "https://imgs.search.brave.com/z9s91DOm-GFdaQfrLT86dXvwG1vwICyeASoMnjH7y0I/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9hc3Nl/dHMtbmV0c3RvcmFn/ZS5ncm93dy5pbi9z/dG9jay1hc3NldHMv/bG9nb3MyL0dPRElH/SVQud2VicA" },
-  { id: 11, name: "Company 8", imgSrc: "https://imgs.search.brave.com/ILbnZF3haHppBkC9y9IZLw88yQqzqZqHrAynJYi4zcw/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy82/LzZjL0xpYmVydHlf/R2VuZXJhbF9JbnN1/cmFuY2UuanBn" },
-  { id: 12, name: "Company 8", imgSrc: "https://imgs.search.brave.com/LzHNK8cH8H6i00vCppHqxj21hSrbwusjPRHLHKtAlng/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9taXIt/czMtY2RuLWNmLmJl/aGFuY2UubmV0L3By/b2plY3RzLzQwNC9m/NzFkOGExOTgzMjcz/OTMuWTNKdmNDdzBN/alU1TERNek16RXNN/VEUzTUN3eE56ay5q/cGc" },
-  { id: 13, name: "Company 8", imgSrc: "https://imgs.search.brave.com/YRz5L45L6OuLsAbRpqQjCpsYvsU8Zf85ekG1qCxI2HQ/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9jb250/ZW50LmpkbWFnaWNi/b3guY29tL3YyL2Nv/bXAvbXVtYmFpL24x/LzAyMnB4eDIyLnh4/MjIuMTMwMTA5MTUw/NTM3LmE0bjEvY2F0/YWxvZ3VlL2Nob2xh/bWFuZGFsYW0taW52/ZXN0bWVudC1hbmQt/ZmluYW5jZS1jb21w/YW55LWx0ZC1iYW5k/cmEta3VybGEtY29t/cGxleC1iYW5kcmEt/ZWFzdC1tdW1iYWkt/ZmluYW5jZS1hZ2Fp/bnN0LXZlaGljbGVz/LWJkdWVyamE3ejIu/anBnP3c9Mzg0MCZx/PTc1" },
+  { id: 11, name: "Company 8", imgSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUG4PTcDzgTYdus3aaneG1fqBNBbeJ7x1U8yTrHkg0e3kNHAaD8xvfFKkYnVmbtEbPkQ&usqp=CAU" },
+  // { id: 12, name: "Company 8", imgSrc: "https://imgs.search.brave.com/LzHNK8cH8H6i00vCppHqxj21hSrbwusjPRHLHKtAlng/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9taXIt/czMtY2RuLWNmLmJl/aGFuY2UubmV0L3By/b2plY3RzLzQwNC9m/NzFkOGExOTgzMjcz/OTMuWTNKdmNDdzBN/alU1TERNek16RXNN/VEUzTUN3eE56ay5q/cGc" },
+  // { id: 13, name: "Company 8", imgSrc: "https://imgs.search.brave.com/YRz5L45L6OuLsAbRpqQjCpsYvsU8Zf85ekG1qCxI2HQ/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9jb250/ZW50LmpkbWFnaWNi/b3guY29tL3YyL2Nv/bXAvbXVtYmFpL24x/LzAyMnB4eDIyLnh4/MjIuMTMwMTA5MTUw/NTM3LmE0bjEvY2F0/YWxvZ3VlL2Nob2xh/bWFuZGFsYW0taW52/ZXN0bWVudC1hbmQt/ZmluYW5jZS1jb21w/YW55LWx0ZC1iYW5k/cmEta3VybGEtY29t/cGxleC1iYW5kcmEt/ZWFzdC1tdW1iYWkt/ZmluYW5jZS1hZ2Fp/bnN0LXZlaGljbGVz/LWJkdWVyamE3ejIu/anBnP3c9Mzg0MCZx/PTc1" },
  
 ];
 
 const TestimonialCompanies = () => {
   return (
-    <section className="py-16 px-6 bg-gray-50">
+    <section className="py-5 px-6 bg-gray-50">
       <div className="max-w-6xl mx-auto text-center space-y-8">
         <h2 className="text-3xl md:text-4xl font-bold text-blue-600">
           OUR PARTNERS

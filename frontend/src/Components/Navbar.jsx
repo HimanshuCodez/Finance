@@ -26,7 +26,7 @@ export default function Navbar({ isInsuranceMenuOpen, setIsInsuranceMenuOpen }) 
   };
 
   return (
-    <header className="relative bg-white z-20 border-b-2 border-yellow-300">
+    <header className="relative bg-white z-20 border-b-2 border-blue-500">
       {/* Navbar content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
@@ -92,7 +92,7 @@ export default function Navbar({ isInsuranceMenuOpen, setIsInsuranceMenuOpen }) 
               type="submit"
               className="bg-blue-600 text-white font-medium rounded-md py-3 px-12 hover:bg-yellow-400 hover:text-black transition"
             >
-              Apply Now
+            Buy Policy
             </button>
           </div>
             </div>

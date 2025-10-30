@@ -7,7 +7,7 @@ const ReadyToBuy = () => {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="relative text-center bg-white p-8 rounded-xl shadow-lg overflow-hidden">
                 <div className="relative z-10 space-y-4">
-                    <h2 className="text-3xl font-bold text-blue-900">Ready To Buy <span className="text-blue-700">Business Insurance?</span></h2>
+                    <h2 className="text-3xl font-bold text-blue-900">Ready To Buy <span className="text-blue-700">Policy?</span></h2>
                     <p className="text-gray-600 text-lg">Join 4,000+ Indian businesses & protect your business today.</p>
                     <motion.button
                         className="bg-blue-900 text-white px-8 py-3 rounded-full hover:bg-indigo-800 transition text-lg font-semibold"

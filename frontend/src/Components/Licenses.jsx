@@ -18,12 +18,12 @@ const CertificateSection = () => {
 
                 {/* Right Images */}
                 <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-gray-100 rounded-lg p-4">
-                        <img src="https://images.bimakavach.com/v4/icons/IRDAI_Licensed_Icon.svg" alt="IRDAI License" className="rounded-md w-full h-auto" />
+                    <div className=" rounded-lg ">
+                        <img src="https://www.careerpower.in/blog/wp-content/uploads/2024/09/03184707/IRDAI-Assistant-Manager-Admit-Card-2024.webp" alt="IRDAI License" className="rounded-md w-full h-auto" />
                     </div>
-                    <div className="bg-gray-100 rounded-lg p-4">
+                    {/* <div className="bg-gray-100 rounded-lg p-4">
                         <img src="https://images.bimakavach.com/v4/icons/ISNP_Certified_Icon.svg" alt="ISNP Certificate" className="rounded-md w-full h-auto" />
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

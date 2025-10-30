@@ -12,7 +12,7 @@ const testimonials = [
 
 const CustomerMarquee = () => {
   return (
-    <section className="bg-blue-600 py-12">
+    <section className="bg-blue-600 py-5">
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold text-white">What Our Customers Are Saying</h2>
       </div>
