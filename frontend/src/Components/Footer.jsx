@@ -74,6 +74,8 @@ const Footer = () => {
                                     <li>Bengaluru</li>
                                     <li>Gurugram</li>
                                     <li>Ahmedabad</li>
+                                    <li>A-304, RAJ HANS KUTUMB, RAJ HANS KUTUMB 4/4 AHINSA KHAND -1, Indirapuram,Ghaziabad, Ghaziabad, Uttar Pradesh, 201014</li>
+                                    <li>Building No./Flat No.: 195-A Road/Street: Nyay Khand -1 Locality/Sub Locality: Nyay Khand 1 City/Town/Village: Ghaziabad District: Ghaziabad State: Uttar Pradesh PIN Code: 201014</li>
                                 </ul>
                             </div>
                             <div>
