@@ -12,6 +12,7 @@ import ApplyForm from '../Components/ApplyForm'
 import WhyChooseUs from '../Components/WhyChoose'
 import Coverage from '../Components/Coverage'
 import JoinningUs from '../Components/JoinningUs'
+import Footer from '../Components/Footer'
 
 const Home = () => {
   const [isInsuranceMenuOpen, setIsInsuranceMenuOpen] = useState(false);
@@ -38,7 +39,7 @@ const Home = () => {
       <WhyChooseUs/>
       
       <ReadyToBuy/>
-      {/* <Footer/> */}
+      <Footer/>
       </div>
   )
 }

@@ -30,7 +30,7 @@ const Card = ({ title, image, onClick }) => (
     <img
       src={image}
       alt={title}
-      className="h-24 w-24 object-contain"
+      className="h-40 w-40 object-contain"
     />
     <h3 className="font-semibold text-[#0E1633] text-lg md:text-xl text-center">
       {title}
@@ -46,18 +46,18 @@ export default function HeroSection() {
   const cardsRef = useRef(null);
 
   const initialCards = [
-    { title: "Personal Insurance", image: "https://images.bimakavach.com/products/GeneralLiabilityInsuranceIcon.webp", view: "personal", path: "/personal" },
-    { title: "Corporate Insurance", image: "https://images.bimakavach.com/products/DirectorsAndOfficersInsuranceIcon.webp", view: "corporate", path: "/corporate" }
+    { title: "Personal Insurance", image: "https://bhartiaxa.com/sites/default/files/2021-12/085-2021-11.jpg", view: "personal", path: "/personal" },
+    { title: "Corporate Insurance", image: "https://d28wu8o6itv89t.cloudfront.net/images/corpinsurancejpg-1541404301893.jpeg", view: "corporate", path: "/corporate" }
   ];
 
   const personalCards = Object.keys(personalInsurance).map(title => ({
     title,
-    image: "https://images.bimakavach.com/products/GeneralLiabilityInsuranceIcon.webp"
+    image: "https://bhartiaxa.com/sites/default/files/2021-12/085-2021-11.jpg"
   }));
 
   const corporateCards = Object.keys(corporateInsurance).map(title => ({
     title,
-    image: "https://images.bimakavach.com/products/DirectorsAndOfficersInsuranceIcon.webp"
+    image: "https://d28wu8o6itv89t.cloudfront.net/images/corpinsurancejpg-1541404301893.jpeg"
   }));
 
   let cardsToShow = [];
@@ -94,7 +94,7 @@ export default function HeroSection() {
     className="relative z-10 text-center max-w-3xl space-y-6 px-4"
   >
     <h1 className="text-4xl sm:text-5xl font-bold italic text-blue-600 font-serif">
-      Welcome to Our World
+      Welcome to World of SMR FINSERV IMF
     </h1>
     <p className="text-white text-xl font-medium">
       We offer Tailored Solutions to Meet Your Tailored Needs.

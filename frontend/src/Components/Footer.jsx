@@ -29,12 +29,6 @@ const productLinks = [
     'Group Personal Accident',
 ];
 
-const usefulLinks = [
-    { name: 'Dashboard Login', href: '#' },
-    { name: 'Claims Checklist', href: '#' },
-    { name: 'FAQ Centre', href: '#' },
-    { name: 'Bima Salaah', href: '#' },
-];
 
 const knowMoreLinks = [
     { name: 'Blog', href: '#' },
@@ -66,16 +60,13 @@ const Footer = () => {
                                 <button type="submit" className="bg-yellow-500 text-blue-900 px-4 py-2 rounded-r-md font-semibold">Subscribe</button>
                             </form>
                         </div>
-                        <div className="grid grid-cols-2 gap-4 text-sm">
+                        <div className="grid grid-cols-1 gap-4 text-sm">
                             <div>
                                 <h4 className="font-semibold mb-2">Our Offices</h4>
                                 <ul className="space-y-1 text-blue-300">
-                                    <li>Indore</li>
-                                    <li>Bengaluru</li>
-                                    <li>Gurugram</li>
-                                    <li>Ahmedabad</li>
-                                    <li>A-304, RAJ HANS KUTUMB, RAJ HANS KUTUMB 4/4 AHINSA KHAND -1, Indirapuram,Ghaziabad, Ghaziabad, Uttar Pradesh, 201014</li>
-                                    <li>Building No./Flat No.: 195-A Road/Street: Nyay Khand -1 Locality/Sub Locality: Nyay Khand 1 City/Town/Village: Ghaziabad District: Ghaziabad State: Uttar Pradesh PIN Code: 201014</li>
+                                    
+                                    <li className='mb-5'> Address 1 : A-304, RAJ HANS KUTUMB, RAJ HANS KUTUMB 4/4 AHINSA KHAND -1, Indirapuram,Ghaziabad, Ghaziabad, Uttar Pradesh, 201014</li>
+                                    <li> Address 2 : Building No./Flat No.: 195-A Road/Street: Nyay Khand -1 Locality/Sub Locality: Nyay Khand 1 City/Town/Village: Ghaziabad District: Ghaziabad State: Uttar Pradesh PIN Code: 201014</li>
                                 </ul>
                             </div>
                             <div>
@@ -87,7 +78,7 @@ const Footer = () => {
                                     </a>
                                     <a href="mailto:namaste@bimakavach.com" className="flex items-center hover:text-yellow-400">
                                         <Mail size={16} className="mr-2" />
-                                        namaste@bimakavach.com
+                                        contact@smrfinserv.com
                                     </a>
                                 </div>
                             </div>
@@ -95,33 +86,18 @@ const Footer = () => {
                     </div>
 
                     {/* Product Links */}
-                    <div>
+                    {/* <div>
                         <h3 className="text-lg font-semibold">Products</h3>
                         <ul className="mt-4 space-y-2 text-sm">
                             {productLinks.slice(0, 8).map((link, index) => (
                                 <li key={index}><a href="#" className="text-blue-300 hover:text-yellow-400">{link}</a></li>
                             ))}
                         </ul>
-                    </div>
+                    </div> */}
 
-                    {/* Useful & Know More Links */}
-                    <div>
-                        <h3 className="text-lg font-semibold">Useful Links</h3>
-                        <ul className="mt-4 space-y-2 text-sm">
-                            {usefulLinks.map((link) => (
-                                <li key={link.name}><a href={link.href} className="text-blue-300 hover:text-yellow-400">{link.name}</a></li>
-                            ))}
-                        </ul>
-                        <h3 className="text-lg font-semibold mt-8">Know More</h3>
-                        <ul className="mt-4 space-y-2 text-sm">
-                            {knowMoreLinks.map((link) => (
-                                <li key={link.name}><a href={link.href} className="text-blue-300 hover:text-yellow-400">{link.name}</a></li>
-                            ))}
-                        </ul>
-                    </div>
-
+                   
                     {/* Legal & Social */}
-                    <div>
+             <div>
                         <h3 className="text-lg font-semibold">Legal</h3>
                         <ul className="mt-4 space-y-2 text-sm">
                             {legalLinks.map((link) => (
@@ -129,7 +105,7 @@ const Footer = () => {
                             ))}
                         </ul>
                         {/* Social media icons can go here */}
-                    </div>
+                  </div>  
                 </div>
 
                 {/* Disclaimer */}
