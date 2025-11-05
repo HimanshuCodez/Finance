@@ -72,9 +72,13 @@ const Footer = () => {
                             <div>
                                 <h4 className="font-semibold mb-2">Contact</h4>
                                 <div className="space-y-2 text-blue-300">
-                                    <a href="tel:+91-90365-54785" className="flex items-center hover:text-yellow-400">
+                                    <a href="tel:+919643434885" className="flex items-center mb-2 hover:text-yellow-400">
                                         <Phone size={16} className="mr-2" />
-                                        +91-90365-54785
+                                        +919643434885
+                                    </a>
+                                    <a href="tel:+919711971269" className="flex items-center hover:text-yellow-400">
+                                        <Phone size={16} className="mr-2" />
+                                        +919711971269
                                     </a>
                                     <a href="mailto:namaste@bimakavach.com" className="flex items-center hover:text-yellow-400">
                                         <Mail size={16} className="mr-2" />

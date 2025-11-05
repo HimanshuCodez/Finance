@@ -47,7 +47,7 @@ export default function HeroSection() {
 
   const initialCards = [
     { title: "Personal Insurance", image: "https://bhartiaxa.com/sites/default/files/2021-12/085-2021-11.jpg", view: "personal", path: "/personal" },
-    { title: "Corporate Insurance", image: "https://d28wu8o6itv89t.cloudfront.net/images/corpinsurancejpg-1541404301893.jpeg", view: "corporate", path: "/corporate" }
+    { title: "Corporate Insurance", image: "https://imgs.search.brave.com/YOwg5w7JRIS1PggBki5UvEvbSM9kKUO8r9GUvRIrpE8/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9jZG4u/Y3JlYXRlLnZpc3Rh/LmNvbS9hcGkvbWVk/aWEvc21hbGwvMjU0/NjI0NDEvc3RvY2st/cGhvdG8tbW9kZXJu/LWJ1c2luZXNzLWJ1/aWxkaW5ncw", view: "corporate", path: "/corporate" }
   ];
 
   const personalCards = Object.keys(personalInsurance).map(title => ({
