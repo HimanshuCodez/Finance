@@ -30,7 +30,7 @@ const Card = ({ title, image, onClick }) => (
     <img
       src={image}
       alt={title}
-      className="h-40 w-40 object-contain"
+      className="h-52 w-72 object-contain"
     />
     <h3 className="font-semibold text-[#0E1633] text-lg md:text-xl text-center">
       {title}
