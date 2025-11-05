@@ -18,9 +18,9 @@ const CertificateSection = () => {
 
                 {/* Right Images */}
                 <div className="grid grid-cols-2 gap-4">
-                    <div className=" rounded-lg ">
-                        <img src="https://www.careerpower.in/blog/wp-content/uploads/2024/09/03184707/IRDAI-Assistant-Manager-Admit-Card-2024.webp" alt="IRDAI License" className="rounded-md w-full h-auto" />
-                        <p className="mt-2 text-center text-lg text-gray-600"><b>IMF08790220250768</b></p>
+                    <div className=" rounded-lg text-center">
+                        <img src="https://www.careerpower.in/blog/wp-content/uploads/2024/09/03184707/IRDAI-Assistant-Manager-Admit-Card-2024.webp" alt="IRDAI License" className="rounded-md w-full h-auto mx-auto" />
+                        <p className="mt-2 text-lg text-gray-600"><b>IMF08790220250768</b></p>
                     </div>
                     {/* <div className="bg-gray-100 rounded-lg p-4">
                         <img src="https://images.bimakavach.com/v4/icons/ISNP_Certified_Icon.svg" alt="ISNP Certificate" className="rounded-md w-full h-auto" />
