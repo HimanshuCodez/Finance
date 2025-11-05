@@ -1,9 +1,12 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, Send } from "lucide-react";
+import Navbar from "../Components/Navbar";
 
 const ContactUs = () => {
   return (
+    <>
+    <Navbar/>
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex flex-col items-center justify-center px-4 sm:px-6 py-12">
       {/* Header */}
       <motion.h1
@@ -135,6 +138,7 @@ const ContactUs = () => {
         © {new Date().getFullYear()} SmrFinserv — All Rights Reserved
       </motion.p>
     </div>
+    </>
   );
 };
 
