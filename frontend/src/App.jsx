@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import InsuranceLanding from './Pages/Home';
 import Personal from './Pages/Personal';
 import Corporate from './Pages/Corporate';
+import ContactUs from "./Pages/Contact";
 
 function App() {
   const personalInsurance = {
@@ -26,6 +27,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<InsuranceLanding />} />
+        <Route path="/contact" element={<ContactUs />} />
         <Route path="/personal" element={<Personal personalInsurance={personalInsurance} />} />
         <Route path="/corporate" element={<Corporate corporateInsurance={corporateInsurance} />} />
       </Routes>

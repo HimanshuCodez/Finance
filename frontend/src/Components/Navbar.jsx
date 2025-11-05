@@ -31,11 +31,11 @@ export default function Navbar({ isInsuranceMenuOpen, setIsInsuranceMenuOpen }) 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Left: Logo */}
-          <div className="flex-shrink-0">
+        <Link to={"/"}>  <div className="flex-shrink-0">
             <span className="text-2xl italic font-bold text-[#0B2B57]">
               SmrFinserv
             </span>
-          </div>
+          </div></Link>
 
           {/* Center: Menu (hidden on small screens) */}
           <div className="hidden md:block">
@@ -73,7 +73,7 @@ export default function Navbar({ isInsuranceMenuOpen, setIsInsuranceMenuOpen }) 
                 )}
               </div>
 
-              <a href="#" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">Contact</a>
+              <Link to={"/contact"} className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">Contact Us</Link>
             </nav>
           </div>
 
@@ -131,7 +131,7 @@ export default function Navbar({ isInsuranceMenuOpen, setIsInsuranceMenuOpen }) 
               </Link>
             </div>
 
-            <a href="#" className="text-gray-700 hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+            <Link to={"/contact"} className="text-gray-700 hover:bg-gray-50 block px-3 py-2 rounded-md text-base font-medium">Contact Us</Link>
           </div>
           <div className="pt-4 pb-3 border-t border-gray-200">
            
