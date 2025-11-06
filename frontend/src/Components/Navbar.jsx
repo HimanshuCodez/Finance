@@ -40,6 +40,7 @@ export default function Navbar({ isInsuranceMenuOpen, setIsInsuranceMenuOpen }) 
           {/* Center: Menu (hidden on small screens) */}
           <div className="hidden md:block">
             <nav className="ml-10 flex items-baseline space-x-4">
+                 <Link to={"/"} className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">Home</Link>
               <div 
                 className="relative"
                 onMouseEnter={() => setIsInsuranceMenuOpen(true)}
