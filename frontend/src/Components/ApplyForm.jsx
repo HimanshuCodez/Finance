@@ -72,7 +72,7 @@ export default function ApplyForm({
         Apply Online
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form className="space-y-6">
         <div className="grid md:grid-cols-3 gap-4">
           {/* Full Name */}
           <div>
@@ -174,7 +174,8 @@ export default function ApplyForm({
         {/* Button */}
         <div className="flex justify-center">
           <button
-            type="submit"
+            type="button"
+            onClick={handleSubmit}
             className="bg-blue-600 font-medium text-white  rounded-md py-3 px-12 hover:bg-blue-400 hover:text-black transition"
           >
             Apply Now
