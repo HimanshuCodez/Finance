@@ -1,17 +1,12 @@
 import { useState } from "react";
 
-export default function ApplyForm({
-  onClose,
-  isModal = true,
-  insuranceOptions,
-}) {
+export default function ApplyForm({ onClose, isModal = true }) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     mobile: "",
     pincode: "",
     employment: "",
-    insuranceType: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -26,35 +21,14 @@ export default function ApplyForm({
     const newErrors = {};
 
     if (!formData.name) newErrors.name = "Full Name is required";
-    if (!formData.email) newErrors.email = "Email is required";
+    if (!formData.name) newErrors.email = "Email is required";
     if (!formData.mobile) newErrors.mobile = "Mobile number is required";
     if (!formData.pincode) newErrors.pincode = "Pincode is required";
-    if (!formData.employment)
-      newErrors.employment = "Employment type is required";
-    if (insuranceOptions && !formData.insuranceType)
-      newErrors.insuranceType = "Insurance type is required";
+    if (!formData.employment) newErrors.employment = "Employment type is required";
 
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      const { name, email, mobile, pincode, employment, insuranceType } =
-        formData;
-      const subject = "New Insurance Application";
-      let body = `
-        Name: ${name}
-        Email: ${email}
-        Mobile: ${mobile}
-        Pincode: ${pincode}
-        Employment: ${employment}
-      `;
-
-      if (insuranceOptions && insuranceType) {
-        body += `\nInsurance Type: ${insuranceType}`;
-      }
-
-      window.location.href = `mailto:Info@smrfinserv.com?subject=${encodeURIComponent(
-        subject
-      )}&body=${encodeURIComponent(body)}`;
       alert("Form submitted!");
       if (onClose) onClose();
     }
@@ -124,70 +98,10 @@ export default function ApplyForm({
               <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>
             )}
           </div>
-        </div>
-        <div className="grid md:grid-cols-3 gap-4">
-          {/* Pincode */}
-          <div>
-            <input
-              type="text"
-              name="pincode"
-              value={formData.pincode}
-              onChange={handleChange}
-              placeholder="Pincode"
-              className={`w-full border ${
-                errors.pincode ? "border-red-500" : "border-gray-300"
-              } rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400`}
-            />
-            {errors.pincode && (
-              <p className="text-red-500 text-xs mt-1">{errors.pincode}</p>
-            )}
-          </div>
 
-          {/* Employment */}
-          <div>
-            <select
-              name="employment"
-              value={formData.employment}
-              onChange={handleChange}
-              className={`w-full border ${
-                errors.employment ? "border-red-500" : "border-gray-300"
-              } rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400`}
-            >
-              <option value="">Select Employment</option>
-              <option value="salaried">Salaried</option>
-              <option value="self-employed">Self-employed</option>
-            </select>
-            {errors.employment && (
-              <p className="text-red-500 text-xs mt-1">{errors.employment}</p>
-            )}
-          </div>
-          {insuranceOptions && (
-            <div>
-              <select
-                name="insuranceType"
-                value={formData.insuranceType}
-                onChange={handleChange}
-                className={`w-full border ${
-                  errors.insuranceType ? "border-red-500" : "border-gray-300"
-                } rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400`}
-              >
-                <option value="">Select Insurance Type</option>
-                {insuranceOptions.map((option) => (
-                  <option
-                    key={option}
-                    value={option.toUpperCase().replace(/ /g, "_")}
-                  >
-                    {option}
-                  </option>
-                ))}
-              </select>
-              {errors.insuranceType && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.insuranceType}
-                </p>
-              )}
-            </div>
-          )}
+         
+
+       
         </div>
 
         {/* Button */}

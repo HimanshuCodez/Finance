@@ -19,6 +19,15 @@ export default function Corporate({ corporateInsurance }) {
     setShowApplyForm(true);
   };
 
+  const corporateInsuranceOptions = [
+    "INVESTMENT PLANS",
+    "Marine Insurance",
+    "Property Insurance",
+    "SME INSURANCE",
+    "ENGINEERING",
+    "LIABILITY",
+  ];
+
   return (
     <>
       <Navbar isInsuranceMenuOpen={isInsuranceMenuOpen} setIsInsuranceMenuOpen={setIsInsuranceMenuOpen} />
@@ -50,7 +59,12 @@ export default function Corporate({ corporateInsurance }) {
           Apply Now
         </button>
       </div>
-      {showApplyForm && <ApplyForm onClose={handleCloseForm} />}
+      {showApplyForm && (
+        <ApplyForm
+          onClose={handleCloseForm}
+          insuranceOptions={corporateInsuranceOptions}
+        />
+      )}
     </div>
   <Footer/>
 </>

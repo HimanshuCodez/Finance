@@ -19,6 +19,13 @@ export default function Personal({ personalInsurance }) {
     setShowApplyForm(true);
   };
 
+  const personalInsuranceOptions = [
+    "HEALTH INSURANCE",
+    "Term Life Insurance",
+    "Motor Insurance",
+    "Other Personal Insurance",
+  ];
+
   return (
     <> <Navbar isInsuranceMenuOpen={isInsuranceMenuOpen} setIsInsuranceMenuOpen={setIsInsuranceMenuOpen} />
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -49,7 +56,12 @@ export default function Personal({ personalInsurance }) {
           Apply Now
         </button>
       </div>
-      {showApplyForm && <ApplyForm onClose={handleCloseForm} />}
+      {showApplyForm && (
+        <ApplyForm
+          onClose={handleCloseForm}
+          insuranceOptions={personalInsuranceOptions}
+        />
+      )}
     </div>
     <Footer/>
      </>

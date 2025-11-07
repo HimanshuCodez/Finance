@@ -1,5 +1,5 @@
 import React from 'react';
-import { Facebook, Twitter } from 'lucide-react';
+import { Facebook, Instagram, Twitter } from 'lucide-react';
 
 export default function SocialHandles() {
   return (
@@ -8,7 +8,7 @@ export default function SocialHandles() {
         <Facebook size={24} stroke="currentColor" />
       </a>
       <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" className="bg-blue-400 text-white p-3 rounded-full shadow-lg hover:bg-blue-500 transition">
-        <Twitter size={24} stroke="currentColor" />
+        <Instagram size={24} stroke="currentColor" />
       </a>
     </div>
   );
