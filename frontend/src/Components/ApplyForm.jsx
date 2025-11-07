@@ -101,24 +101,7 @@ export default function ApplyForm({ onClose, isModal = true }) {
 
          
 
-          {/* Employment Type */}
-          <div>
-            <select
-              name="employment"
-              value={formData.employment}
-              onChange={handleChange}
-              className={`w-full border ${
-                errors.employment ? "border-red-500" : "border-gray-300"
-              } rounded-md p-3 bg-white focus:outline-none focus:ring-2 focus:ring-yellow-400`}
-            >
-              <option value="">Employment Type *</option>
-              <option value="salaried">Salaried</option>
-              <option value="self-employed">Self Employed</option>
-            </select>
-            {errors.employment && (
-              <p className="text-red-500 text-xs mt-1">{errors.employment}</p>
-            )}
-          </div>
+       
         </div>
 
         {/* Button */}

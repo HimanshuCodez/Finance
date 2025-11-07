@@ -117,7 +117,7 @@ export default function HeroSection() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.3 }}
-        className="mt-16 w-full max-w-6xl"
+        className="mt-16 lg:ml-60 w-full max-w-6xl"
       >
         {currentView !== "initial" && (
           <button

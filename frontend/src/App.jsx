@@ -6,6 +6,8 @@ import Personal from './Pages/Personal';
 import Corporate from './Pages/Corporate';
 import ContactUs from "./Pages/Contact";
 
+import SocialHandles from "./Components/SocialHandles";
+
 function App() {
   const personalInsurance = {
     "HEALTH INSURANCE": ["Health Insurance", "Cancer Insurance", "Critical Insurance", "Family Health Insurance", "OPD Health Insurance", "Personal Accident Insurance"],
@@ -25,6 +27,7 @@ function App() {
 
   return (
     <Router>
+      <SocialHandles />
       <Routes>
         <Route path="/" element={<InsuranceLanding />} />
         <Route path="/contact" element={<ContactUs />} />

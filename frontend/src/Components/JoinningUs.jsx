@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function JoinningUs() {
   return (
-    <div className="max-w-7xl mx-auto  sm:px-6 lg:px-8 py-8">
+    <div className="max-w-7xl mx-auto  bg-slate-200 sm:px-6 lg:px-8 py-8">
       <h2 className="text-3xl font-bold text-center text-blue-500 mb-8">
         BENEFITS OF JOINING US
       </h2>
@@ -19,6 +19,12 @@ export default function JoinningUs() {
           <h3 className="text-xl font-semibold text-gray-700 mb-2">Rewards & Recognition - Travel Nationally & Internationally</h3>
           {/* Optional: Add an icon here */}
         </div>
+      </div>
+      <div className="text-center mt-8">
+        <img src="https://imgs.search.brave.com/1SqLZfNbkonh-bpvLfvKSaqitauiM4XDpgBjV0o_U6k/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wNDYv/OTY3LzQzMi9zbWFs/bC9uaWdodHRpbWUt/YnVzaW5lc3MtbWVl/dGluZy1pbi1tb2Rl/cm4tb2ZmaWNlLW92/ZXJsb29raW5nLWNp/dHlzY2FwZS1jb3Jw/b3JhdGUtc2V0dGlu/Zy1mb3ItcHJpbnQt/Y2FyZC1wb3N0ZXIt/ZGVzaWduLXBob3Rv/LmpwZw" controls autoPlay loop muted className="mx-auto mb-4 w-full max-w-md" />
+        <button className="bg-blue-500 hover:bg-blue-700 text-white text-2xl font-bold py-2 px-4 rounded">
+          Join Us
+        </button>
       </div>
     </div>
   );
