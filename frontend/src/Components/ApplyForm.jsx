@@ -143,24 +143,7 @@ export default function ApplyForm({
             )}
           </div>
 
-          {/* Employment */}
-          <div>
-            <select
-              name="employment"
-              value={formData.employment}
-              onChange={handleChange}
-              className={`w-full border ${
-                errors.employment ? "border-red-500" : "border-gray-300"
-              } rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400`}
-            >
-              <option value="">Select Employment</option>
-              <option value="salaried">Salaried</option>
-              <option value="self-employed">Self-employed</option>
-            </select>
-            {errors.employment && (
-              <p className="text-red-500 text-xs mt-1">{errors.employment}</p>
-            )}
-          </div>
+       
           {insuranceOptions && (
             <div>
               <select
