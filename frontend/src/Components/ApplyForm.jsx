@@ -55,8 +55,6 @@ export default function ApplyForm({
       window.location.href = `mailto:Info@smrfinserv.com?subject=${encodeURIComponent(
         subject
       )}&body=${encodeURIComponent(body)}`;
-      alert("Form submitted!");
-      if (onClose) onClose();
     }
   };
 
