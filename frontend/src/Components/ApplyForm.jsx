@@ -4,6 +4,9 @@ export default function ApplyForm({
   onClose,
   isModal = true,
   insuranceOptions,
+  emailTo = "Info@smrfinserv.com",
+  formTitle = "Apply Online",
+  subject = "New Insurance Application",
 }) {
   const [formData, setFormData] = useState({
     name: "",
@@ -34,7 +37,6 @@ export default function ApplyForm({
     if (Object.keys(newErrors).length === 0) {
       const { name, email, mobile, insuranceType } =
         formData;
-      const subject = "New Insurance Application";
       let body = `
         Name: ${name}
         Email: ${email}
@@ -45,7 +47,7 @@ export default function ApplyForm({
         body += `\nInsurance Type: ${insuranceType}`;
       }
 
-      window.location.href = `mailto:Info@smrfinserv.com?subject=${encodeURIComponent(
+      window.location.href = `mailto:${emailTo}?subject=${encodeURIComponent(
         subject
       )}&body=${encodeURIComponent(body)}`;
     }
@@ -62,7 +64,7 @@ export default function ApplyForm({
         </button>
       )}
       <div className="bg-blue-600 text-center  text-white py-3 rounded-t-xl font-semibold text-lg -mt-8 mb-6 shadow-sm">
-        Apply Online
+        {formTitle}
       </div>
 
       <form className="space-y-6">

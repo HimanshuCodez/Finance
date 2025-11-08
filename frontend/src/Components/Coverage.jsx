@@ -34,7 +34,7 @@ export default function Coverage() {
       <div className="max-w-6xl mx-auto text-center">
         {/* Header */}
         <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-12">
-          OUR <span className="text-blue-700">COVERAGE</span>
+          OUR <span className="text-blue-600">COVERAGE</span>
         </h2>
 
         {/* Cards */}

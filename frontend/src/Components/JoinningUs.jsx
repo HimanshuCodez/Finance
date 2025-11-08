@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ApplyForm from './ApplyForm';
 
 export default function JoinningUs() {
+  const [showJoinForm, setShowJoinForm] = useState(false);
+
   const handleJoinUsClick = () => {
-    const subject = "Inquiry about Joining Us";
-    const body = "I am interested in joining SMR Finserv. Please provide more information.";
-    window.location.href = `mailto:contact@smrfinserv.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setShowJoinForm(true);
+  };
+
+  const handleCloseForm = () => {
+    setShowJoinForm(false);
   };
 
   return (
@@ -35,6 +40,14 @@ export default function JoinningUs() {
           Join Us
         </button>
       </div>
+      {showJoinForm && (
+        <ApplyForm
+          onClose={handleCloseForm}
+          emailTo="contact@smrfinserv.com"
+          subject="Inquiry about Joining Us"
+          formTitle="Join Us"
+        />
+      )}
     </div>
   );
 }
