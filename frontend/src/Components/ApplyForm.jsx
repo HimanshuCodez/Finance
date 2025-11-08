@@ -125,21 +125,7 @@ export default function ApplyForm({
         </div>
         <div className="grid md:grid-cols-3 gap-4">
           {/* Pincode */}
-          <div>
-            <input
-              type="text"
-              name="pincode"
-              value={formData.pincode}
-              onChange={handleChange}
-              placeholder="Pincode"
-              className={`w-full border ${
-                errors.pincode ? "border-red-500" : "border-gray-300"
-              } rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400`}
-            />
-            {errors.pincode && (
-              <p className="text-red-500 text-xs mt-1">{errors.pincode}</p>
-            )}
-          </div>
+          
 
        
           {insuranceOptions && (

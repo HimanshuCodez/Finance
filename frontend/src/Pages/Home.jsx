@@ -23,7 +23,7 @@ const Home = () => {
       <Navbar isInsuranceMenuOpen={isInsuranceMenuOpen} setIsInsuranceMenuOpen={setIsInsuranceMenuOpen} />
       <HeroSection onOpenInsuranceMenu={() => setIsInsuranceMenuOpen(true)} />
        <JoinningUs/>
-      <ApplyForm isModal={false} /> {/* Render ApplyForm unconditionally as non-modal */}
+   
       
       
      
