@@ -3,15 +3,11 @@ import { useState } from "react";
 export default function ApplyForm({
   onClose,
   isModal = true,
-  insuranceOptions,
 }) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     mobile: "",
-    pincode: "",
-    employment: "",
-    insuranceType: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -28,29 +24,18 @@ export default function ApplyForm({
     if (!formData.name) newErrors.name = "Full Name is required";
     if (!formData.email) newErrors.email = "Email is required";
     if (!formData.mobile) newErrors.mobile = "Mobile number is required";
-    if (!formData.pincode) newErrors.pincode = "Pincode is required";
-    if (!formData.employment)
-      newErrors.employment = "Employment type is required";
-    if (insuranceOptions && !formData.insuranceType)
-      newErrors.insuranceType = "Insurance type is required";
 
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      const { name, email, mobile, pincode, employment, insuranceType } =
+      const { name, email, mobile } =
         formData;
       const subject = "New Insurance Application";
       let body = `
         Name: ${name}
         Email: ${email}
         Mobile: ${mobile}
-        Pincode: ${pincode}
-        Employment: ${employment}
       `;
-
-      if (insuranceOptions && insuranceType) {
-        body += `\nInsurance Type: ${insuranceType}`;
-      }
 
       window.location.href = `mailto:Info@smrfinserv.com?subject=${encodeURIComponent(
         subject
@@ -124,37 +109,7 @@ export default function ApplyForm({
           </div>
         </div>
         <div className="grid md:grid-cols-3 gap-4">
-          {/* Pincode */}
           
-
-       
-          {insuranceOptions && (
-            <div>
-              <select
-                name="insuranceType"
-                value={formData.insuranceType}
-                onChange={handleChange}
-                className={`w-full border ${
-                  errors.insuranceType ? "border-red-500" : "border-gray-300"
-                } rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400`}
-              >
-                <option value="">Select Insurance Type</option>
-                {insuranceOptions.map((option) => (
-                  <option
-                    key={option}
-                    value={option.toUpperCase().replace(/ /g, "_")}
-                  >
-                    {option}
-                  </option>
-                ))}
-              </select>
-              {errors.insuranceType && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.insuranceType}
-                </p>
-              )}
-            </div>
-          )}
         </div>
 
         {/* Button */}

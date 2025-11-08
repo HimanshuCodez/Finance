@@ -7,7 +7,7 @@ export default function SocialHandles() {
       <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" className="bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition">
         <Facebook size={24} stroke="currentColor" />
       </a>
-      <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" className="bg-blue-400 text-white p-3 rounded-full shadow-lg hover:bg-blue-500 transition">
+      <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" className="bg-red-400 text-white p-3 rounded-full shadow-lg hover:bg-blue-500 transition">
         <Instagram size={24} stroke="currentColor" />
       </a>
     </div>
