@@ -97,7 +97,7 @@ export default function HeroSection() {
       Welcome to World of SMR FINSERV IMF
     </h1>
     <p className="text-white text-xl font-medium">
-      We offer Tailored Solutions to Meet Your Tailored Needs.
+      We offer Tailored Solutions to Meet All Financial Needs.
     </p>
 
     <button

@@ -21,7 +21,7 @@ const ReadyToBuy = () => {
             <div className="relative text-center bg-white p-8 rounded-xl shadow-lg overflow-hidden">
                 <div className="relative z-10 space-y-4">
                     <h2 className="text-3xl font-bold text-blue-600">Ready To Buy <span className="text-blue-700">Insurance?</span></h2>
-                    <p className="text-gray-600 text-lg">Join 4,000+ Indian businesses & protect your business today.</p>
+                    <p className="text-gray-600 text-lg">Join SMR Finserv and protect Personal , Business needs today</p>
                     <motion.button
                         onClick={handleBuyClick}
                         className="bg-blue-400 text-white px-8 py-3 rounded-full  transition text-lg font-semibold"
