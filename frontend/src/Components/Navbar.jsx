@@ -55,13 +55,21 @@ export default function Navbar({ isInsuranceMenuOpen, setIsInsuranceMenuOpen }) 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Left: Logo */}
-            <Link to={"/"}>
-              <div className="flex-shrink-0">
-                <span className="text-2xl italic font-bold text-[#0B2B57]">
-                  SmrFinserv
-                </span>
-              </div>
-            </Link>
+         
+             <div className="flex items-center justify-between h-16 px-4">
+  {/* Left: Logo */}
+  <Link to={"/"}>
+    <div className="flex items-center h-full">
+      <img
+        src="./smr.png"
+        alt="Logo"
+        className="h-14 w-auto object-contain"  // Perfect alignment
+      />
+    </div>
+  </Link>
+</div>
+
+            
 
             {/* Center: Menu (hidden on small screens) */}
             <div className="hidden md:block">
