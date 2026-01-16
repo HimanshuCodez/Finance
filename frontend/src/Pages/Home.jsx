@@ -13,6 +13,7 @@ import WhyChooseUs from '../Components/WhyChoose'
 import Coverage from '../Components/Coverage'
 import JoinningUs from '../Components/JoinningUs'
 import Footer from '../Components/Footer'
+import Certificate from '../Components/Certificate'
 
 const Home = () => {
   const [isInsuranceMenuOpen, setIsInsuranceMenuOpen] = useState(false);
@@ -29,6 +30,7 @@ const Home = () => {
      
             <TestimonialCompanies/>
       <CertificateSection/>
+      <Certificate/>
       {/* <TestimonialBoxes/> */}
 
       <Coverage/>
