@@ -14,7 +14,9 @@ const UpdateMarquee = () => {
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        setText(docSnap.data().text_content || "");
+        setText(docSnap.data().text_content || "Welcome to World of SMR FINSERV IMF");
+      } else {
+        setText("Welcome to World of SMR FINSERV IMF"); // Initial text if document doesn't exist
       }
       setLoading(false);
     };
