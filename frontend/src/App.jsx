@@ -5,6 +5,7 @@ import InsuranceLanding from './Pages/Home';
 import Personal from './Pages/Personal';
 import Corporate from './Pages/Corporate';
 import ContactUs from "./Pages/Contact";
+import UpdateMarquee from "./Pages/Admin/UpdateMarquee"; // Import the new component
 
 import SocialHandles from "./Components/SocialHandles";
 
@@ -33,6 +34,7 @@ function App() {
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/personal" element={<Personal personalInsurance={personalInsurance} />} />
         <Route path="/corporate" element={<Corporate corporateInsurance={corporateInsurance} />} />
+        <Route path="/admin/update-marquee" element={<UpdateMarquee />} />
       </Routes>
     </Router>
   );
