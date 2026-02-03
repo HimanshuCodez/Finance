@@ -14,7 +14,8 @@ import Coverage from '../Components/Coverage'
 import JoinningUs from '../Components/JoinningUs'
 import Footer from '../Components/Footer'
 import Certificate from '../Components/Certificate'
-import Swiper from '../Components/swiper/swiper'
+import Swiper from '../Components/Slider/Slider'
+
 
 const Home = () => {
   const [isInsuranceMenuOpen, setIsInsuranceMenuOpen] = useState(false);
@@ -23,7 +24,7 @@ const Home = () => {
   return (
     <div>
       <Navbar isInsuranceMenuOpen={isInsuranceMenuOpen} setIsInsuranceMenuOpen={setIsInsuranceMenuOpen} />
-        <Swiper/>
+       <Swiper/>
       <HeroSection onOpenInsuranceMenu={() => setIsInsuranceMenuOpen(true)} />
        <JoinningUs/>
    
