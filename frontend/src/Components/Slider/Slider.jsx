@@ -33,7 +33,7 @@ const Swiper = () => {
 
   if (loading) {
     return (
-      <Marquee className="font-bold">
+      <Marquee className="font-bold bg-blue-100 text-blue-600">
         Loading...
       </Marquee>
     );
@@ -41,14 +41,14 @@ const Swiper = () => {
 
   if (error) {
     return (
-      <Marquee className="font-bold text-red-500">
+      <Marquee className="font-bold bg-blue-100 text-blue-600">
         Error: {marqueeText}
       </Marquee>
     );
   }
 
   return (
-    <Marquee className="font-bold">
+    <Marquee className="font-bold bg-blue-100 text-blue-600">
       {marqueeText}
     </Marquee>
   );
