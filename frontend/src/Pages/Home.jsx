@@ -34,7 +34,7 @@ const Home = () => {
             <TestimonialCompanies/>
       <CertificateSection/>
       <Certificate/>
-      <Swiper/>
+ 
 
       <Coverage/>
       {/* <NewWay/> */}
