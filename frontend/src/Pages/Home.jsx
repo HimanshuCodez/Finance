@@ -33,7 +33,7 @@ const Home = () => {
      
             <TestimonialCompanies/>
       <CertificateSection/>
-      <Certificate/>
+      
  
 
       <Coverage/>
