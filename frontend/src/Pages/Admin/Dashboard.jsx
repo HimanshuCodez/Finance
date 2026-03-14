@@ -59,48 +59,66 @@ const EmptyState = ({ icon, title, subtitle }) => (
   </div>
 );
 
-const AllUsers = () => (
+const AllUsers = ({ isMobile }) => (
   <div>
     <div style={{ marginBottom: 28 }}>
-      <h1 style={{ color: "#fff", fontSize: 26, fontWeight: 800, fontFamily: "'Playfair Display', serif", marginBottom: 6 }}>All Users</h1>
-      <p style={{ color: "#5b9bd5", fontSize: 14 }}>Manage and monitor all registered users</p>
+      <h1 style={{ color: "#fff", fontSize: isMobile ? 22 : 26, fontWeight: 800, fontFamily: "'Playfair Display', serif", marginBottom: 6 }}>All Users</h1>
+      <p style={{ color: "#5b9bd5", fontSize: 13 }}>Manage and monitor all registered users</p>
     </div>
     <div style={{ background: "#0d1b2a", borderRadius: 16, border: "1px solid #1e3a5a", overflow: "hidden" }}>
-      <div style={{ padding: "20px 24px", borderBottom: "1px solid #1e3a5a", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <div style={{ 
+        padding: isMobile ? "16px" : "20px 24px", 
+        borderBottom: "1px solid #1e3a5a", 
+        display: "flex", 
+        flexDirection: isMobile ? "column" : "row",
+        gap: isMobile ? 12 : 0,
+        justifyContent: "space-between", 
+        alignItems: isMobile ? "flex-start" : "center" 
+      }}>
         <span style={{ color: "#fff", fontWeight: 700, fontSize: 15 }}>User Directory</span>
         <input
           placeholder="Search users..."
           disabled
           style={{
             background: "#071323", border: "1px solid #1e3a5a", borderRadius: 8, padding: "8px 14px",
-            color: "#8badc7", fontSize: 13, outline: "none", width: 220, opacity: 0.5, cursor: "not-allowed"
+            color: "#8badc7", fontSize: 13, outline: "none", width: isMobile ? "100%" : 220, opacity: 0.5, cursor: "not-allowed"
           }}
         />
       </div>
-      <table style={{ width: "100%", borderCollapse: "collapse" }}>
-        <thead>
-          <tr style={{ background: "#071323" }}>
-            {["User", "Email", "Phone", "Plan", "Balance", "Status", "Joined"].map(h => (
-              <th key={h} style={{ padding: "12px 20px", color: "#5b9bd5", fontSize: 11, fontWeight: 700, textAlign: "left", letterSpacing: "1px", textTransform: "uppercase" }}>{h}</th>
-            ))}
-          </tr>
-        </thead>
-      </table>
+      <div style={{ overflowX: "auto" }}>
+        <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 600 }}>
+          <thead>
+            <tr style={{ background: "#071323" }}>
+              {["User", "Email", "Phone", "Plan", "Balance", "Status", "Joined"].map(h => (
+                <th key={h} style={{ padding: "12px 20px", color: "#5b9bd5", fontSize: 11, fontWeight: 700, textAlign: "left", letterSpacing: "1px", textTransform: "uppercase" }}>{h}</th>
+              ))}
+            </tr>
+          </thead>
+        </table>
+      </div>
       <EmptyState icon="👥" title="Data Not Available" subtitle="No user records have been added yet. Users will appear here once they are registered on the platform." />
     </div>
   </div>
 );
 
-const DataRecord = () => (
+const DataRecord = ({ isMobile }) => (
   <div>
     <div style={{ marginBottom: 28 }}>
-      <h1 style={{ color: "#fff", fontSize: 26, fontWeight: 800, fontFamily: "'Playfair Display', serif", marginBottom: 6 }}>Data Records</h1>
-      <p style={{ color: "#5b9bd5", fontSize: 14 }}>Complete transaction and financial activity log</p>
+      <h1 style={{ color: "#fff", fontSize: isMobile ? 22 : 26, fontWeight: 800, fontFamily: "'Playfair Display', serif", marginBottom: 6 }}>Data Records</h1>
+      <p style={{ color: "#5b9bd5", fontSize: 13 }}>Complete transaction and financial activity log</p>
     </div>
     <div style={{ background: "#0d1b2a", borderRadius: 16, border: "1px solid #1e3a5a", overflow: "hidden" }}>
-      <div style={{ padding: "20px 24px", borderBottom: "1px solid #1e3a5a", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <div style={{ 
+        padding: isMobile ? "16px" : "20px 24px", 
+        borderBottom: "1px solid #1e3a5a", 
+        display: "flex", 
+        flexDirection: isMobile ? "column" : "row",
+        gap: isMobile ? 12 : 0,
+        justifyContent: "space-between", 
+        alignItems: isMobile ? "flex-start" : "center" 
+      }}>
         <span style={{ color: "#fff", fontWeight: 700, fontSize: 15 }}>Transaction Log</span>
-        <div style={{ display: "flex", gap: 8 }}>
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
           {["All", "Investment", "Withdrawal", "Deposit"].map(f => (
             <button key={f} disabled style={{
               padding: "6px 14px", borderRadius: 20, fontSize: 12, fontWeight: 600,
@@ -112,21 +130,23 @@ const DataRecord = () => (
           ))}
         </div>
       </div>
-      <table style={{ width: "100%", borderCollapse: "collapse" }}>
-        <thead>
-          <tr style={{ background: "#071323" }}>
-            {["Txn ID", "User", "Type", "Category", "Amount", "Date", "Status"].map(h => (
-              <th key={h} style={{ padding: "12px 20px", color: "#5b9bd5", fontSize: 11, fontWeight: 700, textAlign: "left", letterSpacing: "1px", textTransform: "uppercase" }}>{h}</th>
-            ))}
-          </tr>
-        </thead>
-      </table>
+      <div style={{ overflowX: "auto" }}>
+        <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 600 }}>
+          <thead>
+            <tr style={{ background: "#071323" }}>
+              {["Txn ID", "User", "Type", "Category", "Amount", "Date", "Status"].map(h => (
+                <th key={h} style={{ padding: "12px 20px", color: "#5b9bd5", fontSize: 11, fontWeight: 700, textAlign: "left", letterSpacing: "1px", textTransform: "uppercase" }}>{h}</th>
+              ))}
+            </tr>
+          </thead>
+        </table>
+      </div>
       <EmptyState icon="📊" title="Data Not Available" subtitle="No transaction records found. Financial activity and transaction history will be displayed here once data is available." />
     </div>
   </div>
 );
 
-const CreateUser = () => {
+const CreateUser = ({ isMobile }) => {
   const [form, setForm] = useState({ name: "", email: "", phone: "", plan: "Basic", role: "User", password: "", confirm: "" });
   const [submitted, setSubmitted] = useState(false);
   const input = (label, key, type = "text", placeholder = "") => (
@@ -159,13 +179,13 @@ const CreateUser = () => {
   return (
     <div>
       <div style={{ marginBottom: 28 }}>
-        <h1 style={{ color: "#fff", fontSize: 26, fontWeight: 800, fontFamily: "'Playfair Display', serif", marginBottom: 6 }}>Create User</h1>
-        <p style={{ color: "#5b9bd5", fontSize: 14 }}>Register a new user account on the platform</p>
+        <h1 style={{ color: "#fff", fontSize: isMobile ? 22 : 26, fontWeight: 800, fontFamily: "'Playfair Display', serif", marginBottom: 6 }}>Create User</h1>
+        <p style={{ color: "#5b9bd5", fontSize: 13 }}>Register a new user account on the platform</p>
       </div>
       {submitted ? (
         <div style={{
           background: "#0a2a1a", border: "1px solid #22c55e40", borderRadius: 16,
-          padding: 40, textAlign: "center"
+          padding: isMobile ? 24 : 40, textAlign: "center"
         }}>
           <div style={{ fontSize: 48, marginBottom: 16 }}>✅</div>
           <div style={{ color: "#22c55e", fontSize: 22, fontWeight: 800, fontFamily: "'Playfair Display', serif", marginBottom: 8 }}>User Created Successfully</div>
@@ -176,8 +196,8 @@ const CreateUser = () => {
           </button>
         </div>
       ) : (
-        <div style={{ background: "#0d1b2a", borderRadius: 16, border: "1px solid #1e3a5a", padding: 32 }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 24 }}>
+        <div style={{ background: "#0d1b2a", borderRadius: 16, border: "1px solid #1e3a5a", padding: isMobile ? 16 : 32 }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 16 : 24, marginBottom: 24 }}>
             {input("Full Name", "name", "text", "John Doe")}
             {input("Email Address", "email", "email", "john@example.com")}
             {input("Phone Number", "phone", "tel", "+91 98765 43210")}
@@ -186,17 +206,17 @@ const CreateUser = () => {
           </div>
           <div style={{ borderTop: "1px solid #1e3a5a", paddingTop: 24, marginBottom: 24 }}>
             <div style={{ color: "#8badc7", fontSize: 12, fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase", marginBottom: 16 }}>Security</div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 16 : 24 }}>
               {input("Password", "password", "password", "Min 8 characters")}
               {input("Confirm Password", "confirm", "password", "Re-enter password")}
             </div>
           </div>
-          <div style={{ display: "flex", gap: 12 }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
             <button onClick={() => setSubmitted(true)}
               style={{
                 background: "linear-gradient(135deg, #1e90ff, #0050c8)", color: "#fff",
                 border: "none", borderRadius: 10, padding: "13px 32px", fontWeight: 700,
-                fontSize: 14, cursor: "pointer", letterSpacing: "0.5px"
+                fontSize: 14, cursor: "pointer", letterSpacing: "0.5px", flex: isMobile ? 1 : "initial"
               }}>
               Create User Account
             </button>
@@ -204,7 +224,7 @@ const CreateUser = () => {
               style={{
                 background: "transparent", color: "#8badc7",
                 border: "1px solid #1e3a5a", borderRadius: 10, padding: "13px 24px",
-                fontWeight: 600, fontSize: 14, cursor: "pointer"
+                fontWeight: 600, fontSize: 14, cursor: "pointer", flex: isMobile ? 1 : "initial"
               }}>
               Clear Form
             </button>
@@ -234,63 +254,100 @@ const navItems = [
   { key: "userrecord", label: "User Record", icon: "🗂️", desc: "Individual profiles" },
 ];
 
+import { useEffect } from "react";
+
 export default function Dashboard() {
   const [active, setActive] = useState("users");
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(window.innerWidth < 1024);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 1024;
+      setIsMobile(mobile);
+      if (!mobile) {
+        setCollapsed(false);
+      } else {
+        setCollapsed(true);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const renderPage = () => {
     if (active === "users") return <AllUsers />;
     if (active === "records") return <DataRecord />;
-    if (active === "create") return <CreateUser />;
+    if (active === "create") return <CreateUser isMobile={isMobile} />;
     if (active === "userrecord") return <UserRecord />;
   };
 
   return (
     <div style={{
       display: "flex", height: "100vh", fontFamily: "'DM Sans', 'Segoe UI', sans-serif",
-      background: "#040d18", overflow: "hidden"
+      background: "#040d18", overflow: "hidden", position: "relative"
     }}>
       <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
+      {/* Mobile Overlay */}
+      {isMobile && !collapsed && (
+        <div 
+          onClick={() => setCollapsed(true)}
+          style={{
+            position: "absolute", inset: 0, background: "rgba(0,0,0,0.5)", 
+            zIndex: 40, backdropFilter: "blur(2px)"
+          }}
+        />
+      )}
+
       {/* Sidebar */}
       <div style={{
-        width: collapsed ? 72 : 240,
+        width: collapsed && !isMobile ? 72 : 240,
         background: "#071323",
         borderRight: "1px solid #0e2540",
         display: "flex", flexDirection: "column",
-        transition: "width 0.3s ease",
-        flexShrink: 0, overflow: "hidden"
+        transition: "all 0.3s ease",
+        flexShrink: 0, 
+        overflow: "hidden",
+        position: isMobile ? "absolute" : "relative",
+        height: "100%",
+        zIndex: 50,
+        left: isMobile && collapsed ? -240 : 0,
+        boxShadow: isMobile && !collapsed ? "20px 0 50px rgba(0,0,0,0.5)" : "none"
       }}>
         {/* Logo */}
         <div style={{ padding: "24px 20px", borderBottom: "1px solid #0e2540", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          {!collapsed && <Logo />}
-          {collapsed && (
+          {(!collapsed || isMobile) && <Logo />}
+          {collapsed && !isMobile && (
             <img
               src={SMR_LOGO}
               alt="SMR Finserv"
               style={{ height: 36, width: "auto", objectFit: "contain", margin: "0 auto", display: "block" }}
             />
           )}
+          {isMobile && (
+            <button onClick={() => setCollapsed(true)} style={{ background: "transparent", border: "none", color: "#5b9bd5", fontSize: 24, cursor: "pointer" }}>×</button>
+          )}
         </div>
 
         {/* Nav */}
         <nav style={{ flex: 1, padding: "16px 12px", display: "flex", flexDirection: "column", gap: 4 }}>
-          {!collapsed && <div style={{ color: "#2d5a8a", fontSize: 10, fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", padding: "8px 8px 4px" }}>Navigation</div>}
+          {(!collapsed || isMobile) && <div style={{ color: "#2d5a8a", fontSize: 10, fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase", padding: "8px 8px 4px" }}>Navigation</div>}
           {navItems.map(item => (
-            <button key={item.key} onClick={() => setActive(item.key)}
+            <button key={item.key} onClick={() => { setActive(item.key); if(isMobile) setCollapsed(true); }}
               style={{
                 display: "flex", alignItems: "center", gap: 12,
-                padding: collapsed ? "14px" : "12px 14px",
+                padding: collapsed && !isMobile ? "14px" : "12px 14px",
                 borderRadius: 10, border: "none", cursor: "pointer",
                 background: active === item.key ? "linear-gradient(135deg, #1e90ff18, #0050c818)" : "transparent",
                 borderLeft: active === item.key ? "3px solid #1e90ff" : "3px solid transparent",
-                transition: "all 0.2s", width: "100%", justifyContent: collapsed ? "center" : "flex-start"
+                transition: "all 0.2s", width: "100%", justifyContent: collapsed && !isMobile ? "center" : "flex-start"
               }}
               onMouseEnter={e => { if (active !== item.key) e.currentTarget.style.background = "#0e243a"; }}
               onMouseLeave={e => { if (active !== item.key) e.currentTarget.style.background = "transparent"; }}
             >
               <span style={{ fontSize: 18, flexShrink: 0 }}>{item.icon}</span>
-              {!collapsed && (
+              {(!collapsed || isMobile) && (
                 <div style={{ textAlign: "left" }}>
                   <div style={{ color: active === item.key ? "#1e90ff" : "#c5d9ec", fontSize: 13, fontWeight: 600 }}>{item.label}</div>
                   <div style={{ color: "#3d6a9a", fontSize: 11 }}>{item.desc}</div>
@@ -302,7 +359,7 @@ export default function Dashboard() {
 
         {/* Admin Info */}
         <div style={{ padding: "16px 14px", borderTop: "1px solid #0e2540" }}>
-          {collapsed ? (
+          {collapsed && !isMobile ? (
             <div style={{
               width: 36, height: 36, borderRadius: "50%", background: "linear-gradient(135deg,#1e90ff,#0050c8)",
               display: "flex", alignItems: "center", justifyContent: "center",
@@ -329,39 +386,45 @@ export default function Dashboard() {
         {/* Topbar */}
         <div style={{
           background: "#071323", borderBottom: "1px solid #0e2540",
-          padding: "0 28px", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between"
+          padding: isMobile ? "0 16px" : "0 28px", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between"
         }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 8 : 16 }}>
             <button onClick={() => setCollapsed(p => !p)}
               style={{ background: "transparent", border: "none", cursor: "pointer", color: "#5b9bd5", fontSize: 20, padding: 4 }}>
               ☰
             </button>
             <div>
-              <div style={{ color: "#fff", fontWeight: 700, fontSize: 15 }}>
+              <div style={{ color: "#fff", fontWeight: 700, fontSize: isMobile ? 14 : 15 }}>
                 {navItems.find(n => n.key === active)?.label}
               </div>
-              <div style={{ color: "#3d6a9a", fontSize: 11 }}>
-                {navItems.find(n => n.key === active)?.desc}
-              </div>
+              {!isMobile && (
+                <div style={{ color: "#3d6a9a", fontSize: 11 }}>
+                  {navItems.find(n => n.key === active)?.desc}
+                </div>
+              )}
             </div>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-            <div style={{ color: "#5b9bd5", fontSize: 12 }}>
-              📅 {new Date().toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short", year: "numeric" })}
-            </div>
+          <div style={{ display: "flex", alignItems: "center", gap: isMobile ? 8 : 16 }}>
+            {!isMobile && (
+              <div style={{ color: "#5b9bd5", fontSize: 12 }}>
+                📅 {new Date().toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short", year: "numeric" })}
+              </div>
+            )}
             <div style={{
               background: "#0d1b2a", border: "1px solid #1e3a5a", borderRadius: 8,
-              padding: "8px 16px", color: "#8badc7", fontSize: 12, fontWeight: 500, cursor: "pointer"
-            }}>🔔 3</div>
-            <div style={{
-              background: "linear-gradient(135deg,#1e90ff,#0050c8)", borderRadius: 8,
-              padding: "8px 16px", color: "#fff", fontSize: 12, fontWeight: 600, cursor: "pointer"
-            }}>⚙️ Settings</div>
+              padding: isMobile ? "6px 10px" : "8px 16px", color: "#8badc7", fontSize: 12, fontWeight: 500, cursor: "pointer"
+            }}>🔔 {isMobile ? "3" : "3 Notifications"}</div>
+            {!isMobile && (
+              <div style={{
+                background: "linear-gradient(135deg,#1e90ff,#0050c8)", borderRadius: 8,
+                padding: "8px 16px", color: "#fff", fontSize: 12, fontWeight: 600, cursor: "pointer"
+              }}>⚙️ Settings</div>
+            )}
           </div>
         </div>
 
         {/* Page Content */}
-        <div style={{ flex: 1, overflowY: "auto", padding: 28 }}>
+        <div style={{ flex: 1, overflowY: "auto", padding: isMobile ? 16 : 28 }}>
           {renderPage()}
         </div>
       </div>
