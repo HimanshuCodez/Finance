@@ -8,6 +8,7 @@ import ContactUs from "./Pages/Contact";
 import UpdateMarquee from "./Pages/Admin/UpdateMarquee"; // Import the new component
 
 import SocialHandles from "./Components/SocialHandles";
+import Dashboard from "./Pages/Admin/Dashboard";
 
 function App() {
   const personalInsurance = {
@@ -35,7 +36,7 @@ function App() {
         <Route path="/personal" element={<Personal personalInsurance={personalInsurance} />} />
         <Route path="/corporate" element={<Corporate corporateInsurance={corporateInsurance} />} />
         <Route path="/admin/update-marquee" element={<UpdateMarquee />} />
-        <Route path="/admin/dashboard" element={<UpdateMarquee />} />
+        <Route path="/admin/dashboard" element={<Dashboard/>} />
       </Routes>
     </Router>
   );

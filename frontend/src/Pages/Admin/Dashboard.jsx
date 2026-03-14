@@ -234,7 +234,7 @@ const navItems = [
   { key: "userrecord", label: "User Record", icon: "🗂️", desc: "Individual profiles" },
 ];
 
-export default function App() {
+export default function Dashboard() {
   const [active, setActive] = useState("users");
   const [collapsed, setCollapsed] = useState(false);
 
