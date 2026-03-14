@@ -35,6 +35,7 @@ function App() {
         <Route path="/personal" element={<Personal personalInsurance={personalInsurance} />} />
         <Route path="/corporate" element={<Corporate corporateInsurance={corporateInsurance} />} />
         <Route path="/admin/update-marquee" element={<UpdateMarquee />} />
+        <Route path="/admin/dashboard" element={<UpdateMarquee />} />
       </Routes>
     </Router>
   );
