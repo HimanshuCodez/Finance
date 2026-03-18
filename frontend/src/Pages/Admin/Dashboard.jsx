@@ -89,7 +89,7 @@ const AllUsers = ({ isMobile }) => (
         <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 600 }}>
           <thead>
             <tr style={{ background: "#071323" }}>
-              {["User", "Email", "Phone", "Plan", "Balance", "Status", "Joined"].map(h => (
+              {["User", "Email", "Phone", "Designation"].map(h => (
                 <th key={h} style={{ padding: "12px 20px", color: "#5b9bd5", fontSize: 11, fontWeight: 700, textAlign: "left", letterSpacing: "1px", textTransform: "uppercase" }}>{h}</th>
               ))}
             </tr>
