@@ -1,0 +1,30 @@
+// Firestore Rules
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Allow public access to 'records' for the landing page apply form
+    match /records/{recordId} {
+      allow read, write: if true;
+    }
+
+    // Allow access to 'users' for login and admin management
+    match /users/{userId} {
+      allow read, write: if true;
+    }
+
+    // Allow access to 'dataEntries' for the dashboard records
+    match /dataEntries/{entryId} {
+      allow read, write: if true;
+    }
+  }
+}
+
+// Storage Rules (Usually in a separate storage.rules file, but included here as requested)
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /dataRecords/{allPaths=**} {
+      allow read, write: if true;
+    }
+  }
+}
