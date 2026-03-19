@@ -66,7 +66,7 @@ const AllUsers = ({ isMobile, users }) => (
       <p style={{ color: "#5b9bd5", fontSize: 13 }}>Manage and monitor all registered users</p>
     </div>
     <div style={{ background: "#0d1b2a", borderRadius: 16, border: "1px solid #1e3a5a", overflow: "hidden" }}>
-      <div style={{ padding: "20px 24px", borderBottom: "1px solid #1e3a5a" }}>
+      <div style={{ padding: isMobile ? "16px" : "20px 24px", borderBottom: "1px solid #1e3a5a" }}>
         <span style={{ color: "#fff", fontWeight: 700, fontSize: 15 }}>User Directory</span>
       </div>
       <div style={{ overflowX: "auto" }}>
@@ -139,8 +139,8 @@ const DataRecord = ({ isMobile }) => {
 
   return (
     <div>
-      <h1 style={{ color: "#fff", fontSize: 26, fontWeight: 800, marginBottom: 20 }}>Fill Data Records</h1>
-      <div style={{ background: "#0d1b2a", borderRadius: 16, border: "1px solid #1e3a5a", padding: 32 }}>
+      <h1 style={{ color: "#fff", fontSize: isMobile ? 22 : 26, fontWeight: 800, marginBottom: 20 }}>Fill Data Records</h1>
+      <div style={{ background: "#0d1b2a", borderRadius: 16, border: "1px solid #1e3a5a", padding: isMobile ? 20 : 32 }}>
         <form onSubmit={handleSubmit} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 20 }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
             <label style={{ fontSize: 12, color: "#8badc7" }}>Txn ID</label>
@@ -196,7 +196,7 @@ const UserRecord = ({ isMobile }) => {
 
   return (
     <div>
-      <h1 style={{ color: "#fff", fontSize: 26, fontWeight: 800, marginBottom: 20 }}>User Record View</h1>
+      <h1 style={{ color: "#fff", fontSize: isMobile ? 22 : 26, fontWeight: 800, marginBottom: 20 }}>User Record View</h1>
       <div style={{ background: "#0d1b2a", borderRadius: 16, border: "1px solid #1e3a5a", overflow: "hidden" }}>
         <div style={{ overflowX: "auto" }}>
           <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 900 }}>
@@ -252,8 +252,8 @@ const CreateUser = ({ isMobile }) => {
   };
 
   return (
-    <div style={{ background: "#0d1b2a", borderRadius: 16, border: "1px solid #1e3a5a", padding: 32 }}>
-       <h1 style={{ color: "#fff", fontSize: 22, marginBottom: 20 }}>Create New User</h1>
+    <div style={{ background: "#0d1b2a", borderRadius: 16, border: "1px solid #1e3a5a", padding: isMobile ? 20 : 32 }}>
+       <h1 style={{ color: "#fff", fontSize: isMobile ? 20 : 22, marginBottom: 20 }}>Create New User</h1>
        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 20 }}>
           <input value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="Full Name" style={{ background: "#071323", border: "1px solid #1e3a5a", borderRadius: 10, padding: 12, color: "#fff" }} />
           <input value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} placeholder="Email" style={{ background: "#071323", border: "1px solid #1e3a5a", borderRadius: 10, padding: 12, color: "#fff" }} />
@@ -264,7 +264,7 @@ const CreateUser = ({ isMobile }) => {
             <option value="Admin">Admin (Full Access)</option>
           </select>
        </div>
-       <button onClick={handleSubmit} disabled={loading} style={{ marginTop: 24, background: "#1e90ff", color: "#fff", border: "none", borderRadius: 10, padding: "12px 32px", cursor: loading ? "not-allowed" : "pointer" }}>
+       <button onClick={handleSubmit} disabled={loading} style={{ marginTop: 24, background: "#1e90ff", color: "#fff", border: "none", borderRadius: 10, padding: "12px 32px", cursor: loading ? "not-allowed" : "pointer", width: isMobile ? "100%" : "auto" }}>
          {loading ? "Creating..." : "Create User"}
        </button>
     </div>
@@ -288,14 +288,14 @@ const Login = ({ onLogin }) => {
   };
 
   return (
-    <div style={{ height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#040d18" }}>
-      <div style={{ background: "#071323", padding: 40, borderRadius: 20, border: "1px solid #1e3a5a", width: 350 }}>
+    <div style={{ height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#040d18", padding: 20 }}>
+      <div style={{ background: "#071323", padding: "40px 24px", borderRadius: 20, border: "1px solid #1e3a5a", width: "100%", maxWidth: 350 }}>
         <Logo />
-        <h2 style={{ color: "#fff", marginTop: 24 }}>Admin Login</h2>
+        <h2 style={{ color: "#fff", marginTop: 24, fontSize: 24, fontWeight: 700 }}>Admin Login</h2>
         <div style={{ display: "flex", flexDirection: "column", gap: 16, marginTop: 24 }}>
-          <input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} style={{ background: "#0d1b2a", border: "1px solid #1e3a5a", borderRadius: 10, padding: 12, color: "#fff" }} />
-          <input placeholder="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} style={{ background: "#0d1b2a", border: "1px solid #1e3a5a", borderRadius: 10, padding: 12, color: "#fff" }} />
-          <button onClick={handleLogin} style={{ background: "#1e90ff", color: "#fff", border: "none", borderRadius: 10, padding: 14, cursor: "pointer" }}>Login</button>
+          <input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} style={{ background: "#0d1b2a", border: "1px solid #1e3a5a", borderRadius: 10, padding: 12, color: "#fff", outline: "none" }} />
+          <input placeholder="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} style={{ background: "#0d1b2a", border: "1px solid #1e3a5a", borderRadius: 10, padding: 12, color: "#fff", outline: "none" }} />
+          <button onClick={handleLogin} style={{ background: "#1e90ff", color: "#fff", border: "none", borderRadius: 10, padding: 14, cursor: "pointer", fontWeight: 700, marginTop: 8 }}>Login</button>
         </div>
       </div>
     </div>
@@ -305,8 +305,8 @@ const Login = ({ onLogin }) => {
 export default function Dashboard() {
   const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem("adminUser")));
   const [active, setActive] = useState("records");
-  const [collapsed, setCollapsed] = useState(window.innerWidth < 1024);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+  const [collapsed, setCollapsed] = useState(window.innerWidth < 1024);
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -319,7 +319,11 @@ export default function Dashboard() {
   }, [currentUser]);
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 1024);
+    const handleResize = () => {
+      const mobile = window.innerWidth < 1024;
+      setIsMobile(mobile);
+      if (mobile) setCollapsed(true);
+    };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -336,32 +340,55 @@ export default function Dashboard() {
   const filteredNavItems = currentUser.role === "Admin" ? navItems : navItems.filter(item => !item.admin);
 
   return (
-    <div style={{ display: "flex", height: "100vh", background: "#040d18", color: "#fff" }}>
-      <div style={{ width: collapsed ? 80 : 260, background: "#071323", borderRight: "1px solid #1e3a5a", transition: "0.3s" }}>
-        <div style={{ padding: 20 }}>{!collapsed ? <Logo /> : <span style={{ fontSize: 24 }}>SMR</span>}</div>
+    <div style={{ display: "flex", height: "100vh", background: "#040d18", color: "#fff", position: "relative", overflow: "hidden" }}>
+      {/* Sidebar Overlay for Mobile */}
+      {isMobile && !collapsed && (
+        <div 
+          onClick={() => setCollapsed(true)}
+          style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.6)", zIndex: 999, backdropFilter: "blur(2px)" }}
+        />
+      )}
+
+      {/* Sidebar */}
+      <div style={{ 
+        width: isMobile ? 260 : (collapsed ? 80 : 260), 
+        background: "#071323", 
+        borderRight: "1px solid #1e3a5a", 
+        transition: "0.3s ease-in-out",
+        position: isMobile ? "fixed" : "relative",
+        left: isMobile && collapsed ? -260 : 0,
+        height: "100vh",
+        zIndex: 1000,
+      }}>
+        <div style={{ padding: 20, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          {(!collapsed || isMobile) ? <Logo /> : <span style={{ fontSize: 24, fontWeight: 900, color: "#1e90ff" }}>S</span>}
+          {isMobile && <button onClick={() => setCollapsed(true)} style={{ background: "transparent", border: "none", color: "#8badc7", fontSize: 24, cursor: "pointer" }}>&times;</button>}
+        </div>
         <nav style={{ padding: 10 }}>
           {filteredNavItems.map(item => (
-            <button key={item.key} onClick={() => setActive(item.key)} style={{ width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "12px 15px", marginBottom: 5, background: active === item.key ? "#1e90ff22" : "transparent", border: "none", color: active === item.key ? "#1e90ff" : "#8badc7", cursor: "pointer", borderRadius: 8 }}>
-              <span style={{ fontSize: 20 }}>{item.icon}</span> {!collapsed && <span>{item.label}</span>}
+            <button key={item.key} onClick={() => { setActive(item.key); if (isMobile) setCollapsed(true); }} style={{ width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "12px 15px", marginBottom: 5, background: active === item.key ? "#1e90ff22" : "transparent", border: "none", color: active === item.key ? "#1e90ff" : "#8badc7", cursor: "pointer", borderRadius: 8, transition: "0.2s" }}>
+              <span style={{ fontSize: 20 }}>{item.icon}</span> {(!collapsed || isMobile) && <span style={{ fontWeight: active === item.key ? 700 : 500 }}>{item.label}</span>}
             </button>
           ))}
-          <button onClick={() => { localStorage.removeItem("adminUser"); setCurrentUser(null); }} style={{ width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "12px 15px", marginTop: 20, background: "transparent", border: "none", color: "#ef4444", cursor: "pointer" }}>
-            <span>🚪</span> {!collapsed && <span>Logout</span>}
+          <button onClick={() => { localStorage.removeItem("adminUser"); setCurrentUser(null); }} style={{ width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "12px 15px", marginTop: 20, background: "transparent", border: "none", color: "#ef4444", cursor: "pointer", borderRadius: 8 }}>
+            <span>🚪</span> {(!collapsed || isMobile) && <span>Logout</span>}
           </button>
         </nav>
       </div>
-      <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-        <header style={{ height: 64, borderBottom: "1px solid #1e3a5a", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 24px" }}>
+
+      {/* Main Content */}
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0 }}>
+        <header style={{ height: 64, borderBottom: "1px solid #1e3a5a", display: "flex", alignItems: "center", justifyContent: "space-between", padding: isMobile ? "0 16px" : "0 24px", background: "#071323" }}>
            <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-              <button onClick={() => setCollapsed(!collapsed)} style={{ background: "transparent", border: "none", color: "#fff", cursor: "pointer", fontSize: 20 }}>☰</button>
-              <h2 style={{ fontSize: 18 }}>{navItems.find(n => n.key === active)?.label}</h2>
+              <button onClick={() => setCollapsed(!collapsed)} style={{ background: "transparent", border: "none", color: "#fff", cursor: "pointer", fontSize: 20, padding: 8, borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center" }}>☰</button>
+              <h2 style={{ fontSize: isMobile ? 16 : 18, fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{navItems.find(n => n.key === active)?.label}</h2>
            </div>
-           <div style={{ textAlign: "right" }}>
-                <div style={{ fontSize: 12, fontWeight: 700 }}>{currentUser.name}</div>
-                <div style={{ fontSize: 10, color: "#5b9bd5" }}>{currentUser.role}</div>
+           <div style={{ textAlign: "right", minWidth: 0 }}>
+                <div style={{ fontSize: 12, fontWeight: 700, color: "#fff", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{currentUser.name}</div>
+                <div style={{ fontSize: 10, color: "#5b9bd5", textTransform: "uppercase", letterSpacing: "0.5px" }}>{currentUser.role}</div>
            </div>
         </header>
-        <main style={{ flex: 1, padding: 24, overflowY: "auto" }}>
+        <main style={{ flex: 1, padding: isMobile ? 16 : 24, overflowY: "auto", background: "#040d18" }}>
           {active === "users" && <AllUsers isMobile={isMobile} users={users} />}
           {active === "records" && <DataRecord isMobile={isMobile} />}
           {active === "create" && <CreateUser isMobile={isMobile} />}
