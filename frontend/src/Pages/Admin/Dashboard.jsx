@@ -98,8 +98,50 @@ const AllUsers = ({ isMobile, users }) => (
   </div>
 );
 
+const MOTOR_VEHICLE_TYPES = [
+  "CAR", "TWO WHEELER: SCOOTY", "TWO WHEELER: BIKE",
+  "GCV: 0-2500KG", "GCV: 2500-3500KG", "GCV: 3500-7500KG",
+  "GCV: 7500-12000KG", "GCV: 12000-16000KG", "GCV: 16000-55000KG",
+  "PCV: SCHOOL BUS", "PCV: STAFF BUS", "PCV: PASSENGER BUS", "PCV: TAXI",
+  "MISC D: TRACTOR", "MISC D: CRANE", "MISC D: OTHER"
+];
+
+const HEALTH_FAMILY_MEMBERS = [
+  "1 Adult", "2 Adult", "2 Adult 1 child", "2 Adult 2 Child",
+  "2 Adult 3 child", "1 Adult 1 Child", "1 Adult 2 child"
+];
+
 const DataRecord = ({ isMobile }) => {
-  const [form, setForm] = useState({ txnId: "", userName: "", type: "", category: "", amount: "", date: "" });
+  const initialFormState = {
+    category: "Motor",
+    sl: "",
+    policyNo: "",
+    make: "",
+    model: "",
+    imdCode: "",
+    mobileNo: "",
+    name: "",
+    company: "",
+    vehicleType: "",
+    policyType: "",
+    riskDate: "",
+    endDate: "",
+    od: "",
+    tp: "",
+    netPrem: "",
+    prem: "",
+    payout: "",
+    companyPercentage: "",
+    remarks: "",
+    subType: "", // Business Type / Insurance Type
+    sumAssured: "",
+    familyMembers: "",
+    bonus: "",
+    tenure: "",
+    productName: ""
+  };
+
+  const [form, setForm] = useState(initialFormState);
   const [aadhaarFile, setAadhaarFile] = useState(null);
   const [panFile, setPanFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -113,11 +155,12 @@ const DataRecord = ({ isMobile }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.txnId || !form.userName || !form.amount) return alert("Fill required fields");
+    if (!form.policyNo || !form.name || !form.prem) return alert("Fill required fields (Policy No, Name, Prem)");
     setLoading(true);
     try {
-      const aadhaarUrl = await uploadFile(aadhaarFile, `dataRecords/${form.txnId}_aadhaar`);
-      const panUrl = await uploadFile(panFile, `dataRecords/${form.txnId}_pan`);
+      const fileId = form.policyNo || Date.now();
+      const aadhaarUrl = await uploadFile(aadhaarFile, `dataRecords/${fileId}_aadhaar`);
+      const panUrl = await uploadFile(panFile, `dataRecords/${fileId}_pan`);
 
       await addDoc(collection(db, "dataEntries"), {
         ...form,
@@ -126,7 +169,7 @@ const DataRecord = ({ isMobile }) => {
         createdAt: serverTimestamp()
       });
       alert("Record Added Successfully!");
-      setForm({ txnId: "", userName: "", type: "", category: "", amount: "", date: "" });
+      setForm(initialFormState);
       setAadhaarFile(null);
       setPanFile(null);
     } catch (e) {
@@ -135,47 +178,96 @@ const DataRecord = ({ isMobile }) => {
     setLoading(false);
   };
 
-  const inputStyle = { background: "#071323", border: "1px solid #1e3a5a", borderRadius: 8, padding: 10, color: "#fff", outline: "none" };
+  const inputStyle = { background: "#071323", border: "1px solid #1e3a5a", borderRadius: 8, padding: 10, color: "#fff", outline: "none", width: "100%" };
+  const labelStyle = { fontSize: 12, color: "#8badc7", marginBottom: 5, display: "block" };
+
+  const renderField = (label, name, type = "text", options = null) => (
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <label style={labelStyle}>{label}</label>
+      {options ? (
+        <select value={form[name]} onChange={e => setForm({ ...form, [name]: e.target.value })} style={inputStyle}>
+          <option value="">Select {label}</option>
+          {options.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+        </select>
+      ) : (
+        <input type={type} value={form[name]} onChange={e => setForm({ ...form, [name]: e.target.value })} style={inputStyle} placeholder={`Enter ${label}`} />
+      )}
+    </div>
+  );
 
   return (
     <div>
       <h1 style={{ color: "#fff", fontSize: isMobile ? 22 : 26, fontWeight: 800, marginBottom: 20 }}>Fill Data Records</h1>
       <div style={{ background: "#0d1b2a", borderRadius: 16, border: "1px solid #1e3a5a", padding: isMobile ? 20 : 32 }}>
-        <form onSubmit={handleSubmit} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 20 }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            <label style={{ fontSize: 12, color: "#8badc7" }}>Txn ID</label>
-            <input value={form.txnId} onChange={e => setForm({ ...form, txnId: e.target.value })} style={inputStyle} placeholder="TXN12345" />
+        <div style={{ marginBottom: 25 }}>
+          <label style={labelStyle}>Insurance Category</label>
+          <select value={form.category} onChange={e => setForm({ ...initialFormState, category: e.target.value })} style={{ ...inputStyle, fontSize: 16, fontWeight: 700, borderColor: "#1e90ff" }}>
+            <option value="Motor">Motor Insurance</option>
+            <option value="Health">Health Insurance</option>
+            <option value="SME">SME Insurance</option>
+          </select>
+        </div>
+
+        <form onSubmit={handleSubmit} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 1fr", gap: 20 }}>
+          {renderField("SL", "sl")}
+          {renderField("Policy No", "policyNo")}
+          {renderField("IMD Code", "imdCode")}
+          {renderField("Name", "name")}
+          {renderField(form.category === "Motor" ? "Company" : "Insurance Company", "company")}
+          
+          {form.category === "Motor" && (
+            <>
+              {renderField("Make", "make")}
+              {renderField("Model", "model")}
+              {renderField("Mobile No", "mobileNo")}
+              {renderField("Vehicle Type", "vehicleType", "select", MOTOR_VEHICLE_TYPES)}
+              {renderField("Policy Type", "policyType", "select", ["COMPREHENSIVE", "SAOD", "THIRD PARTY"])}
+              {renderField("Risk Date", "riskDate", "date")}
+              {renderField("OD", "od")}
+              {renderField("TP", "tp")}
+            </>
+          )}
+
+          {form.category === "Health" && (
+            <>
+              {renderField("Business Type", "subType", "select", ["New", "Renewal", "Port"])}
+              {renderField("Sum Assured", "sumAssured")}
+              {renderField("Family Members", "familyMembers", "select", HEALTH_FAMILY_MEMBERS)}
+              {renderField("Bonus", "bonus")}
+              {renderField("Tenure", "tenure")}
+              {renderField("Risk Date", "riskDate", "date")}
+            </>
+          )}
+
+          {form.category === "SME" && (
+            <>
+              {renderField("Insurance Type", "subType", "select", ["New", "Renewal"])}
+              {renderField("Product Name", "productName")}
+              {renderField("Tenure", "tenure")}
+              {renderField("Sum Assured", "sumAssured")}
+            </>
+          )}
+
+          {renderField("End Date", "endDate", "date")}
+          {renderField("Net Prem", "netPrem")}
+          {renderField("Prem", "prem")}
+          {renderField("Payout", "payout")}
+          {renderField("Company %", "companyPercentage")}
+          <div style={{ gridColumn: isMobile ? "span 1" : "span 2" }}>
+            {renderField("Remarks", "remarks")}
           </div>
+
           <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            <label style={{ fontSize: 12, color: "#8badc7" }}>User (Name)</label>
-            <input value={form.userName} onChange={e => setForm({ ...form, userName: e.target.value })} style={inputStyle} placeholder="Enter User Name" />
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            <label style={{ fontSize: 12, color: "#8badc7" }}>Type</label>
-            <input value={form.type} onChange={e => setForm({ ...form, type: e.target.value })} style={inputStyle} placeholder="e.g. Credit" />
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            <label style={{ fontSize: 12, color: "#8badc7" }}>Category</label>
-            <input value={form.category} onChange={e => setForm({ ...form, category: e.target.value })} style={inputStyle} placeholder="e.g. Loan" />
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            <label style={{ fontSize: 12, color: "#8badc7" }}>Amount</label>
-            <input value={form.amount} onChange={e => setForm({ ...form, amount: e.target.value })} style={inputStyle} placeholder="5000" />
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            <label style={{ fontSize: 12, color: "#8badc7" }}>Date</label>
-            <input type="date" value={form.date} onChange={e => setForm({ ...form, date: e.target.value })} style={inputStyle} />
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            <label style={{ fontSize: 12, color: "#8badc7" }}>Aadhaar Card Photo</label>
+            <label style={labelStyle}>Aadhaar Card Photo</label>
             <input type="file" accept="image/*" onChange={e => setAadhaarFile(e.target.files[0])} style={inputStyle} />
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            <label style={{ fontSize: 12, color: "#8badc7" }}>Pan Card Photo</label>
+            <label style={labelStyle}>Pan Card Photo</label>
             <input type="file" accept="image/*" onChange={e => setPanFile(e.target.files[0])} style={inputStyle} />
           </div>
-          <button type="submit" disabled={loading} style={{ gridColumn: isMobile ? "span 1" : "span 2", background: "#1e90ff", color: "#fff", border: "none", borderRadius: 8, padding: 14, fontWeight: 700, cursor: loading ? "not-allowed" : "pointer" }}>
-            {loading ? "Uploading & Saving..." : "Save Record"}
+
+          <button type="submit" disabled={loading} style={{ gridColumn: "1 / -1", background: "#1e90ff", color: "#fff", border: "none", borderRadius: 8, padding: 16, fontWeight: 700, fontSize: 16, cursor: loading ? "not-allowed" : "pointer", marginTop: 10 }}>
+            {loading ? "Uploading & Saving..." : `Save ${form.category} Record`}
           </button>
         </form>
       </div>
@@ -185,6 +277,7 @@ const DataRecord = ({ isMobile }) => {
 
 const UserRecord = ({ isMobile }) => {
   const [entries, setEntries] = useState([]);
+  const [filter, setFilter] = useState("Motor");
 
   useEffect(() => {
     const q = query(collection(db, "dataEntries"), orderBy("createdAt", "desc"));
@@ -194,41 +287,125 @@ const UserRecord = ({ isMobile }) => {
     return () => unsubscribe();
   }, []);
 
+  const filteredEntries = entries.filter(ent => ent.category === filter);
+
+  const motorHeaders = ["SL", "Policy No", "Make", "Model", "IMD Code", "Mobile No", "Name", "Company", "Vehicle Type", "Policy Type", "Risk Date", "End Date", "OD", "TP", "Net Prem", "Prem", "Payout", "Co%", "Remarks"];
+  const healthHeaders = ["SL", "Policy No", "Company", "Business Type", "IMD Code", "Name", "Sum Assured", "Family", "Bonus", "Tenure", "Risk Date", "End Date", "Net Prem", "Prem", "Payout", "Co%", "Remarks"];
+  const smeHeaders = ["SL", "Policy No", "Company", "Type", "IMD Code", "Product", "Name", "Tenure", "Sum Assured", "End Date", "Net Prem", "Prem", "Payout", "Co%", "Remarks"];
+
+  const getHeaders = () => {
+    if (filter === "Motor") return motorHeaders;
+    if (filter === "Health") return healthHeaders;
+    return smeHeaders;
+  };
+
+  const renderCell = (val) => (
+    <td style={{ padding: "12px 15px", color: "#fff", fontSize: 12, borderBottom: "1px solid #1e3a5a", whiteSpace: "nowrap" }}>
+      {val || "-"}
+    </td>
+  );
+
   return (
     <div>
-      <h1 style={{ color: "#fff", fontSize: isMobile ? 22 : 26, fontWeight: 800, marginBottom: 20 }}>User Record View</h1>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, gap: 20, flexWrap: "wrap" }}>
+        <h1 style={{ color: "#fff", fontSize: isMobile ? 22 : 26, fontWeight: 800 }}>User Record View</h1>
+        <div style={{ display: "flex", gap: 10 }}>
+          {["Motor", "Health", "SME"].map(cat => (
+            <button key={cat} onClick={() => setFilter(cat)} style={{ padding: "8px 16px", borderRadius: 8, border: "1px solid #1e3a5a", background: filter === cat ? "#1e90ff" : "#0d1b2a", color: "#fff", cursor: "pointer", fontWeight: 600 }}>{cat}</button>
+          ))}
+        </div>
+      </div>
+
       <div style={{ background: "#0d1b2a", borderRadius: 16, border: "1px solid #1e3a5a", overflow: "hidden" }}>
         <div style={{ overflowX: "auto" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 900 }}>
+          <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
               <tr style={{ background: "#071323" }}>
-                {["Txn ID", "User", "Type", "Category", "Amount", "Date", "Aadhaar", "PAN"].map(h => (
-                  <th key={h} style={{ padding: "12px 20px", color: "#5b9bd5", fontSize: 11, fontWeight: 700, textAlign: "left", textTransform: "uppercase" }}>{h}</th>
+                {getHeaders().map(h => (
+                  <th key={h} style={{ padding: "12px 15px", color: "#5b9bd5", fontSize: 10, fontWeight: 700, textAlign: "left", textTransform: "uppercase", letterSpacing: "0.5px", whiteSpace: "nowrap" }}>{h}</th>
                 ))}
+                <th style={{ padding: "12px 15px", color: "#5b9bd5", fontSize: 10, fontWeight: 700, textAlign: "left", textTransform: "uppercase" }}>Docs</th>
               </tr>
             </thead>
             <tbody>
-              {entries.map((ent) => (
-                <tr key={ent.id} style={{ borderBottom: "1px solid #1e3a5a" }}>
-                  <td style={{ padding: "12px 20px", color: "#fff", fontSize: 13 }}>{ent.txnId}</td>
-                  <td style={{ padding: "12px 20px", color: "#fff", fontSize: 13 }}>{ent.userName}</td>
-                  <td style={{ padding: "12px 20px", color: "#8badc7", fontSize: 13 }}>{ent.type}</td>
-                  <td style={{ padding: "12px 20px", color: "#8badc7", fontSize: 13 }}>{ent.category}</td>
-                  <td style={{ padding: "12px 20px", color: "#22c55e", fontSize: 13, fontWeight: 700 }}>₹{ent.amount}</td>
-                  <td style={{ padding: "12px 20px", color: "#8badc7", fontSize: 13 }}>{ent.date}</td>
-                  <td style={{ padding: "12px 20px" }}>
-                    {ent.aadhaarPhoto ? <a href={ent.aadhaarPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 12 }}>View Photo</a> : "N/A"}
-                  </td>
-                  <td style={{ padding: "12px 20px" }}>
-                    {ent.panPhoto ? <a href={ent.panPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 12 }}>View Photo</a> : "N/A"}
+              {filteredEntries.map((ent) => (
+                <tr key={ent.id}>
+                  {filter === "Motor" && (
+                    <>
+                      {renderCell(ent.sl)}
+                      {renderCell(ent.policyNo)}
+                      {renderCell(ent.make)}
+                      {renderCell(ent.model)}
+                      {renderCell(ent.imdCode)}
+                      {renderCell(ent.mobileNo)}
+                      {renderCell(ent.name)}
+                      {renderCell(ent.company)}
+                      {renderCell(ent.vehicleType)}
+                      {renderCell(ent.policyType)}
+                      {renderCell(ent.riskDate)}
+                      {renderCell(ent.endDate)}
+                      {renderCell(ent.od)}
+                      {renderCell(ent.tp)}
+                      {renderCell(ent.netPrem)}
+                      {renderCell(ent.prem)}
+                      {renderCell(ent.payout)}
+                      {renderCell(ent.companyPercentage)}
+                      {renderCell(ent.remarks)}
+                    </>
+                  )}
+                  {filter === "Health" && (
+                    <>
+                      {renderCell(ent.sl)}
+                      {renderCell(ent.policyNo)}
+                      {renderCell(ent.company)}
+                      {renderCell(ent.subType)}
+                      {renderCell(ent.imdCode)}
+                      {renderCell(ent.name)}
+                      {renderCell(ent.sumAssured)}
+                      {renderCell(ent.familyMembers)}
+                      {renderCell(ent.bonus)}
+                      {renderCell(ent.tenure)}
+                      {renderCell(ent.riskDate)}
+                      {renderCell(ent.endDate)}
+                      {renderCell(ent.netPrem)}
+                      {renderCell(ent.prem)}
+                      {renderCell(ent.payout)}
+                      {renderCell(ent.companyPercentage)}
+                      {renderCell(ent.remarks)}
+                    </>
+                  )}
+                  {filter === "SME" && (
+                    <>
+                      {renderCell(ent.sl)}
+                      {renderCell(ent.policyNo)}
+                      {renderCell(ent.company)}
+                      {renderCell(ent.subType)}
+                      {renderCell(ent.imdCode)}
+                      {renderCell(ent.productName)}
+                      {renderCell(ent.name)}
+                      {renderCell(ent.tenure)}
+                      {renderCell(ent.sumAssured)}
+                      {renderCell(ent.endDate)}
+                      {renderCell(ent.netPrem)}
+                      {renderCell(ent.prem)}
+                      {renderCell(ent.payout)}
+                      {renderCell(ent.companyPercentage)}
+                      {renderCell(ent.remarks)}
+                    </>
+                  )}
+                  <td style={{ padding: "12px 15px", borderBottom: "1px solid #1e3a5a" }}>
+                    <div style={{ display: "flex", gap: 8 }}>
+                      {ent.aadhaarPhoto && <a href={ent.aadhaarPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700 }}>AADHAAR</a>}
+                      {ent.panPhoto && <a href={ent.panPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700 }}>PAN</a>}
+                    </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        {entries.length === 0 && (
-          <EmptyState icon="🗂️" title="No Records" subtitle="Entries from 'Data Records' will show here." />
+        {filteredEntries.length === 0 && (
+          <EmptyState icon="🗂️" title="No Records" subtitle={`No ${filter} insurance records found.`} />
         )}
       </div>
     </div>
