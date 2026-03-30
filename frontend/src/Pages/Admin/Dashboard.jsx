@@ -138,7 +138,13 @@ const DataRecord = ({ isMobile }) => {
     familyMembers: "",
     bonus: "",
     tenure: "",
-    productName: ""
+    productName: "",
+    plan: "",
+    paymentType: "",
+    folioNo: "",
+    amount: "",
+    paymentDate: "",
+    nextPaymentDate: ""
   };
 
   const [form, setForm] = useState(initialFormState);
@@ -155,10 +161,17 @@ const DataRecord = ({ isMobile }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.policyNo || !form.name || !form.prem) return alert("Fill required fields (Policy No, Name, Prem)");
+    const isMF = form.category === "MutualFund";
+    const idValue = isMF ? form.folioNo : form.policyNo;
+    const premValue = isMF ? form.amount : form.prem;
+
+    if (!idValue || !form.name || !premValue) {
+      return alert(`Fill required fields (${isMF ? "Folio No" : "Policy No"}, Name, ${isMF ? "Amount" : "Prem"})`);
+    }
+
     setLoading(true);
     try {
-      const fileId = form.policyNo || Date.now();
+      const fileId = idValue || Date.now();
       const aadhaarUrl = await uploadFile(aadhaarFile, `dataRecords/${fileId}_aadhaar`);
       const panUrl = await uploadFile(panFile, `dataRecords/${fileId}_pan`);
 
@@ -205,6 +218,8 @@ const DataRecord = ({ isMobile }) => {
             <option value="Motor">Motor Insurance</option>
             <option value="Health">Health Insurance</option>
             <option value="SME">SME Insurance</option>
+            <option value="Life">Life Insurance</option>
+            <option value="MutualFund">Mutual Fund</option>
           </select>
         </div>
 
@@ -245,6 +260,27 @@ const DataRecord = ({ isMobile }) => {
               {renderField("Product Name", "productName")}
               {renderField("Tenure", "tenure")}
               {renderField("Sum Assured", "sumAssured")}
+            </>
+          )}
+
+          {form.category === "Life" && (
+            <>
+              {renderField("Plan", "plan")}
+              {renderField("Sum Assured", "sumAssured")}
+              {renderField("Tenure", "tenure")}
+              {renderField("Risk Date", "riskDate", "date")}
+              {renderField("Payment Type", "paymentType", "select", ["Monthly", "Quarterly", "Half-Yearly", "Yearly", "Single"])}
+            </>
+          )}
+
+          {form.category === "MutualFund" && (
+            <>
+              {renderField("Folio No", "folioNo")}
+              {renderField("Fund Name", "productName")}
+              {renderField("Tenure", "tenure")}
+              {renderField("Amount", "amount")}
+              {renderField("Payment Date", "paymentDate", "date")}
+              {renderField("Next Payment Date", "nextPaymentDate", "date")}
             </>
           )}
 
@@ -292,11 +328,16 @@ const UserRecord = ({ isMobile }) => {
   const motorHeaders = ["SL", "Policy No", "Make", "Model", "IMD Code", "Mobile No", "Name", "Company", "Vehicle Type", "Policy Type", "Risk Date", "End Date", "OD", "TP", "Net Prem", "Prem", "Payout", "Co%", "Remarks"];
   const healthHeaders = ["SL", "Policy No", "Company", "Business Type", "IMD Code", "Name", "Sum Assured", "Family", "Bonus", "Tenure", "Risk Date", "End Date", "Net Prem", "Prem", "Payout", "Co%", "Remarks"];
   const smeHeaders = ["SL", "Policy No", "Company", "Type", "IMD Code", "Product", "Name", "Tenure", "Sum Assured", "End Date", "Net Prem", "Prem", "Payout", "Co%", "Remarks"];
+  const lifeHeaders = ["SL", "Policy No", "Company", "Plan", "IMD Code", "Name", "Sum Assured", "Tenure", "Risk Date", "End Date", "Payment Type", "Net Prem", "Prem", "Payout", "Co%", "Remarks"];
+  const mfHeaders = ["SL", "Folio No", "Company", "Fund Name", "IMD Code", "Name", "Tenure", "Amount", "Payment Date", "Next Payment", "Net Prem", "Prem", "Payout", "Co%", "Remarks"];
 
   const getHeaders = () => {
     if (filter === "Motor") return motorHeaders;
     if (filter === "Health") return healthHeaders;
-    return smeHeaders;
+    if (filter === "SME") return smeHeaders;
+    if (filter === "Life") return lifeHeaders;
+    if (filter === "MutualFund") return mfHeaders;
+    return [];
   };
 
   const renderCell = (val) => (
@@ -310,7 +351,7 @@ const UserRecord = ({ isMobile }) => {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, gap: 20, flexWrap: "wrap" }}>
         <h1 style={{ color: "#fff", fontSize: isMobile ? 22 : 26, fontWeight: 800 }}>User Record View</h1>
         <div style={{ display: "flex", gap: 10 }}>
-          {["Motor", "Health", "SME"].map(cat => (
+          {["Motor", "Health", "SME", "Life", "MutualFund"].map(cat => (
             <button key={cat} onClick={() => setFilter(cat)} style={{ padding: "8px 16px", borderRadius: 8, border: "1px solid #1e3a5a", background: filter === cat ? "#1e90ff" : "#0d1b2a", color: "#fff", cursor: "pointer", fontWeight: 600 }}>{cat}</button>
           ))}
         </div>
@@ -386,6 +427,45 @@ const UserRecord = ({ isMobile }) => {
                       {renderCell(ent.tenure)}
                       {renderCell(ent.sumAssured)}
                       {renderCell(ent.endDate)}
+                      {renderCell(ent.netPrem)}
+                      {renderCell(ent.prem)}
+                      {renderCell(ent.payout)}
+                      {renderCell(ent.companyPercentage)}
+                      {renderCell(ent.remarks)}
+                    </>
+                  )}
+                  {filter === "Life" && (
+                    <>
+                      {renderCell(ent.sl)}
+                      {renderCell(ent.policyNo)}
+                      {renderCell(ent.company)}
+                      {renderCell(ent.plan)}
+                      {renderCell(ent.imdCode)}
+                      {renderCell(ent.name)}
+                      {renderCell(ent.sumAssured)}
+                      {renderCell(ent.tenure)}
+                      {renderCell(ent.riskDate)}
+                      {renderCell(ent.endDate)}
+                      {renderCell(ent.paymentType)}
+                      {renderCell(ent.netPrem)}
+                      {renderCell(ent.prem)}
+                      {renderCell(ent.payout)}
+                      {renderCell(ent.companyPercentage)}
+                      {renderCell(ent.remarks)}
+                    </>
+                  )}
+                  {filter === "MutualFund" && (
+                    <>
+                      {renderCell(ent.sl)}
+                      {renderCell(ent.folioNo)}
+                      {renderCell(ent.company)}
+                      {renderCell(ent.productName)}
+                      {renderCell(ent.imdCode)}
+                      {renderCell(ent.name)}
+                      {renderCell(ent.tenure)}
+                      {renderCell(ent.amount)}
+                      {renderCell(ent.paymentDate)}
+                      {renderCell(ent.nextPaymentDate)}
                       {renderCell(ent.netPrem)}
                       {renderCell(ent.prem)}
                       {renderCell(ent.payout)}
