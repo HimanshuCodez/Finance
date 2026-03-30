@@ -509,9 +509,9 @@ export default function Dashboard() {
 
   const navItems = [
     { key: "users", label: "All Users", icon: "👥", admin: true },
-    { key: "records", label: "Data Records", icon: "📊", admin: false },
     { key: "create", label: "Create User", icon: "➕", admin: true },
-    { key: "userrecord", label: "User Record", icon: "🗂️", admin: true },
+    { key: "records", label: "Record Data", icon: "📊", admin: false },
+    { key: "userrecord", label: "Find Data", icon: "🗂️", admin: true },
   ];
 
   const filteredNavItems = currentUser.role === "Admin" ? navItems : navItems.filter(item => !item.admin);
