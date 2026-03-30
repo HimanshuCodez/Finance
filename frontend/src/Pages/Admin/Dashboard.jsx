@@ -150,6 +150,7 @@ const DataRecord = ({ isMobile }) => {
   const [form, setForm] = useState(initialFormState);
   const [aadhaarFile, setAadhaarFile] = useState(null);
   const [panFile, setPanFile] = useState(null);
+  const [policyFile, setPolicyFile] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const uploadFile = async (file, path) => {
@@ -174,17 +175,20 @@ const DataRecord = ({ isMobile }) => {
       const fileId = idValue || Date.now();
       const aadhaarUrl = await uploadFile(aadhaarFile, `dataRecords/${fileId}_aadhaar`);
       const panUrl = await uploadFile(panFile, `dataRecords/${fileId}_pan`);
+      const policyUrl = await uploadFile(policyFile, `dataRecords/${fileId}_policy`);
 
       await addDoc(collection(db, "dataEntries"), {
         ...form,
         aadhaarPhoto: aadhaarUrl,
         panPhoto: panUrl,
+        policyPhoto: policyUrl,
         createdAt: serverTimestamp()
       });
       alert("Record Added Successfully!");
       setForm(initialFormState);
       setAadhaarFile(null);
       setPanFile(null);
+      setPolicyFile(null);
     } catch (e) {
       alert("Error adding record: " + e.message);
     }
@@ -300,6 +304,10 @@ const DataRecord = ({ isMobile }) => {
           <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
             <label style={labelStyle}>Pan Card Photo</label>
             <input type="file" accept="image/*" onChange={e => setPanFile(e.target.files[0])} style={inputStyle} />
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+            <label style={labelStyle}>Policy Document</label>
+            <input type="file" accept="image/*,application/pdf" onChange={e => setPolicyFile(e.target.files[0])} style={inputStyle} />
           </div>
 
           <button type="submit" disabled={loading} style={{ gridColumn: "1 / -1", background: "#1e90ff", color: "#fff", border: "none", borderRadius: 8, padding: 16, fontWeight: 700, fontSize: 16, cursor: loading ? "not-allowed" : "pointer", marginTop: 10 }}>
@@ -477,6 +485,7 @@ const UserRecord = ({ isMobile }) => {
                     <div style={{ display: "flex", gap: 8 }}>
                       {ent.aadhaarPhoto && <a href={ent.aadhaarPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700 }}>AADHAAR</a>}
                       {ent.panPhoto && <a href={ent.panPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700 }}>PAN</a>}
+                      {ent.policyPhoto && <a href={ent.policyPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700 }}>POLICY</a>}
                     </div>
                   </td>
                 </tr>
