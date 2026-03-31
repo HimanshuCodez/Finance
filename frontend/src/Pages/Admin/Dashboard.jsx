@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { db, storage } from "../../firebase";
-import { collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, getDocs, updateDoc, doc } from "firebase/firestore";
+import { collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, getDocs, updateDoc, doc, deleteDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -334,7 +334,7 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
           </div>
 
           <button type="submit" disabled={loading} style={{ gridColumn: "1 / -1", background: "#1e90ff", color: "#fff", border: "none", borderRadius: 8, padding: 16, fontWeight: 700, fontSize: 16, cursor: loading ? "not-allowed" : "pointer", marginTop: 10 }}>
-            {loading ? "Uploading & Saving..." : "Save Motor Record for all categories"}
+            {loading ? "Uploading & Saving..." : "Saved"}
           </button>
         </form>
       </div>
@@ -356,6 +356,17 @@ const UserRecord = ({ isMobile, currentUser }) => {
   }, []);
 
   const filteredEntries = entries.filter(ent => ent.category === filter);
+
+  const handleDelete = async (id) => {
+    if (window.confirm("Are you sure you want to delete this record?")) {
+      try {
+        await deleteDoc(doc(db, "dataEntries", id));
+        toast.success("Record deleted successfully!");
+      } catch (e) {
+        toast.error("Error deleting record: " + e.message);
+      }
+    }
+  };
 
   const motorHeaders = ["SL", "Policy No", "Make", "Model", "IMD Code", "Mobile No", "Name", "Company", "Vehicle Type", "Policy Type", "Risk Date", "End Date", "OD", "TP", "Net Prem", "Prem", "Payout", "Co%", "Remarks", "Actions"];
   const healthHeaders = ["SL", "Policy No", "Company", "Business Type", "IMD Code", "Name", "Sum Assured", "Family", "Bonus", "Tenure", "Risk Date", "End Date", "Net Prem", "Prem", "Payout", "Co%", "Remarks", "Actions"];
@@ -512,6 +523,12 @@ const UserRecord = ({ isMobile, currentUser }) => {
                         style={{ background: "#1e90ff", color: "#fff", border: "none", borderRadius: 4, padding: "4px 8px", fontSize: 10, fontWeight: 700, cursor: "pointer" }}
                       >
                         EDIT
+                      </button>
+                      <button 
+                        onClick={() => handleDelete(ent.id)}
+                        style={{ background: "#ef4444", color: "#fff", border: "none", borderRadius: 4, padding: "4px 8px", fontSize: 10, fontWeight: 700, cursor: "pointer" }}
+                      >
+                        DELETE
                       </button>
                     </div>
                   </td>
