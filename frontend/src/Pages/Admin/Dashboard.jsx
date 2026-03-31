@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { db, storage } from "../../firebase";
-import { collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, getDocs } from "firebase/firestore";
+import { collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, getDocs, updateDoc, doc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -112,7 +112,7 @@ const HEALTH_FAMILY_MEMBERS = [
   "2 Adult 3 child", "1 Adult 1 Child", "1 Adult 2 child"
 ];
 
-const DataRecord = ({ isMobile, currentUser }) => {
+const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
   const initialFormState = {
     category: "Motor",
     sl: "",
@@ -154,6 +154,14 @@ const DataRecord = ({ isMobile, currentUser }) => {
   const [policyFile, setPolicyFile] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    if (recordToEdit) {
+      setForm(recordToEdit);
+    } else {
+      setForm(initialFormState);
+    }
+  }, [recordToEdit]);
+
   const uploadFile = async (file, path) => {
     if (!file) return "";
     const storageRef = ref(storage, path);
@@ -176,22 +184,36 @@ const DataRecord = ({ isMobile, currentUser }) => {
         uploadFile(policyFile, `dataRecords/${form.category}/${timestamp}_${fileId}_policy`)
       ]);
 
-      await addDoc(collection(db, "dataEntries"), {
+      const dataToSave = {
         ...form,
-        aadhaarPhoto: aadhaarUrl,
-        panPhoto: panUrl,
-        policyPhoto: policyUrl,
         addedBy: currentUser?.id || "admin",
         addedByName: currentUser?.name || "Super Admin",
-        createdAt: serverTimestamp()
-      });
-      toast.success("Record Added Successfully!");
-      setForm(initialFormState);
-      setAadhaarFile(null);
-      setPanFile(null);
-      setPolicyFile(null);
+      };
+
+      if (aadhaarUrl) dataToSave.aadhaarPhoto = aadhaarUrl;
+      if (panUrl) dataToSave.panPhoto = panUrl;
+      if (policyUrl) dataToSave.policyPhoto = policyUrl;
+
+      if (recordToEdit) {
+        await updateDoc(doc(db, "dataEntries", recordToEdit.id), {
+          ...dataToSave,
+          updatedAt: serverTimestamp()
+        });
+        toast.success("Record Updated Successfully!");
+        if (onFinished) onFinished();
+      } else {
+        await addDoc(collection(db, "dataEntries"), {
+          ...dataToSave,
+          createdAt: serverTimestamp()
+        });
+        toast.success("Record Added Successfully!");
+        setForm(initialFormState);
+        setAadhaarFile(null);
+        setPanFile(null);
+        setPolicyFile(null);
+      }
     } catch (e) {
-      toast.error("Error adding record: " + e.message);
+      toast.error(`Error ${recordToEdit ? "updating" : "adding"} record: ` + e.message);
     }
     setLoading(false);
   };
@@ -320,9 +342,10 @@ const DataRecord = ({ isMobile, currentUser }) => {
   );
 };
 
-const UserRecord = ({ isMobile }) => {
+const UserRecord = ({ isMobile, currentUser }) => {
   const [entries, setEntries] = useState([]);
   const [filter, setFilter] = useState("Motor");
+  const [editingRecord, setEditingRecord] = useState(null);
 
   useEffect(() => {
     const q = query(collection(db, "dataEntries"), orderBy("createdAt", "desc"));
@@ -334,11 +357,11 @@ const UserRecord = ({ isMobile }) => {
 
   const filteredEntries = entries.filter(ent => ent.category === filter);
 
-  const motorHeaders = ["SL", "Policy No", "Make", "Model", "IMD Code", "Mobile No", "Name", "Company", "Vehicle Type", "Policy Type", "Risk Date", "End Date", "OD", "TP", "Net Prem", "Prem", "Payout", "Co%", "Remarks"];
-  const healthHeaders = ["SL", "Policy No", "Company", "Business Type", "IMD Code", "Name", "Sum Assured", "Family", "Bonus", "Tenure", "Risk Date", "End Date", "Net Prem", "Prem", "Payout", "Co%", "Remarks"];
-  const smeHeaders = ["SL", "Policy No", "Company", "Type", "IMD Code", "Product", "Name", "Tenure", "Sum Assured", "End Date", "Net Prem", "Prem", "Payout", "Co%", "Remarks"];
-  const lifeHeaders = ["SL", "Policy No", "Company", "Plan", "IMD Code", "Name", "Sum Assured", "Tenure", "Risk Date", "End Date", "Payment Type", "Net Prem", "Prem", "Payout", "Co%", "Remarks"];
-  const mfHeaders = ["SL", "Folio No", "Company", "Fund Name", "IMD Code", "Name", "Tenure", "Amount", "Payment Date", "Next Payment", "Net Prem", "Prem", "Payout", "Co%", "Remarks"];
+  const motorHeaders = ["SL", "Policy No", "Make", "Model", "IMD Code", "Mobile No", "Name", "Company", "Vehicle Type", "Policy Type", "Risk Date", "End Date", "OD", "TP", "Net Prem", "Prem", "Payout", "Co%", "Remarks", "Actions"];
+  const healthHeaders = ["SL", "Policy No", "Company", "Business Type", "IMD Code", "Name", "Sum Assured", "Family", "Bonus", "Tenure", "Risk Date", "End Date", "Net Prem", "Prem", "Payout", "Co%", "Remarks", "Actions"];
+  const smeHeaders = ["SL", "Policy No", "Company", "Type", "IMD Code", "Product", "Name", "Tenure", "Sum Assured", "End Date", "Net Prem", "Prem", "Payout", "Co%", "Remarks", "Actions"];
+  const lifeHeaders = ["SL", "Policy No", "Company", "Plan", "IMD Code", "Name", "Sum Assured", "Tenure", "Risk Date", "End Date", "Payment Type", "Net Prem", "Prem", "Payout", "Co%", "Remarks", "Actions"];
+  const mfHeaders = ["SL", "Folio No", "Company", "Fund Name", "IMD Code", "Name", "Tenure", "Amount", "Payment Date", "Next Payment", "Net Prem", "Prem", "Payout", "Co%", "Remarks", "Actions"];
 
   const getHeaders = () => {
     if (filter === "Motor") return motorHeaders;
@@ -484,6 +507,16 @@ const UserRecord = ({ isMobile }) => {
                   )}
                   <td style={{ padding: "12px 15px", borderBottom: "1px solid #1e3a5a" }}>
                     <div style={{ display: "flex", gap: 8 }}>
+                      <button 
+                        onClick={() => setEditingRecord(ent)}
+                        style={{ background: "#1e90ff", color: "#fff", border: "none", borderRadius: 4, padding: "4px 8px", fontSize: 10, fontWeight: 700, cursor: "pointer" }}
+                      >
+                        EDIT
+                      </button>
+                    </div>
+                  </td>
+                  <td style={{ padding: "12px 15px", borderBottom: "1px solid #1e3a5a" }}>
+                    <div style={{ display: "flex", gap: 8 }}>
                       {ent.aadhaarPhoto && <a href={ent.aadhaarPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700 }}>AADHAAR</a>}
                       {ent.panPhoto && <a href={ent.panPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700 }}>PAN</a>}
                       {ent.policyPhoto && <a href={ent.policyPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700 }}>POLICY</a>}
@@ -498,6 +531,27 @@ const UserRecord = ({ isMobile }) => {
           <EmptyState icon="🗂️" title="No Records" subtitle={`No ${filter} insurance records found.`} />
         )}
       </div>
+
+      {editingRecord && (
+        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.8)", zIndex: 2000, display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}>
+          <div style={{ background: "#040d18", borderRadius: 16, width: "100%", maxWidth: 1000, maxHeight: "90vh", overflowY: "auto", position: "relative", border: "1px solid #1e3a5a" }}>
+            <button 
+              onClick={() => setEditingRecord(null)} 
+              style={{ position: "absolute", top: 20, right: 20, background: "transparent", border: "none", color: "#fff", fontSize: 24, cursor: "pointer", zIndex: 1 }}
+            >
+              &times;
+            </button>
+            <div style={{ padding: isMobile ? 20 : 40 }}>
+              <DataRecord 
+                isMobile={isMobile} 
+                currentUser={currentUser} 
+                recordToEdit={editingRecord} 
+                onFinished={() => setEditingRecord(null)} 
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -659,7 +713,7 @@ export default function Dashboard() {
           {active === "users" && <AllUsers isMobile={isMobile} users={users} />}
           {active === "records" && <DataRecord isMobile={isMobile} currentUser={currentUser} />}
           {active === "create" && <CreateUser isMobile={isMobile} />}
-          {active === "userrecord" && <UserRecord isMobile={isMobile} />}
+          {active === "userrecord" && <UserRecord isMobile={isMobile} currentUser={currentUser} />}
         </main>
       </div>
     </div>
