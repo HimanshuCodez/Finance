@@ -185,13 +185,13 @@ const DataRecord = ({ isMobile, currentUser }) => {
         addedByName: currentUser?.name || "Super Admin",
         createdAt: serverTimestamp()
       });
-      alert("Record Added Successfully!");
+      toast.success("Record Added Successfully!");
       setForm(initialFormState);
       setAadhaarFile(null);
       setPanFile(null);
       setPolicyFile(null);
     } catch (e) {
-      alert("Error adding record: " + e.message);
+      toast.error("Error adding record: " + e.message);
     }
     setLoading(false);
   };
@@ -511,8 +511,8 @@ const CreateUser = ({ isMobile }) => {
     try {
       await addDoc(collection(db, "users"), { ...form, createdAt: serverTimestamp() });
       setForm({ name: "", email: "", phone: "", role: "User", password: "" });
-      alert("User created successfully!");
-    } catch (e) { alert(e.message); }
+      toast.success("User created successfully!");
+    } catch (e) { toast.error(e.message); }
     setLoading(false);
   };
 
@@ -549,11 +549,12 @@ const Login = ({ onLogin }) => {
     const snapshot = await getDocs(q);
     const user = snapshot.docs.find(d => d.data().email === email && d.data().password === password);
     if (user) onLogin({ id: user.id, ...user.data() });
-    else alert("Invalid credentials (Try: admin@smr.com / admin123)");
+    else toast.error("Invalid credentials (Try: admin@smr.com / admin123)");
   };
 
   return (
     <div style={{ height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#040d18", padding: 20 }}>
+      <Toaster position="top-right" reverseOrder={false} />
       <div style={{ background: "#071323", padding: "40px 24px", borderRadius: 20, border: "1px solid #1e3a5a", width: "100%", maxWidth: 350 }}>
         <Logo />
         <h2 style={{ color: "#fff", marginTop: 24, fontSize: 24, fontWeight: 700 }}>Admin Login</h2>
@@ -606,6 +607,7 @@ export default function Dashboard() {
 
   return (
     <div style={{ display: "flex", height: "100vh", background: "#040d18", color: "#fff", position: "relative", overflow: "hidden" }}>
+      <Toaster position="top-right" reverseOrder={false} />
       {/* Sidebar Overlay for Mobile */}
       {isMobile && !collapsed && (
         <div 
