@@ -129,6 +129,16 @@ export default function HeroSection() {
           </button>
         )}
 
+        {currentView === "initial" && (
+          <div className="mb-12 w-full flex justify-center px-4">
+            <img 
+              src="/pre.jpeg" 
+              alt="Milestone Achieved" 
+              className="w-full max-w-4xl h-auto rounded-3xl shadow-2xl object-cover border-2 border-blue-100"
+            />
+          </div>
+        )}
+
         <div
           className={`grid ${
             currentView === "initial"
