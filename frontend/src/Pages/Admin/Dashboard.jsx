@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { db, storage } from "../../firebase";
 import { collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, getDocs } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import toast, { Toaster } from "react-hot-toast";
 
 const SMR_LOGO = "https://i.postimg.cc/Fsbgy6sQ/smr.png";
 
@@ -162,16 +163,10 @@ const DataRecord = ({ isMobile, currentUser }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const isMF = form.category === "MutualFund";
-    const idValue = isMF ? form.folioNo : form.policyNo;
-    const premValue = isMF ? form.amount : form.prem;
-
-    if (!idValue || !form.name || !premValue) {
-      return alert(`Fill required fields (${isMF ? "Folio No" : "Policy No"}, Name, ${isMF ? "Amount" : "Prem"})`);
-    }
-
     setLoading(true);
     try {
+      const isMF = form.category === "MutualFund";
+      const idValue = isMF ? form.folioNo : form.policyNo;
       const fileId = idValue || Date.now();
       const timestamp = Date.now();
       
@@ -512,15 +507,13 @@ const CreateUser = ({ isMobile }) => {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    if (form.name && form.email && form.password) {
-      setLoading(true);
-      try {
-        await addDoc(collection(db, "users"), { ...form, createdAt: serverTimestamp() });
-        setForm({ name: "", email: "", phone: "", role: "User", password: "" });
-        alert("User created successfully!");
-      } catch (e) { alert(e.message); }
-      setLoading(false);
-    } else alert("Fill required fields");
+    setLoading(true);
+    try {
+      await addDoc(collection(db, "users"), { ...form, createdAt: serverTimestamp() });
+      setForm({ name: "", email: "", phone: "", role: "User", password: "" });
+      alert("User created successfully!");
+    } catch (e) { alert(e.message); }
+    setLoading(false);
   };
 
   return (
