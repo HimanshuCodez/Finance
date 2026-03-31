@@ -111,7 +111,7 @@ const HEALTH_FAMILY_MEMBERS = [
   "2 Adult 3 child", "1 Adult 1 Child", "1 Adult 2 child"
 ];
 
-const DataRecord = ({ isMobile }) => {
+const DataRecord = ({ isMobile, currentUser }) => {
   const initialFormState = {
     category: "Motor",
     sl: "",
@@ -173,15 +173,21 @@ const DataRecord = ({ isMobile }) => {
     setLoading(true);
     try {
       const fileId = idValue || Date.now();
-      const aadhaarUrl = await uploadFile(aadhaarFile, `dataRecords/${fileId}_aadhaar`);
-      const panUrl = await uploadFile(panFile, `dataRecords/${fileId}_pan`);
-      const policyUrl = await uploadFile(policyFile, `dataRecords/${fileId}_policy`);
+      const timestamp = Date.now();
+      
+      const [aadhaarUrl, panUrl, policyUrl] = await Promise.all([
+        uploadFile(aadhaarFile, `dataRecords/${form.category}/${timestamp}_${fileId}_aadhaar`),
+        uploadFile(panFile, `dataRecords/${form.category}/${timestamp}_${fileId}_pan`),
+        uploadFile(policyFile, `dataRecords/${form.category}/${timestamp}_${fileId}_policy`)
+      ]);
 
       await addDoc(collection(db, "dataEntries"), {
         ...form,
         aadhaarPhoto: aadhaarUrl,
         panPhoto: panUrl,
         policyPhoto: policyUrl,
+        addedBy: currentUser?.id || "admin",
+        addedByName: currentUser?.name || "Super Admin",
         createdAt: serverTimestamp()
       });
       alert("Record Added Successfully!");
@@ -311,7 +317,7 @@ const DataRecord = ({ isMobile }) => {
           </div>
 
           <button type="submit" disabled={loading} style={{ gridColumn: "1 / -1", background: "#1e90ff", color: "#fff", border: "none", borderRadius: 8, padding: 16, fontWeight: 700, fontSize: 16, cursor: loading ? "not-allowed" : "pointer", marginTop: 10 }}>
-            {loading ? "Uploading & Saving..." : `Save ${form.category} Record`}
+            {loading ? "Uploading & Saving..." : "Save Motor Record for all categories"}
           </button>
         </form>
       </div>
@@ -656,7 +662,7 @@ export default function Dashboard() {
         </header>
         <main style={{ flex: 1, padding: isMobile ? 16 : 24, overflowY: "auto", background: "#040d18" }}>
           {active === "users" && <AllUsers isMobile={isMobile} users={users} />}
-          {active === "records" && <DataRecord isMobile={isMobile} />}
+          {active === "records" && <DataRecord isMobile={isMobile} currentUser={currentUser} />}
           {active === "create" && <CreateUser isMobile={isMobile} />}
           {active === "userrecord" && <UserRecord isMobile={isMobile} />}
         </main>

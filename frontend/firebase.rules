@@ -17,6 +17,11 @@ service cloud.firestore {
     match /dataEntries/{entryId} {
       allow read, write: if true;
     }
+
+    // Allow access to 'settings' for marquee and other configurations
+    match /settings/{settingId} {
+      allow read, write: if true;
+    }
   }
 }
 
