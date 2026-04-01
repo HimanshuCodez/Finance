@@ -117,12 +117,12 @@ export default function HeroSection() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.3 }}
-        className="mt-16 lg:ml-60 w-full max-w-6xl"
+        className="mt-12 md:mt-16 w-full max-w-[1400px] mx-auto"
       >
         {currentView !== "initial" && (
           <button
             onClick={() => setCurrentView("initial")}
-            className="mb-6 flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-800"
+            className="mb-6 flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors"
           >
             <ArrowLeft size={16} />
             Back
@@ -130,20 +130,23 @@ export default function HeroSection() {
         )}
 
         {currentView === "initial" && (
-          <div className="mb-12 w-full flex justify-center px-4">
-            <img 
-              src="/pre.jpeg" 
-              alt="Milestone Achieved" 
-              className="w-full max-w-4xl h-auto rounded-3xl shadow-2xl object-cover border-2 border-blue-100"
+          <div className="mb-8 md:mb-12 flex justify-center px-2 md:px-0">
+            <motion.img
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              src="/pre.jpeg"
+              alt="Milestone"
+              className="w-full max-w-[1100px] rounded-xl md:rounded-3xl shadow-lg md:shadow-xl border-2 md:border-4 border-white object-cover"
             />
           </div>
         )}
 
         <div
-          className={`grid ${
+          className={`grid px-2 md:px-0 ${
             currentView === "initial"
-              ? "grid-cols-1 md:grid-cols-2 gap-8"
-              : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              ? "grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 justify-items-center"
+              : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
           }`}
         >
           {cardsToShow.map((card, index) => (
