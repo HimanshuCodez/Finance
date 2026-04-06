@@ -386,7 +386,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
   const healthHeaders = ["SL", "Policy No", "Company", "Business Type", "IMD Code", "Name", "Sum Assured", "Family", "Bonus", "Tenure", "Risk start Date", "Risk End date", "Net Prem", "Prem", "Payout", "Co%", "Remarks", "Actions"];
   const smeHeaders = ["SL", "Policy No", "Company", "Type", "IMD Code", "Product", "Name", "Tenure", "Sum Assured", "Risk End date", "Net Prem", "Prem", "Payout", "Co%", "Remarks", "Actions"];
   const lifeHeaders = ["SL", "Policy No", "Company", "Plan", "IMD Code", "Name", "Sum Assured", "Tenure", "Risk start Date", "Risk End date", "Payment Type", "Net Prem", "Prem", "Payout", "Co%", "Remarks", "Actions"];
-  const mfHeaders = ["SL", "Folio No", "Company", "Fund Name", "IMD Code", "Name", "Tenure", "Amount", "Payment Date", "Next Payment", "Net Prem", "Prem", "Payout", "Co%", "Remarks", "Actions"];
+  const mfHeaders = ["SL", "Folio No", "Company", "Fund Name", "IMD Code", "Name", "Tenure", "Amount", "Payment Date", "Next Payment", "Fund scheme end date", "Net Prem", "Prem", "Payout", "Co%", "Remarks", "Actions"];
 
   const getHeaders = () => {
     if (filter === "Motor") return motorHeaders;
