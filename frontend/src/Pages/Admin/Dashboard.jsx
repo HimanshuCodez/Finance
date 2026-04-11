@@ -278,9 +278,6 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
               {renderField("Mobile No", "mobileNo")}
               {renderField("Vehicle Type", "vehicleType", "select", MOTOR_VEHICLE_TYPES)}
               {renderField("Policy Type", "policyType", "select", ["COMPREHENSIVE", "SAOD", "THIRD PARTY"])}
-              {renderField("Risk start Date", "riskDate", "date")}
-              {renderField("OD", "od")}
-              {renderField("TP", "tp")}
             </>
           )}
 
@@ -290,8 +287,6 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
               {renderField("Sum Assured", "sumAssured")}
               {renderField("Family Members", "familyMembers", "select", HEALTH_FAMILY_MEMBERS)}
               {renderField("Bonus", "bonus")}
-              {renderField("Tenure", "tenure")}
-              {renderField("Risk start Date", "riskDate", "date")}
             </>
           )}
 
@@ -299,7 +294,6 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
             <>
               {renderField("Insurance Type", "subType", "select", ["New", "Renewal"])}
               {renderField("Product Name", "productName")}
-              {renderField("Tenure", "tenure")}
               {renderField("Sum Assured", "sumAssured")}
             </>
           )}
@@ -308,8 +302,6 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
             <>
               {renderField("Plan", "plan")}
               {renderField("Sum Assured", "sumAssured")}
-              {renderField("Tenure", "tenure")}
-              {renderField("Risk start Date", "riskDate", "date")}
               {renderField("Payment Type", "paymentType", "select", ["Monthly", "Quarterly", "Half-Yearly", "Yearly", "Single"])}
             </>
           )}
@@ -318,16 +310,24 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
             <>
               {renderField("Folio No", "folioNo")}
               {renderField("Fund Name", "productName")}
-              {renderField("Tenure", "tenure")}
               {renderField("Amount", "amount")}
-              {renderField("Payment Date", "paymentDate", "date")}
-              {renderField("Next Payment Date", "nextPaymentDate", "date")}
             </>
           )}
 
+          {renderField("Tenure", "tenure")}
+          {form.category === "MutualFund" ? (
+            <>
+              {renderField("Payment Date", "paymentDate", "date")}
+              {renderField("Next Payment Date", "nextPaymentDate", "date")}
+            </>
+          ) : (
+            renderField("Risk start Date", "riskDate", "date")
+          )}
           {renderField(form.category === "MutualFund" ? "Fund scheme end date" : "Risk End date", "endDate", "date")}
+          {renderField("OD", "od")}
+          {renderField("TP", "tp")}
           {renderField("Net Prem", "netPrem")}
-          {renderField("Prem", "prem")}
+          {renderField("Total prem", "prem")}
           {renderField("Payout", "payout")}
           {renderField("Company %", "companyPercentage")}
           <div style={{ gridColumn: isMobile ? "span 1" : "span 2" }}>
@@ -343,7 +343,7 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
             <input type="file" accept="image/*" onChange={e => setPanFile(e.target.files[0])} style={inputStyle} />
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            <label style={labelStyle}>Policy Document</label>
+            <label style={labelStyle}>Misc Document</label>
             <input type="file" accept="image/*,application/pdf" onChange={e => setPolicyFile(e.target.files[0])} style={inputStyle} />
           </div>
 
@@ -382,11 +382,11 @@ const UserRecord = ({ isMobile, currentUser }) => {
     }
   };
 
-  const motorHeaders = ["SL", "Policy No", "Make", "Model", "IMD Code", "Mobile No", "Name", "Company", "Vehicle Type", "Policy Type", "Risk start Date", "Risk End date", "OD", "TP", "Net Prem", "Prem", "Payout", "Co%", "Remarks", "Actions"];
-  const healthHeaders = ["SL", "Policy No", "Company", "Business Type", "IMD Code", "Name", "Sum Assured", "Family", "Bonus", "Tenure", "Risk start Date", "Risk End date", "Net Prem", "Prem", "Payout", "Co%", "Remarks", "Actions"];
-  const smeHeaders = ["SL", "Policy No", "Company", "Type", "IMD Code", "Product", "Name", "Tenure", "Sum Assured", "Risk End date", "Net Prem", "Prem", "Payout", "Co%", "Remarks", "Actions"];
-  const lifeHeaders = ["SL", "Policy No", "Company", "Plan", "IMD Code", "Name", "Sum Assured", "Tenure", "Risk start Date", "Risk End date", "Payment Type", "Net Prem", "Prem", "Payout", "Co%", "Remarks", "Actions"];
-  const mfHeaders = ["SL", "Folio No", "Company", "Fund Name", "IMD Code", "Name", "Tenure", "Amount", "Payment Date", "Next Payment", "Fund scheme end date", "Net Prem", "Prem", "Payout", "Co%", "Remarks", "Actions"];
+  const motorHeaders = ["SL", "Policy No", "Make", "Model", "IMD Code", "Mobile No", "Name", "Company", "Vehicle Type", "Policy Type", "Tenure", "Risk start Date", "Risk End date", "OD", "TP", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
+  const healthHeaders = ["SL", "Policy No", "Company", "Business Type", "IMD Code", "Name", "Sum Assured", "Family", "Bonus", "Tenure", "Risk start Date", "Risk End date", "OD", "TP", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
+  const smeHeaders = ["SL", "Policy No", "Company", "Type", "IMD Code", "Product", "Name", "Sum Assured", "Tenure", "Risk start Date", "Risk End date", "OD", "TP", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
+  const lifeHeaders = ["SL", "Policy No", "Company", "Plan", "IMD Code", "Name", "Sum Assured", "Payment Type", "Tenure", "Risk start Date", "Risk End date", "OD", "TP", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
+  const mfHeaders = ["SL", "Folio No", "Company", "Fund Name", "IMD Code", "Name", "Amount", "Payment Date", "Next Payment", "Tenure", "Risk start Date", "Risk End date", "OD", "TP", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
 
   const getHeaders = () => {
     if (filter === "Motor") return motorHeaders;
@@ -440,6 +440,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                       {renderCell(ent.company)}
                       {renderCell(ent.vehicleType)}
                       {renderCell(ent.policyType)}
+                      {renderCell(ent.tenure)}
                       {renderCell(ent.riskDate)}
                       {renderCell(ent.endDate)}
                       {renderCell(ent.od)}
@@ -465,6 +466,8 @@ const UserRecord = ({ isMobile, currentUser }) => {
                       {renderCell(ent.tenure)}
                       {renderCell(ent.riskDate)}
                       {renderCell(ent.endDate)}
+                      {renderCell(ent.od)}
+                      {renderCell(ent.tp)}
                       {renderCell(ent.netPrem)}
                       {renderCell(ent.prem)}
                       {renderCell(ent.payout)}
@@ -481,9 +484,12 @@ const UserRecord = ({ isMobile, currentUser }) => {
                       {renderCell(ent.imdCode)}
                       {renderCell(ent.productName)}
                       {renderCell(ent.name)}
-                      {renderCell(ent.tenure)}
                       {renderCell(ent.sumAssured)}
+                      {renderCell(ent.tenure)}
+                      {renderCell(ent.riskDate)}
                       {renderCell(ent.endDate)}
+                      {renderCell(ent.od)}
+                      {renderCell(ent.tp)}
                       {renderCell(ent.netPrem)}
                       {renderCell(ent.prem)}
                       {renderCell(ent.payout)}
@@ -500,10 +506,12 @@ const UserRecord = ({ isMobile, currentUser }) => {
                       {renderCell(ent.imdCode)}
                       {renderCell(ent.name)}
                       {renderCell(ent.sumAssured)}
+                      {renderCell(ent.paymentType)}
                       {renderCell(ent.tenure)}
                       {renderCell(ent.riskDate)}
                       {renderCell(ent.endDate)}
-                      {renderCell(ent.paymentType)}
+                      {renderCell(ent.od)}
+                      {renderCell(ent.tp)}
                       {renderCell(ent.netPrem)}
                       {renderCell(ent.prem)}
                       {renderCell(ent.payout)}
@@ -519,11 +527,14 @@ const UserRecord = ({ isMobile, currentUser }) => {
                       {renderCell(ent.productName)}
                       {renderCell(ent.imdCode)}
                       {renderCell(ent.name)}
-                      {renderCell(ent.tenure)}
                       {renderCell(ent.amount)}
                       {renderCell(ent.paymentDate)}
                       {renderCell(ent.nextPaymentDate)}
+                      {renderCell(ent.tenure)}
+                      {renderCell(ent.riskDate)}
                       {renderCell(ent.endDate)}
+                      {renderCell(ent.od)}
+                      {renderCell(ent.tp)}
                       {renderCell(ent.netPrem)}
                       {renderCell(ent.prem)}
                       {renderCell(ent.payout)}
