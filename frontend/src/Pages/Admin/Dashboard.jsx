@@ -112,10 +112,23 @@ const HEALTH_FAMILY_MEMBERS = [
   "2 Adult 3 child", "1 Adult 1 Child", "1 Adult 2 child"
 ];
 
-const INSURANCE_COMPANIES = [
-  "ICICI LOMBARD", "SBI GENERAL INSURANCE", "NIVA BUPA", 
-  "BAJAJ GENERAL", "ADITYA BIRLA", "CIGNA TTK", "NEW INDIA ASSURANCE"
-];
+const COMPANIES_BY_CATEGORY = {
+  Motor: [
+    "ICICI LOMBARD GENERAL INSURANCE", "TATA AIG", "BAJAJ GENERAL",
+    "GO DIGIT", "SBI GENERAL", "NEW INDIA ASSURANCE", "OTHERS"
+  ],
+  SME: [
+    "ICICI LOMBARD GENERAL INSURANCE", "TATA AIG", "BAJAJ GENERAL",
+    "GO DIGIT", "SBI GENERAL", "NEW INDIA ASSURANCE", "OTHERS"
+  ],
+  Life: [
+    "LIFE INSURANCE CORPORATION", "AXIS MAX LIFE", "PRUDENTIAL ICICI"
+  ],
+  MutualFund: [
+    "PRUDENTIAL ICICI", "HDFC MUTUAL", "OSWAL MUTUAL FUND"
+  ],
+  Health: []
+};
 
 const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
   const initialFormState = {
@@ -268,7 +281,7 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
                 : "Insurance Company", 
             "company",
             "text",
-            INSURANCE_COMPANIES
+            COMPANIES_BY_CATEGORY[form.category] || []
           )}
           
           {form.category === "Motor" && (
