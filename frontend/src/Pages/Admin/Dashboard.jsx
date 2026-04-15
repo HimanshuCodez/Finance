@@ -337,8 +337,12 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
             renderField("Risk start Date", "riskDate", "date")
           )}
           {renderField(form.category === "MutualFund" ? "Fund scheme end date" : "Risk End date", "endDate", "date")}
-          {renderField("OD", "od")}
-          {renderField("TP", "tp")}
+          {!["Health", "SME", "MutualFund"].includes(form.category) && (
+            <>
+              {renderField("OD", "od")}
+              {renderField("TP", "tp")}
+            </>
+          )}
           {renderField("Net Prem", "netPrem")}
           {renderField("Total prem", "prem")}
           {renderField("Payout", "payout")}
@@ -396,10 +400,10 @@ const UserRecord = ({ isMobile, currentUser }) => {
   };
 
   const motorHeaders = ["SL", "Policy No", "Make", "Model", "IMD Code", "Mobile No", "Name", "Company", "Vehicle Type", "Policy Type", "Tenure", "Risk start Date", "Risk End date", "OD", "TP", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
-  const healthHeaders = ["SL", "Policy No", "Company", "Business Type", "IMD Code", "Name", "Sum Assured", "Family", "Bonus", "Tenure", "Risk start Date", "Risk End date", "OD", "TP", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
-  const smeHeaders = ["SL", "Policy No", "Company", "Type", "IMD Code", "Product", "Name", "Sum Assured", "Tenure", "Risk start Date", "Risk End date", "OD", "TP", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
+  const healthHeaders = ["SL", "Policy No", "Company", "Business Type", "IMD Code", "Name", "Sum Assured", "Family", "Bonus", "Tenure", "Risk start Date", "Risk End date", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
+  const smeHeaders = ["SL", "Policy No", "Company", "Type", "IMD Code", "Product", "Name", "Sum Assured", "Tenure", "Risk start Date", "Risk End date", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
   const lifeHeaders = ["SL", "Policy No", "Company", "Plan", "IMD Code", "Name", "Sum Assured", "Payment Type", "Tenure", "Risk start Date", "Risk End date", "OD", "TP", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
-  const mfHeaders = ["SL", "Folio No", "Company", "Fund Name", "IMD Code", "Name", "Amount", "Payment Date", "Next Payment", "Tenure", "Risk start Date", "Risk End date", "OD", "TP", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
+  const mfHeaders = ["SL", "Folio No", "Company", "Fund Name", "IMD Code", "Name", "Amount", "Payment Date", "Next Payment", "Tenure", "Risk start Date", "Risk End date", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
 
   const getHeaders = () => {
     if (filter === "Motor") return motorHeaders;
@@ -479,8 +483,6 @@ const UserRecord = ({ isMobile, currentUser }) => {
                       {renderCell(ent.tenure)}
                       {renderCell(ent.riskDate)}
                       {renderCell(ent.endDate)}
-                      {renderCell(ent.od)}
-                      {renderCell(ent.tp)}
                       {renderCell(ent.netPrem)}
                       {renderCell(ent.prem)}
                       {renderCell(ent.payout)}
@@ -501,8 +503,6 @@ const UserRecord = ({ isMobile, currentUser }) => {
                       {renderCell(ent.tenure)}
                       {renderCell(ent.riskDate)}
                       {renderCell(ent.endDate)}
-                      {renderCell(ent.od)}
-                      {renderCell(ent.tp)}
                       {renderCell(ent.netPrem)}
                       {renderCell(ent.prem)}
                       {renderCell(ent.payout)}
@@ -546,8 +546,6 @@ const UserRecord = ({ isMobile, currentUser }) => {
                       {renderCell(ent.tenure)}
                       {renderCell(ent.riskDate)}
                       {renderCell(ent.endDate)}
-                      {renderCell(ent.od)}
-                      {renderCell(ent.tp)}
                       {renderCell(ent.netPrem)}
                       {renderCell(ent.prem)}
                       {renderCell(ent.payout)}
