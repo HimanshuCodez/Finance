@@ -127,13 +127,16 @@ const COMPANIES_BY_CATEGORY = {
   MutualFund: [
     "PRUDENTIAL ICICI", "HDFC MUTUAL", "OSWAL MUTUAL FUND"
   ],
-  Health: []
+  Health: [
+    "ICICI LOMBARD GENERAL INSURANCE", "TATA AIG", "BAJAJ GENERAL",
+    "GO DIGIT", "SBI GENERAL", "NEW INDIA ASSURANCE", "OTHERS"
+  ]
 };
 
 const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
   const initialFormState = {
     category: "Motor",
-    sl: "",
+    vehicleNumber: "",
     policyNo: "",
     make: "",
     model: "",
@@ -269,7 +272,7 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
         </div>
 
         <form onSubmit={handleSubmit} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 1fr", gap: 20 }}>
-          {renderField("SL", "sl")}
+          {form.category === "Motor" && renderField("Vehicle Number", "vehicleNumber")}
           {renderField("Policy No", "policyNo")}
           {renderField("IMD Code", "imdCode")}
           {renderField("Name", "name")}
@@ -399,7 +402,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
     }
   };
 
-  const motorHeaders = ["SL", "Policy No", "Make", "Model", "IMD Code", "Mobile No", "Name", "Company", "Vehicle Type", "Policy Type", "Tenure", "Risk start Date", "Risk End date", "OD", "TP", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
+  const motorHeaders = ["SL", "Vehicle No", "Policy No", "Make", "Model", "IMD Code", "Mobile No", "Name", "Company", "Vehicle Type", "Policy Type", "Tenure", "Risk start Date", "Risk End date", "OD", "TP", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
   const healthHeaders = ["SL", "Policy No", "Company", "Business Type", "IMD Code", "Name", "Sum Assured", "Family", "Bonus", "Tenure", "Risk start Date", "Risk End date", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
   const smeHeaders = ["SL", "Policy No", "Company", "Type", "IMD Code", "Product", "Name", "Sum Assured", "Tenure", "Risk start Date", "Risk End date", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
   const lifeHeaders = ["SL", "Policy No", "Company", "Plan", "IMD Code", "Name", "Sum Assured", "Payment Type", "Tenure", "Risk start Date", "Risk End date", "OD", "TP", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
@@ -443,11 +446,12 @@ const UserRecord = ({ isMobile, currentUser }) => {
               </tr>
             </thead>
             <tbody>
-              {filteredEntries.map((ent) => (
+              {filteredEntries.map((ent, idx) => (
                 <tr key={ent.id}>
                   {filter === "Motor" && (
                     <>
-                      {renderCell(ent.sl)}
+                      {renderCell(idx + 1)}
+                      {renderCell(ent.vehicleNumber)}
                       {renderCell(ent.policyNo)}
                       {renderCell(ent.make)}
                       {renderCell(ent.model)}
@@ -471,7 +475,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                   )}
                   {filter === "Health" && (
                     <>
-                      {renderCell(ent.sl)}
+                      {renderCell(idx + 1)}
                       {renderCell(ent.policyNo)}
                       {renderCell(ent.company)}
                       {renderCell(ent.subType)}
@@ -492,7 +496,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                   )}
                   {filter === "SME" && (
                     <>
-                      {renderCell(ent.sl)}
+                      {renderCell(idx + 1)}
                       {renderCell(ent.policyNo)}
                       {renderCell(ent.company)}
                       {renderCell(ent.subType)}
@@ -512,7 +516,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                   )}
                   {filter === "Life" && (
                     <>
-                      {renderCell(ent.sl)}
+                      {renderCell(idx + 1)}
                       {renderCell(ent.policyNo)}
                       {renderCell(ent.company)}
                       {renderCell(ent.plan)}
@@ -534,7 +538,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                   )}
                   {filter === "MutualFund" && (
                     <>
-                      {renderCell(ent.sl)}
+                      {renderCell(idx + 1)}
                       {renderCell(ent.folioNo)}
                       {renderCell(ent.company)}
                       {renderCell(ent.productName)}
