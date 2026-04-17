@@ -173,6 +173,7 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
   const [aadhaarFile, setAadhaarFile] = useState(null);
   const [panFile, setPanFile] = useState(null);
   const [policyFile, setPolicyFile] = useState(null);
+  const [policyDocFile, setPolicyDocFile] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -199,10 +200,11 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
       const fileId = idValue || Date.now();
       const timestamp = Date.now();
       
-      const [aadhaarUrl, panUrl, policyUrl] = await Promise.all([
+      const [aadhaarUrl, panUrl, policyUrl, policyDocUrl] = await Promise.all([
         uploadFile(aadhaarFile, `dataRecords/${form.category}/${timestamp}_${fileId}_aadhaar`),
         uploadFile(panFile, `dataRecords/${form.category}/${timestamp}_${fileId}_pan`),
-        uploadFile(policyFile, `dataRecords/${form.category}/${timestamp}_${fileId}_policy`)
+        uploadFile(policyFile, `dataRecords/${form.category}/${timestamp}_${fileId}_policy`),
+        uploadFile(policyDocFile, `dataRecords/${form.category}/${timestamp}_${fileId}_policyDoc`)
       ]);
 
       const dataToSave = {
@@ -214,6 +216,7 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
       if (aadhaarUrl) dataToSave.aadhaarPhoto = aadhaarUrl;
       if (panUrl) dataToSave.panPhoto = panUrl;
       if (policyUrl) dataToSave.policyPhoto = policyUrl;
+      if (policyDocUrl) dataToSave.policyDocPhoto = policyDocUrl;
 
       if (recordToEdit) {
         await updateDoc(doc(db, "dataEntries", recordToEdit.id), {
@@ -232,6 +235,7 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
         setAadhaarFile(null);
         setPanFile(null);
         setPolicyFile(null);
+        setPolicyDocFile(null);
       }
     } catch (e) {
       toast.error(`Error ${recordToEdit ? "updating" : "adding"} record: ` + e.message);
@@ -362,8 +366,14 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
             <label style={labelStyle}>Pan Card Photo</label>
             <input type="file" accept="image/*" onChange={e => setPanFile(e.target.files[0])} style={inputStyle} />
           </div>
+          {form.category === "Motor" && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+              <label style={labelStyle}>Policy Document</label>
+              <input type="file" accept="image/*,application/pdf" onChange={e => setPolicyDocFile(e.target.files[0])} style={inputStyle} />
+            </div>
+          )}
           <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            <label style={labelStyle}>Misc Document</label>
+            <label style={labelStyle}>{form.category === "Motor" ? "Misc Document" : "Policy Document"}</label>
             <input type="file" accept="image/*,application/pdf" onChange={e => setPolicyFile(e.target.files[0])} style={inputStyle} />
           </div>
 
@@ -577,7 +587,8 @@ const UserRecord = ({ isMobile, currentUser }) => {
                     <div style={{ display: "flex", gap: 8 }}>
                       {ent.aadhaarPhoto && <a href={ent.aadhaarPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700 }}>AADHAAR</a>}
                       {ent.panPhoto && <a href={ent.panPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700 }}>PAN</a>}
-                      {ent.policyPhoto && <a href={ent.policyPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700 }}>POLICY</a>}
+                      {ent.policyDocPhoto && <a href={ent.policyDocPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700 }}>POLICY</a>}
+                      {ent.policyPhoto && <a href={ent.policyPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700 }}>{filter === "Motor" ? "MISC" : "POLICY"}</a>}
                     </div>
                   </td>
                 </tr>
