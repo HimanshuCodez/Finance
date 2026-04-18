@@ -171,8 +171,10 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
   };
 
   const [form, setForm] = useState(initialFormState);
-  const [aadhaarFile, setAadhaarFile] = useState(null);
-  const [panFile, setPanFile] = useState(null);
+  const [aadhaarFrontFile, setAadhaarFrontFile] = useState(null);
+  const [aadhaarBackFile, setAadhaarBackFile] = useState(null);
+  const [panFrontFile, setPanFrontFile] = useState(null);
+  const [panBackFile, setPanBackFile] = useState(null);
   const [policyFile, setPolicyFile] = useState(null);
   const [policyDocFile, setPolicyDocFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -208,9 +210,11 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
       const fileId = idValue || Date.now();
       const timestamp = Date.now();
       
-      const [aadhaarUrl, panUrl, policyUrl, policyDocUrl] = await Promise.all([
-        uploadFile(aadhaarFile, `dataRecords/${form.category}/${timestamp}_${fileId}_aadhaar`),
-        uploadFile(panFile, `dataRecords/${form.category}/${timestamp}_${fileId}_pan`),
+      const [aadhaarFrontUrl, aadhaarBackUrl, panFrontUrl, panBackUrl, policyUrl, policyDocUrl] = await Promise.all([
+        uploadFile(aadhaarFrontFile, `dataRecords/${form.category}/${timestamp}_${fileId}_aadhaar_front`),
+        uploadFile(aadhaarBackFile, `dataRecords/${form.category}/${timestamp}_${fileId}_aadhaar_back`),
+        uploadFile(panFrontFile, `dataRecords/${form.category}/${timestamp}_${fileId}_pan_front`),
+        uploadFile(panBackFile, `dataRecords/${form.category}/${timestamp}_${fileId}_pan_back`),
         uploadFile(policyFile, `dataRecords/${form.category}/${timestamp}_${fileId}_policy`),
         uploadFile(policyDocFile, `dataRecords/${form.category}/${timestamp}_${fileId}_policyDoc`)
       ]);
@@ -227,8 +231,10 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
       // Remove customCompany from firestore data
       delete dataToSave.customCompany;
 
-      if (aadhaarUrl) dataToSave.aadhaarPhoto = aadhaarUrl;
-      if (panUrl) dataToSave.panPhoto = panUrl;
+      if (aadhaarFrontUrl) dataToSave.aadhaarFrontPhoto = aadhaarFrontUrl;
+      if (aadhaarBackUrl) dataToSave.aadhaarBackPhoto = aadhaarBackUrl;
+      if (panFrontUrl) dataToSave.panFrontPhoto = panFrontUrl;
+      if (panBackUrl) dataToSave.panBackPhoto = panBackUrl;
       if (policyUrl) dataToSave.policyPhoto = policyUrl;
       if (policyDocUrl) dataToSave.policyDocPhoto = policyDocUrl;
 
@@ -246,8 +252,10 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
         });
         toast.success("Record Added Successfully!");
         setForm(initialFormState);
-        setAadhaarFile(null);
-        setPanFile(null);
+        setAadhaarFrontFile(null);
+        setAadhaarBackFile(null);
+        setPanFrontFile(null);
+        setPanBackFile(null);
         setPolicyFile(null);
         setPolicyDocFile(null);
       }
@@ -375,6 +383,7 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
               {renderField("TP", "tp")}
             </>
           )}
+          {renderCell(ent.policyPhoto && <a href={ent.policyPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700 }}>{filter === "Motor" ? "MISC" : "POLICY"}</a>)}
           {renderField("Net Prem", "netPrem")}
           {renderField("Total prem", "prem")}
           {renderField("Payout", "payout")}
@@ -384,12 +393,20 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            <label style={labelStyle}>Aadhaar Card Photo</label>
-            <input type="file" accept="image/*" onChange={e => setAadhaarFile(e.target.files[0])} style={inputStyle} />
+            <label style={labelStyle}>Aadhaar Card Photo (Front)</label>
+            <input type="file" accept="image/*" onChange={e => setAadhaarFrontFile(e.target.files[0])} style={inputStyle} />
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            <label style={labelStyle}>Pan Card Photo</label>
-            <input type="file" accept="image/*" onChange={e => setPanFile(e.target.files[0])} style={inputStyle} />
+            <label style={labelStyle}>Aadhaar Card Photo (Back)</label>
+            <input type="file" accept="image/*" onChange={e => setAadhaarBackFile(e.target.files[0])} style={inputStyle} />
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+            <label style={labelStyle}>Pan Card Photo (Front)</label>
+            <input type="file" accept="image/*" onChange={e => setPanFrontFile(e.target.files[0])} style={inputStyle} />
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+            <label style={labelStyle}>Pan Card Photo (Back)</label>
+            <input type="file" accept="image/*" onChange={e => setPanBackFile(e.target.files[0])} style={inputStyle} />
           </div>
           {form.category === "Motor" && (
             <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
@@ -609,9 +626,11 @@ const UserRecord = ({ isMobile, currentUser }) => {
                     </div>
                   </td>
                   <td style={{ padding: "12px 15px", borderBottom: "1px solid #e2e8f0" }}>
-                    <div style={{ display: "flex", gap: 8 }}>
-                      {ent.aadhaarPhoto && <a href={ent.aadhaarPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700 }}>AADHAAR</a>}
-                      {ent.panPhoto && <a href={ent.panPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700 }}>PAN</a>}
+                    <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                      {ent.aadhaarFrontPhoto && <a href={ent.aadhaarFrontPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700 }}>AADHAAR FRONT</a>}
+                      {ent.aadhaarBackPhoto && <a href={ent.aadhaarBackPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700 }}>AADHAAR BACK</a>}
+                      {ent.panFrontPhoto && <a href={ent.panFrontPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700 }}>PAN FRONT</a>}
+                      {ent.panBackPhoto && <a href={ent.panBackPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700 }}>PAN BACK</a>}
                       {ent.policyDocPhoto && <a href={ent.policyDocPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700 }}>POLICY</a>}
                       {ent.policyPhoto && <a href={ent.policyPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700 }}>{filter === "Motor" ? "MISC" : "POLICY"}</a>}
                     </div>
