@@ -631,13 +631,13 @@ const UserRecord = ({ isMobile, currentUser }) => {
                     </div>
                   </td>
                   <td style={{ padding: "12px 15px", borderBottom: "1px solid #e2e8f0" }}>
-                    <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                      {ent.aadhaarFrontPhoto && <a href={ent.aadhaarFrontPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700, textDecoration: "none" }}>AADHAAR FRONT</a>}
-                      {ent.aadhaarBackPhoto && <a href={ent.aadhaarBackPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700, textDecoration: "none" }}>AADHAAR BACK</a>}
-                      {ent.panFrontPhoto && <a href={ent.panFrontPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700, textDecoration: "none" }}>PAN FRONT</a>}
-                      {ent.panBackPhoto && <a href={ent.panBackPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700, textDecoration: "none" }}>PAN BACK</a>}
-                      {ent.policyDocPhoto && <a href={ent.policyDocPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700, textDecoration: "none" }}>POLICY</a>}
-                      {ent.policyPhoto && <a href={ent.policyPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700, textDecoration: "none" }}>{filter === "Motor" ? "MISC" : "POLICY"}</a>}
+                    <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
+                      {ent.aadhaarFrontPhoto && <a href={ent.aadhaarFrontPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700, textDecoration: "none", background: "#eff6ff", padding: "2px 6px", borderRadius: 4, border: "1px solid #dbeafe", whiteSpace: "nowrap" }}>AADHAAR FRONT</a>}
+                      {ent.aadhaarBackPhoto && <a href={ent.aadhaarBackPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700, textDecoration: "none", background: "#eff6ff", padding: "2px 6px", borderRadius: 4, border: "1px solid #dbeafe", whiteSpace: "nowrap" }}>AADHAAR BACK</a>}
+                      {ent.panFrontPhoto && <a href={ent.panFrontPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700, textDecoration: "none", background: "#eff6ff", padding: "2px 6px", borderRadius: 4, border: "1px solid #dbeafe", whiteSpace: "nowrap" }}>PAN FRONT</a>}
+                      {ent.panBackPhoto && <a href={ent.panBackPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700, textDecoration: "none", background: "#eff6ff", padding: "2px 6px", borderRadius: 4, border: "1px solid #dbeafe", whiteSpace: "nowrap" }}>PAN BACK</a>}
+                      {ent.policyDocPhoto && <a href={ent.policyDocPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700, textDecoration: "none", background: "#eff6ff", padding: "2px 6px", borderRadius: 4, border: "1px solid #dbeafe", whiteSpace: "nowrap" }}>POLICY</a>}
+                      {ent.policyPhoto && <a href={ent.policyPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700, textDecoration: "none", background: "#eff6ff", padding: "2px 6px", borderRadius: 4, border: "1px solid #dbeafe", whiteSpace: "nowrap" }}>{filter === "Motor" ? "MISC" : "POLICY"}</a>}
                     </div>
                   </td>
                 </tr>
