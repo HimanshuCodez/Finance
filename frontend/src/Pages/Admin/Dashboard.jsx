@@ -122,10 +122,10 @@ const COMPANIES_BY_CATEGORY = {
     "GO DIGIT", "SBI GENERAL", "NEW INDIA ASSURANCE", "OTHERS"
   ],
   Life: [
-    "LIFE INSURANCE CORPORATION", "AXIS MAX LIFE", "PRUDENTIAL ICICI"
+    "LIFE INSURANCE CORPORATION", "AXIS MAX LIFE", "PRUDENTIAL ICICI", "OTHERS"
   ],
   MutualFund: [
-    "PRUDENTIAL ICICI", "HDFC MUTUAL", "OSWAL MUTUAL FUND"
+    "PRUDENTIAL ICICI", "HDFC MUTUAL", "OSWAL MUTUAL FUND", "OTHERS"
   ],
   Health: [
     "ICICI LOMBARD GENERAL INSURANCE", "TATA AIG", "BAJAJ GENERAL",
@@ -144,6 +144,7 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
     mobileNo: "",
     name: "",
     company: "",
+    customCompany: "",
     vehicleType: "",
     policyType: "",
     riskDate: "",
@@ -178,7 +179,14 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
 
   useEffect(() => {
     if (recordToEdit) {
-      setForm(recordToEdit);
+      const predefined = COMPANIES_BY_CATEGORY[recordToEdit.category] || [];
+      const isOther = recordToEdit.company && !predefined.includes(recordToEdit.company);
+      
+      setForm({
+        ...recordToEdit,
+        company: isOther ? "OTHERS" : recordToEdit.company,
+        customCompany: isOther ? recordToEdit.company : ""
+      });
     } else {
       setForm(initialFormState);
     }
@@ -207,11 +215,17 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
         uploadFile(policyDocFile, `dataRecords/${form.category}/${timestamp}_${fileId}_policyDoc`)
       ]);
 
+      const finalCompany = form.company === "OTHERS" ? form.customCompany : form.company;
+
       const dataToSave = {
         ...form,
+        company: finalCompany,
         addedBy: currentUser?.id || "admin",
         addedByName: currentUser?.name || "Super Admin",
       };
+
+      // Remove customCompany from firestore data
+      delete dataToSave.customCompany;
 
       if (aadhaarUrl) dataToSave.aadhaarPhoto = aadhaarUrl;
       if (panUrl) dataToSave.panPhoto = panUrl;
@@ -280,16 +294,27 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
           {renderField("Policy No", "policyNo")}
           {renderField("IMD Code", "imdCode")}
           {renderField("Name", "name")}
-          {renderField(
-            form.category === "Motor" 
-              ? "Company" 
-              : form.category === "MutualFund" 
-                ? "Mutual Fund Company" 
-                : "Insurance Company", 
-            "company",
-            "text",
-            COMPANIES_BY_CATEGORY[form.category] || []
-          )}
+          <div style={{ display: "flex", flexDirection: "column", gap: form.company === "OTHERS" ? 10 : 0 }}>
+            {renderField(
+              form.category === "Motor" 
+                ? "Company" 
+                : form.category === "MutualFund" 
+                  ? "Mutual Fund Company" 
+                  : "Insurance Company", 
+              "company",
+              "text",
+              COMPANIES_BY_CATEGORY[form.category] || []
+            )}
+            {form.company === "OTHERS" && (
+              <input 
+                type="text" 
+                value={form.customCompany} 
+                onChange={e => setForm({ ...form, customCompany: e.target.value })} 
+                style={inputStyle} 
+                placeholder="Enter Company Name" 
+              />
+            )}
+          </div>
           
           {form.category === "Motor" && (
             <>
@@ -460,7 +485,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                 <tr key={ent.id}>
                   {filter === "Motor" && (
                     <>
-                      {renderCell(idx + 1)}
+                      {renderCell(filteredEntries.length - idx)}
                       {renderCell(ent.vehicleNumber)}
                       {renderCell(ent.policyNo)}
                       {renderCell(ent.make)}
@@ -485,7 +510,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                   )}
                   {filter === "Health" && (
                     <>
-                      {renderCell(idx + 1)}
+                      {renderCell(filteredEntries.length - idx)}
                       {renderCell(ent.policyNo)}
                       {renderCell(ent.company)}
                       {renderCell(ent.subType)}
@@ -506,7 +531,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                   )}
                   {filter === "SME" && (
                     <>
-                      {renderCell(idx + 1)}
+                      {renderCell(filteredEntries.length - idx)}
                       {renderCell(ent.policyNo)}
                       {renderCell(ent.company)}
                       {renderCell(ent.subType)}
@@ -526,7 +551,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                   )}
                   {filter === "Life" && (
                     <>
-                      {renderCell(idx + 1)}
+                      {renderCell(filteredEntries.length - idx)}
                       {renderCell(ent.policyNo)}
                       {renderCell(ent.company)}
                       {renderCell(ent.plan)}
@@ -548,7 +573,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                   )}
                   {filter === "MutualFund" && (
                     <>
-                      {renderCell(idx + 1)}
+                      {renderCell(filteredEntries.length - idx)}
                       {renderCell(ent.folioNo)}
                       {renderCell(ent.company)}
                       {renderCell(ent.productName)}
