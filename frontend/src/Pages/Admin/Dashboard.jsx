@@ -432,6 +432,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
   const [entries, setEntries] = useState([]);
   const [filter, setFilter] = useState("Motor");
   const [editingRecord, setEditingRecord] = useState(null);
+  const [viewingDocs, setViewingDocs] = useState(null);
 
   useEffect(() => {
     const q = query(collection(db, "dataEntries"), orderBy("createdAt", "asc"));
@@ -631,14 +632,12 @@ const UserRecord = ({ isMobile, currentUser }) => {
                     </div>
                   </td>
                   <td style={{ padding: "12px 15px", borderBottom: "1px solid #e2e8f0" }}>
-                    <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
-                      {ent.aadhaarFrontPhoto && <a href={ent.aadhaarFrontPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700, textDecoration: "none", background: "#eff6ff", padding: "2px 6px", borderRadius: 4, border: "1px solid #dbeafe", whiteSpace: "nowrap" }}>AADHAAR FRONT</a>}
-                      {ent.aadhaarBackPhoto && <a href={ent.aadhaarBackPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700, textDecoration: "none", background: "#eff6ff", padding: "2px 6px", borderRadius: 4, border: "1px solid #dbeafe", whiteSpace: "nowrap" }}>AADHAAR BACK</a>}
-                      {ent.panFrontPhoto && <a href={ent.panFrontPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700, textDecoration: "none", background: "#eff6ff", padding: "2px 6px", borderRadius: 4, border: "1px solid #dbeafe", whiteSpace: "nowrap" }}>PAN FRONT</a>}
-                      {ent.panBackPhoto && <a href={ent.panBackPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700, textDecoration: "none", background: "#eff6ff", padding: "2px 6px", borderRadius: 4, border: "1px solid #dbeafe", whiteSpace: "nowrap" }}>PAN BACK</a>}
-                      {ent.policyDocPhoto && <a href={ent.policyDocPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700, textDecoration: "none", background: "#eff6ff", padding: "2px 6px", borderRadius: 4, border: "1px solid #dbeafe", whiteSpace: "nowrap" }}>POLICY</a>}
-                      {ent.policyPhoto && <a href={ent.policyPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700, textDecoration: "none", background: "#eff6ff", padding: "2px 6px", borderRadius: 4, border: "1px solid #dbeafe", whiteSpace: "nowrap" }}>{filter === "Motor" ? "MISC" : "POLICY"}</a>}
-                    </div>
+                    <button 
+                      onClick={() => setViewingDocs(ent)}
+                      style={{ background: "#f8fafc", color: "#1e90ff", border: "1px solid #1e90ff", borderRadius: 4, padding: "4px 8px", fontSize: 10, fontWeight: 700, cursor: "pointer" }}
+                    >
+                      VIEW DOCS
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -649,6 +648,30 @@ const UserRecord = ({ isMobile, currentUser }) => {
           <EmptyState icon="🗂️" title="No Records" subtitle={`No ${filter} insurance records found.`} />
         )}
       </div>
+
+      {viewingDocs && (
+        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)", zIndex: 3000, display: "flex", alignItems: "center", justifyContent: "center", padding: 20, backdropFilter: "blur(4px)" }}>
+          <div style={{ background: "#fff", borderRadius: 16, width: "100%", maxWidth: 400, position: "relative", border: "1px solid #e2e8f0", boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" }}>
+            <div style={{ padding: 24 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+                <h3 style={{ margin: 0, color: "#1e293b", fontSize: 18, fontWeight: 800 }}>Record Documents</h3>
+                <button onClick={() => setViewingDocs(null)} style={{ background: "transparent", border: "none", color: "#64748b", fontSize: 24, cursor: "pointer" }}>&times;</button>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                {viewingDocs.aadhaarFrontPhoto && <a href={viewingDocs.aadhaarFrontPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 13, fontWeight: 700, textDecoration: "none", background: "#f0f9ff", padding: "12px 16px", borderRadius: 8, border: "1px solid #e0f2fe", textAlign: "center" }}>AADHAAR CARD (FRONT)</a>}
+                {viewingDocs.aadhaarBackPhoto && <a href={viewingDocs.aadhaarBackPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 13, fontWeight: 700, textDecoration: "none", background: "#f0f9ff", padding: "12px 16px", borderRadius: 8, border: "1px solid #e0f2fe", textAlign: "center" }}>AADHAAR CARD (BACK)</a>}
+                {viewingDocs.panFrontPhoto && <a href={viewingDocs.panFrontPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 13, fontWeight: 700, textDecoration: "none", background: "#f0f9ff", padding: "12px 16px", borderRadius: 8, border: "1px solid #e0f2fe", textAlign: "center" }}>PAN CARD (FRONT)</a>}
+                {viewingDocs.panBackPhoto && <a href={viewingDocs.panBackPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 13, fontWeight: 700, textDecoration: "none", background: "#f0f9ff", padding: "12px 16px", borderRadius: 8, border: "1px solid #e0f2fe", textAlign: "center" }}>PAN CARD (BACK)</a>}
+                {viewingDocs.policyDocPhoto && <a href={viewingDocs.policyDocPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 13, fontWeight: 700, textDecoration: "none", background: "#f0f9ff", padding: "12px 16px", borderRadius: 8, border: "1px solid #e0f2fe", textAlign: "center" }}>POLICY DOCUMENT</a>}
+                {viewingDocs.policyPhoto && <a href={viewingDocs.policyPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 13, fontWeight: 700, textDecoration: "none", background: "#f0f9ff", padding: "12px 16px", borderRadius: 8, border: "1px solid #e0f2fe", textAlign: "center" }}>{filter === "Motor" ? "MISC DOCUMENT" : "POLICY DOCUMENT"}</a>}
+                {(!viewingDocs.aadhaarFrontPhoto && !viewingDocs.aadhaarBackPhoto && !viewingDocs.panFrontPhoto && !viewingDocs.panBackPhoto && !viewingDocs.policyDocPhoto && !viewingDocs.policyPhoto) && (
+                  <p style={{ textAlign: "center", color: "#64748b", fontSize: 14 }}>No documents uploaded for this record.</p>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {editingRecord && (
         <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)", zIndex: 2000, display: "flex", alignItems: "center", justifyContent: "center", padding: 20, backdropFilter: "blur(4px)" }}>
