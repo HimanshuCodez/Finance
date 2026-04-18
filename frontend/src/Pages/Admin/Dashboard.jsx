@@ -417,7 +417,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
   const [editingRecord, setEditingRecord] = useState(null);
 
   useEffect(() => {
-    const q = query(collection(db, "dataEntries"), orderBy("createdAt", "desc"));
+    const q = query(collection(db, "dataEntries"), orderBy("createdAt", "asc"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       setEntries(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
     });
@@ -485,7 +485,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                 <tr key={ent.id}>
                   {filter === "Motor" && (
                     <>
-                      {renderCell(filteredEntries.length - idx)}
+                      {renderCell(idx + 1)}
                       {renderCell(ent.vehicleNumber)}
                       {renderCell(ent.policyNo)}
                       {renderCell(ent.make)}
@@ -510,7 +510,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                   )}
                   {filter === "Health" && (
                     <>
-                      {renderCell(filteredEntries.length - idx)}
+                      {renderCell(idx + 1)}
                       {renderCell(ent.policyNo)}
                       {renderCell(ent.company)}
                       {renderCell(ent.subType)}
@@ -531,7 +531,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                   )}
                   {filter === "SME" && (
                     <>
-                      {renderCell(filteredEntries.length - idx)}
+                      {renderCell(idx + 1)}
                       {renderCell(ent.policyNo)}
                       {renderCell(ent.company)}
                       {renderCell(ent.subType)}
@@ -551,7 +551,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                   )}
                   {filter === "Life" && (
                     <>
-                      {renderCell(filteredEntries.length - idx)}
+                      {renderCell(idx + 1)}
                       {renderCell(ent.policyNo)}
                       {renderCell(ent.company)}
                       {renderCell(ent.plan)}
@@ -573,7 +573,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                   )}
                   {filter === "MutualFund" && (
                     <>
-                      {renderCell(filteredEntries.length - idx)}
+                      {renderCell(idx + 1)}
                       {renderCell(ent.folioNo)}
                       {renderCell(ent.company)}
                       {renderCell(ent.productName)}
