@@ -129,7 +129,7 @@ const COMPANIES_BY_CATEGORY = {
   ],
   Health: [
     "ICICI LOMBARD GENERAL INSURANCE", "TATA AIG", "BAJAJ GENERAL",
-    "GO DIGIT", "SBI GENERAL", "NEW INDIA ASSURANCE", "OTHERS"
+    "GO DIGIT", "SBI GENERAL", "NEW INDIA ASSURANCE", "NIVA BUPA", "OTHERS"
   ]
 };
 
@@ -337,6 +337,7 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
           {form.category === "Health" && (
             <>
               {renderField("Business Type", "subType", "select", ["New", "Renewal", "Port"])}
+              {renderField("Plan Name", "plan")}
               {renderField("Sum Assured", "sumAssured")}
               {renderField("Family Members", "familyMembers", "select", HEALTH_FAMILY_MEMBERS)}
               {renderField("Bonus", "bonus")}
@@ -454,7 +455,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
   };
 
   const motorHeaders = ["SL", "Vehicle No", "Policy No", "Make", "Model", "IMD Code", "Mobile No", "Name", "Company", "Vehicle Type", "Policy Type", "Tenure", "Risk start Date", "Risk End date", "OD", "TP", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
-  const healthHeaders = ["SL", "Policy No", "Company", "Business Type", "IMD Code", "Name", "Sum Assured", "Family", "Bonus", "Tenure", "Risk start Date", "Risk End date", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
+  const healthHeaders = ["SL", "Policy No", "Company", "Business Type", "Plan Name", "IMD Code", "Name", "Sum Assured", "Family", "Bonus", "Tenure", "Risk start Date", "Risk End date", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
   const smeHeaders = ["SL", "Policy No", "Company", "Type", "IMD Code", "Product", "Name", "Sum Assured", "Tenure", "Risk start Date", "Risk End date", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
   const lifeHeaders = ["SL", "Policy No", "Company", "Plan", "IMD Code", "Name", "Sum Assured", "Payment Type", "Tenure", "Risk start Date", "Risk End date", "OD", "TP", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
   const mfHeaders = ["SL", "Folio No", "Company", "Fund Name", "IMD Code", "Name", "Amount", "Payment Date", "Next Payment", "Tenure", "Risk start Date", "Risk End date", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
@@ -530,6 +531,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                       {renderCell(ent.policyNo)}
                       {renderCell(ent.company)}
                       {renderCell(ent.subType)}
+                      {renderCell(ent.plan)}
                       {renderCell(ent.imdCode)}
                       {renderCell(ent.name)}
                       {renderCell(ent.sumAssured)}
