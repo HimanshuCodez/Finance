@@ -383,7 +383,6 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
               {renderField("TP", "tp")}
             </>
           )}
-          {renderCell(ent.policyPhoto && <a href={ent.policyPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 10, fontWeight: 700 }}>{filter === "Motor" ? "MISC" : "POLICY"}</a>)}
           {renderField("Net Prem", "netPrem")}
           {renderField("Total prem", "prem")}
           {renderField("Payout", "payout")}
