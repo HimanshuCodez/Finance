@@ -431,6 +431,7 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
 const UserRecord = ({ isMobile, currentUser }) => {
   const [entries, setEntries] = useState([]);
   const [filter, setFilter] = useState("Motor");
+  const [searchTerm, setSearchTerm] = useState("");
   const [editingRecord, setEditingRecord] = useState(null);
   const [viewingDocs, setViewingDocs] = useState(null);
 
@@ -442,7 +443,10 @@ const UserRecord = ({ isMobile, currentUser }) => {
     return () => unsubscribe();
   }, []);
 
-  const filteredEntries = entries.filter(ent => ent.category === filter);
+  const filteredEntries = entries.filter(ent => 
+    ent.category === filter && 
+    (ent.mobileNo || "").toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this record?")) {
@@ -480,10 +484,28 @@ const UserRecord = ({ isMobile, currentUser }) => {
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, gap: 20, flexWrap: "wrap" }}>
         <h1 style={{ color: "#1e293b", fontSize: isMobile ? 22 : 26, fontWeight: 800 }}>User Record View</h1>
-        <div style={{ display: "flex", gap: 10 }}>
-          {["Motor", "Health", "SME", "Life", "MutualFund"].map(cat => (
-            <button key={cat} onClick={() => setFilter(cat)} style={{ padding: "8px 16px", borderRadius: 8, border: "1px solid #e2e8f0", background: filter === cat ? "#1e90ff" : "#f1f5f9", color: filter === cat ? "#fff" : "#475569", cursor: "pointer", fontWeight: 600 }}>{cat}</button>
-          ))}
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+          <div style={{ position: "relative" }}>
+            <input 
+              type="text" 
+              placeholder="Search by Phone No..." 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{ 
+                padding: "8px 12px", 
+                borderRadius: 8, 
+                border: "1px solid #e2e8f0", 
+                fontSize: 14, 
+                outline: "none",
+                width: isMobile ? "100%" : 200
+              }}
+            />
+          </div>
+          <div style={{ display: "flex", gap: 5 }}>
+            {["Motor", "Health", "SME", "Life", "MutualFund"].map(cat => (
+              <button key={cat} onClick={() => setFilter(cat)} style={{ padding: "8px 12px", borderRadius: 8, border: "1px solid #e2e8f0", background: filter === cat ? "#1e90ff" : "#f1f5f9", color: filter === cat ? "#fff" : "#475569", cursor: "pointer", fontWeight: 600, fontSize: 12 }}>{cat}</button>
+            ))}
+          </div>
         </div>
       </div>
 
