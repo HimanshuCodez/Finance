@@ -384,7 +384,7 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
               {renderField("TP", "tp")}
             </>
           )}
-          {renderField("Net Prem", "netPrem")}
+          {form.category !== "Health" && renderField("Net Prem", "netPrem")}
           {renderField("Total prem", "prem")}
           {renderField("Payout", "payout")}
           {renderField("Company %", "companyPercentage")}
@@ -460,7 +460,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
   };
 
   const motorHeaders = ["SL", "Vehicle No", "Policy No", "Make", "Model", "IMD Code", "Mobile No", "Name", "Company", "Vehicle Type", "Policy Type", "Tenure", "Risk start Date", "Risk End date", "OD", "TP", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
-  const healthHeaders = ["SL", "Policy No", "Company", "Business Type", "Plan Name", "IMD Code", "Mobile No", "Name", "Sum Assured", "Family", "Bonus", "Tenure", "Risk start Date", "Risk End date", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
+  const healthHeaders = ["SL", "Policy No", "Company", "Business Type", "Plan Name", "IMD Code", "Mobile No", "Name", "Sum Assured", "Family", "Bonus", "Tenure", "Risk start Date", "Risk End date", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
   const smeHeaders = ["SL", "Policy No", "Company", "Type", "IMD Code", "Mobile No", "Product", "Name", "Sum Assured", "Tenure", "Risk start Date", "Risk End date", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
   const lifeHeaders = ["SL", "Policy No", "Company", "Plan", "IMD Code", "Mobile No", "Name", "Sum Assured", "Payment Type", "Tenure", "Risk start Date", "Risk End date", "OD", "TP", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
   const mfHeaders = ["SL", "Folio No", "Company", "Fund Name", "IMD Code", "Mobile No", "Name", "Amount", "Payment Date", "Next Payment", "Tenure", "Risk start Date", "Risk End date", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
@@ -564,7 +564,6 @@ const UserRecord = ({ isMobile, currentUser }) => {
                       {renderCell(ent.tenure)}
                       {renderCell(ent.riskDate)}
                       {renderCell(ent.endDate)}
-                      {renderCell(ent.netPrem)}
                       {renderCell(ent.prem)}
                       {renderCell(ent.payout)}
                       {renderCell(ent.companyPercentage)}
