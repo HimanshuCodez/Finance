@@ -104,7 +104,7 @@ const MOTOR_VEHICLE_TYPES = [
   "GCV: 0-2500KG", "GCV: 2500-3500KG", "GCV: 3500-7500KG",
   "GCV: 7500-12000KG", "GCV: 12000-16000KG", "GCV: 16000-55000KG",
   "PCV: SCHOOL BUS", "PCV: STAFF BUS", "PCV: PASSENGER BUS", "PCV: TAXI",
-  "MISC D: TRACTOR", "MISC D: CRANE", "MISC D: OTHER"
+  "MISC D: TRACTOR", "MISC D: CRANE", "E RICKSHAW", "MISC D: OTHER"
 ];
 
 const HEALTH_FAMILY_MEMBERS = [
@@ -146,6 +146,7 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
     company: "",
     customCompany: "",
     vehicleType: "",
+    customVehicleType: "",
     policyType: "",
     riskDate: "",
     endDate: "",
@@ -181,13 +182,17 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
 
   useEffect(() => {
     if (recordToEdit) {
-      const predefined = COMPANIES_BY_CATEGORY[recordToEdit.category] || [];
-      const isOther = recordToEdit.company && !predefined.includes(recordToEdit.company);
+      const predefinedCompanies = COMPANIES_BY_CATEGORY[recordToEdit.category] || [];
+      const isOtherCompany = recordToEdit.company && !predefinedCompanies.includes(recordToEdit.company);
       
+      const isOtherVehicle = recordToEdit.vehicleType && !MOTOR_VEHICLE_TYPES.includes(recordToEdit.vehicleType);
+
       setForm({
         ...recordToEdit,
-        company: isOther ? "OTHERS" : recordToEdit.company,
-        customCompany: isOther ? recordToEdit.company : ""
+        company: isOtherCompany ? "OTHERS" : recordToEdit.company,
+        customCompany: isOtherCompany ? recordToEdit.company : "",
+        vehicleType: isOtherVehicle ? "MISC D: OTHER" : recordToEdit.vehicleType,
+        customVehicleType: isOtherVehicle ? recordToEdit.vehicleType : ""
       });
     } else {
       setForm(initialFormState);
@@ -220,16 +225,19 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
       ]);
 
       const finalCompany = form.company === "OTHERS" ? form.customCompany : form.company;
+      const finalVehicleType = form.vehicleType === "MISC D: OTHER" ? form.customVehicleType : form.vehicleType;
 
       const dataToSave = {
         ...form,
         company: finalCompany,
+        vehicleType: finalVehicleType,
         addedBy: currentUser?.id || "admin",
         addedByName: currentUser?.name || "Super Admin",
       };
 
-      // Remove customCompany from firestore data
+      // Remove custom fields from firestore data
       delete dataToSave.customCompany;
+      delete dataToSave.customVehicleType;
 
       if (aadhaarFrontUrl) dataToSave.aadhaarFrontPhoto = aadhaarFrontUrl;
       if (aadhaarBackUrl) dataToSave.aadhaarBackPhoto = aadhaarBackUrl;
@@ -329,7 +337,18 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
             <>
               {renderField("Make", "make")}
               {renderField("Model", "model")}
-              {renderField("Vehicle Type", "vehicleType", "select", MOTOR_VEHICLE_TYPES)}
+              <div style={{ display: "flex", flexDirection: "column", gap: form.vehicleType === "MISC D: OTHER" ? 10 : 0 }}>
+                {renderField("Vehicle Type", "vehicleType", "select", MOTOR_VEHICLE_TYPES)}
+                {form.vehicleType === "MISC D: OTHER" && (
+                  <input 
+                    type="text" 
+                    value={form.customVehicleType} 
+                    onChange={e => setForm({ ...form, customVehicleType: e.target.value })} 
+                    style={inputStyle} 
+                    placeholder="Enter Vehicle Type" 
+                  />
+                )}
+              </div>
               {renderField("Policy Type", "policyType", "select", ["COMPREHENSIVE", "SAOD", "THIRD PARTY"])}
             </>
           )}
