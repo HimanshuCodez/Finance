@@ -566,7 +566,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                 <tr key={ent.id}>
                   {filter === "Motor" && (
                     <>
-                      {renderCell(ent.slNo)}
+                      {renderCell(ent.slNo || idx + 1)}
                       {renderCell(ent.vehicleNumber)}
                       {renderCell(ent.policyNo)}
                       {renderCell(ent.make)}
@@ -591,7 +591,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                   )}
                   {filter === "Health" && (
                     <>
-                      {renderCell(ent.slNo)}
+                      {renderCell(ent.slNo || idx + 1)}
                       {renderCell(ent.policyNo)}
                       {renderCell(ent.company)}
                       {renderCell(ent.subType)}
@@ -613,7 +613,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                   )}
                   {filter === "SME" && (
                     <>
-                      {renderCell(ent.slNo)}
+                      {renderCell(ent.slNo || idx + 1)}
                       {renderCell(ent.policyNo)}
                       {renderCell(ent.company)}
                       {renderCell(ent.subType)}
@@ -634,7 +634,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                   )}
                   {filter === "Life" && (
                     <>
-                      {renderCell(ent.slNo)}
+                      {renderCell(ent.slNo || idx + 1)}
                       {renderCell(ent.policyNo)}
                       {renderCell(ent.company)}
                       {renderCell(ent.plan)}
@@ -657,7 +657,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                   )}
                   {filter === "MutualFund" && (
                     <>
-                      {renderCell(ent.slNo)}
+                      {renderCell(ent.slNo || idx + 1)}
                       {renderCell(ent.folioNo)}
                       {renderCell(ent.company)}
                       {renderCell(ent.productName)}
