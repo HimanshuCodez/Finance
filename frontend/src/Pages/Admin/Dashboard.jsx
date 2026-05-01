@@ -473,6 +473,8 @@ const UserRecord = ({ isMobile, currentUser }) => {
   const [entries, setEntries] = useState([]);
   const [filter, setFilter] = useState("Motor");
   const [searchTerm, setSearchTerm] = useState("");
+  const [monthFilter, setMonthFilter] = useState("");
+  const [yearFilter, setYearFilter] = useState("");
   const [editingRecord, setEditingRecord] = useState(null);
   const [viewingDocs, setViewingDocs] = useState(null);
 
@@ -484,10 +486,14 @@ const UserRecord = ({ isMobile, currentUser }) => {
     return () => unsubscribe();
   }, []);
 
-  const filteredEntries = entries.filter(ent => 
-    ent.category === filter && 
-    (ent.mobileNo || "").toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredEntries = entries.filter(ent => {
+    const matchesCategory = ent.category === filter;
+    const matchesSearch = (ent.mobileNo || "").toLowerCase().includes(searchTerm.toLowerCase()) || 
+                          (ent.name || "").toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesMonth = monthFilter === "" || ent.entryMonth === monthFilter;
+    const matchesYear = yearFilter === "" || ent.entryYear === yearFilter;
+    return matchesCategory && matchesSearch && matchesMonth && matchesYear;
+  });
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this record?")) {
@@ -500,11 +506,11 @@ const UserRecord = ({ isMobile, currentUser }) => {
     }
   };
 
-  const motorHeaders = ["SL", "Vehicle No", "Policy No", "Make", "Model", "IMD Code", "Mobile No", "Name", "Company", "Vehicle Type", "Policy Type", "Tenure", "Risk start Date", "Risk End date", "OD", "TP", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
-  const healthHeaders = ["SL", "Policy No", "Company", "Business Type", "Plan Name", "IMD Code", "Mobile No", "Name", "Sum Assured", "Family", "Bonus", "Tenure", "Risk start Date", "Risk End date", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
-  const smeHeaders = ["SL", "Policy No", "Company", "Type", "IMD Code", "Mobile No", "Product", "Name", "Sum Assured", "Tenure", "Risk start Date", "Risk End date", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
-  const lifeHeaders = ["SL", "Policy No", "Company", "Plan", "IMD Code", "Mobile No", "Name", "Sum Assured", "Payment Type", "Tenure", "Risk start Date", "Risk End date", "OD", "TP", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
-  const mfHeaders = ["SL", "Folio No", "Company", "Fund Name", "IMD Code", "Mobile No", "Name", "Amount", "Payment Date", "Next Payment", "Tenure", "Risk start Date", "Risk End date", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
+  const motorHeaders = ["SL", "Month", "Vehicle No", "Policy No", "Make", "Model", "IMD Code", "Mobile No", "Name", "Company", "Vehicle Type", "Policy Type", "Tenure", "Risk start Date", "Risk End date", "OD", "TP", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
+  const healthHeaders = ["SL", "Month", "Policy No", "Company", "Business Type", "Plan Name", "IMD Code", "Mobile No", "Name", "Sum Assured", "Family", "Bonus", "Tenure", "Risk start Date", "Risk End date", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
+  const smeHeaders = ["SL", "Month", "Policy No", "Company", "Type", "IMD Code", "Mobile No", "Product", "Name", "Sum Assured", "Tenure", "Risk start Date", "Risk End date", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
+  const lifeHeaders = ["SL", "Month", "Policy No", "Company", "Plan", "IMD Code", "Mobile No", "Name", "Sum Assured", "Payment Type", "Tenure", "Risk start Date", "Risk End date", "OD", "TP", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
+  const mfHeaders = ["SL", "Month", "Folio No", "Company", "Fund Name", "IMD Code", "Mobile No", "Name", "Amount", "Payment Date", "Next Payment", "Tenure", "Risk start Date", "Risk End date", "Net Prem", "Total prem", "Payout", "Co%", "Remarks", "Actions"];
 
   const getHeaders = () => {
     if (filter === "Motor") return motorHeaders;
@@ -521,15 +527,34 @@ const UserRecord = ({ isMobile, currentUser }) => {
     </td>
   );
 
+  const months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+  const years = Array.from({ length: 5 }, (_, i) => (new Date().getFullYear() - i).toString());
+
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, gap: 20, flexWrap: "wrap" }}>
         <h1 style={{ color: "#1e293b", fontSize: isMobile ? 22 : 26, fontWeight: 800 }}>User Record View</h1>
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+          <select 
+            value={monthFilter} 
+            onChange={(e) => setMonthFilter(e.target.value)}
+            style={{ padding: "8px 12px", borderRadius: 8, border: "1px solid #e2e8f0", fontSize: 14, outline: "none", background: "#fff" }}
+          >
+            <option value="">All Months</option>
+            {months.map(m => <option key={m} value={m}>{new Date(2000, parseInt(m)-1).toLocaleString('default', { month: 'long' })}</option>)}
+          </select>
+          <select 
+            value={yearFilter} 
+            onChange={(e) => setYearFilter(e.target.value)}
+            style={{ padding: "8px 12px", borderRadius: 8, border: "1px solid #e2e8f0", fontSize: 14, outline: "none", background: "#fff" }}
+          >
+            <option value="">All Years</option>
+            {years.map(y => <option key={y} value={y}>{y}</option>)}
+          </select>
           <div style={{ position: "relative" }}>
             <input 
               type="text" 
-              placeholder="Search by Phone No..." 
+              placeholder="Search Name/Phone..." 
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               style={{ 
@@ -567,6 +592,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                   {filter === "Motor" && (
                     <>
                       {renderCell(ent.slNo || idx + 1)}
+                      {renderCell(ent.entryMonth ? `${ent.entryMonth}/${ent.entryYear}` : "-")}
                       {renderCell(ent.vehicleNumber)}
                       {renderCell(ent.policyNo)}
                       {renderCell(ent.make)}
@@ -592,6 +618,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                   {filter === "Health" && (
                     <>
                       {renderCell(ent.slNo || idx + 1)}
+                      {renderCell(ent.entryMonth ? `${ent.entryMonth}/${ent.entryYear}` : "-")}
                       {renderCell(ent.policyNo)}
                       {renderCell(ent.company)}
                       {renderCell(ent.subType)}
@@ -614,6 +641,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                   {filter === "SME" && (
                     <>
                       {renderCell(ent.slNo || idx + 1)}
+                      {renderCell(ent.entryMonth ? `${ent.entryMonth}/${ent.entryYear}` : "-")}
                       {renderCell(ent.policyNo)}
                       {renderCell(ent.company)}
                       {renderCell(ent.subType)}
@@ -635,6 +663,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                   {filter === "Life" && (
                     <>
                       {renderCell(ent.slNo || idx + 1)}
+                      {renderCell(ent.entryMonth ? `${ent.entryMonth}/${ent.entryYear}` : "-")}
                       {renderCell(ent.policyNo)}
                       {renderCell(ent.company)}
                       {renderCell(ent.plan)}
@@ -658,6 +687,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                   {filter === "MutualFund" && (
                     <>
                       {renderCell(ent.slNo || idx + 1)}
+                      {renderCell(ent.entryMonth ? `${ent.entryMonth}/${ent.entryYear}` : "-")}
                       {renderCell(ent.folioNo)}
                       {renderCell(ent.company)}
                       {renderCell(ent.productName)}
