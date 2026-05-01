@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { db, storage } from "../../firebase";
-import { collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, getDocs, updateDoc, doc, deleteDoc } from "firebase/firestore";
+import { collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, getDocs, updateDoc, doc, deleteDoc, where, limit } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -215,6 +215,10 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
       const fileId = idValue || Date.now();
       const timestamp = Date.now();
       
+      const now = new Date();
+      const currentMonth = (now.getMonth() + 1).toString().padStart(2, "0");
+      const currentYear = now.getFullYear().toString();
+
       const [aadhaarFrontUrl, aadhaarBackUrl, panFrontUrl, panBackUrl, policyUrl, policyDocUrl] = await Promise.all([
         uploadFile(aadhaarFrontFile, `dataRecords/${form.category}/${timestamp}_${fileId}_aadhaar_front`),
         uploadFile(aadhaarBackFile, `dataRecords/${form.category}/${timestamp}_${fileId}_aadhaar_back`),
@@ -254,8 +258,26 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
         toast.success("Record Updated Successfully!");
         if (onFinished) onFinished();
       } else {
+        // Calculate Sequential SL NO for the current month and category
+        // Fetch matching records and find max slNo in JS to avoid composite index requirement
+        const qGroup = query(
+          collection(db, "dataEntries"),
+          where("category", "==", form.category),
+          where("entryMonth", "==", currentMonth),
+          where("entryYear", "==", currentYear)
+        );
+        const groupSnap = await getDocs(qGroup);
+        let nextSlNo = 1;
+        if (!groupSnap.empty) {
+          const slNos = groupSnap.docs.map(d => d.data().slNo || 0);
+          nextSlNo = Math.max(...slNos) + 1;
+        }
+
         await addDoc(collection(db, "dataEntries"), {
           ...dataToSave,
+          slNo: nextSlNo,
+          entryMonth: currentMonth,
+          entryYear: currentYear,
           createdAt: serverTimestamp()
         });
         toast.success("Record Added Successfully!");
@@ -544,7 +566,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                 <tr key={ent.id}>
                   {filter === "Motor" && (
                     <>
-                      {renderCell(idx + 1)}
+                      {renderCell(ent.slNo)}
                       {renderCell(ent.vehicleNumber)}
                       {renderCell(ent.policyNo)}
                       {renderCell(ent.make)}
@@ -569,7 +591,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                   )}
                   {filter === "Health" && (
                     <>
-                      {renderCell(idx + 1)}
+                      {renderCell(ent.slNo)}
                       {renderCell(ent.policyNo)}
                       {renderCell(ent.company)}
                       {renderCell(ent.subType)}
@@ -591,7 +613,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                   )}
                   {filter === "SME" && (
                     <>
-                      {renderCell(idx + 1)}
+                      {renderCell(ent.slNo)}
                       {renderCell(ent.policyNo)}
                       {renderCell(ent.company)}
                       {renderCell(ent.subType)}
@@ -612,7 +634,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                   )}
                   {filter === "Life" && (
                     <>
-                      {renderCell(idx + 1)}
+                      {renderCell(ent.slNo)}
                       {renderCell(ent.policyNo)}
                       {renderCell(ent.company)}
                       {renderCell(ent.plan)}
@@ -635,7 +657,7 @@ const UserRecord = ({ isMobile, currentUser }) => {
                   )}
                   {filter === "MutualFund" && (
                     <>
-                      {renderCell(idx + 1)}
+                      {renderCell(ent.slNo)}
                       {renderCell(ent.folioNo)}
                       {renderCell(ent.company)}
                       {renderCell(ent.productName)}
