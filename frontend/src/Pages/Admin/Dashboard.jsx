@@ -204,7 +204,10 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
   const uploadFile = async (file, path) => {
     if (!file) return "";
     const storageRef = ref(storage, path);
-    await uploadBytes(storageRef, file);
+    const metadata = {
+      contentType: file.type,
+    };
+    await uploadBytes(storageRef, file, metadata);
     return await getDownloadURL(storageRef);
   };
 
@@ -443,40 +446,40 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
 
           <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
             <label style={labelStyle}>Aadhaar Card Photo (Front)</label>
-            <input type="file" accept="image/*" onChange={e => setAadhaarFrontFile(e.target.files[0])} style={inputStyle} />
+            <input type="file" accept="image/*,.pdf,application/pdf" onChange={e => setAadhaarFrontFile(e.target.files[0])} style={inputStyle} />
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
             <label style={labelStyle}>Aadhaar Card Photo (Back)</label>
-            <input type="file" accept="image/*" onChange={e => setAadhaarBackFile(e.target.files[0])} style={inputStyle} />
+            <input type="file" accept="image/*,.pdf,application/pdf" onChange={e => setAadhaarBackFile(e.target.files[0])} style={inputStyle} />
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
             <label style={labelStyle}>Pan Card Photo (Front)</label>
-            <input type="file" accept="image/*" onChange={e => setPanFrontFile(e.target.files[0])} style={inputStyle} />
+            <input type="file" accept="image/*,.pdf,application/pdf" onChange={e => setPanFrontFile(e.target.files[0])} style={inputStyle} />
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
             <label style={labelStyle}>Pan Card Photo (Back)</label>
-            <input type="file" accept="image/*" onChange={e => setPanBackFile(e.target.files[0])} style={inputStyle} />
+            <input type="file" accept="image/*,.pdf,application/pdf" onChange={e => setPanBackFile(e.target.files[0])} style={inputStyle} />
           </div>
           {form.category === "Motor" && (
             <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
               <label style={labelStyle}>Policy Document</label>
-              <input type="file" accept="image/*,application/pdf" onChange={e => setPolicyDocFile(e.target.files[0])} style={inputStyle} />
+              <input type="file" accept="image/*,.pdf,application/pdf" onChange={e => setPolicyDocFile(e.target.files[0])} style={inputStyle} />
             </div>
           )}
           <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
             <label style={labelStyle}>{form.category === "Motor" ? "Misc Document" : "Policy Document"}</label>
-            <input type="file" accept="image/*,application/pdf" onChange={e => setPolicyFile(e.target.files[0])} style={inputStyle} />
+            <input type="file" accept="image/*,.pdf,application/pdf" onChange={e => setPolicyFile(e.target.files[0])} style={inputStyle} />
           </div>
 
           {form.category === "SME" && (
             <>
               <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
                 <label style={labelStyle}>Invoice PDF</label>
-                <input type="file" accept="image/*,application/pdf" onChange={e => setInvoiceFile(e.target.files[0])} style={inputStyle} />
+                <input type="file" accept="image/*,.pdf,application/pdf" onChange={e => setInvoiceFile(e.target.files[0])} style={inputStyle} />
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
                 <label style={labelStyle}>GST PDF</label>
-                <input type="file" accept="image/*,application/pdf" onChange={e => setGstFile(e.target.files[0])} style={inputStyle} />
+                <input type="file" accept="image/*,.pdf,application/pdf" onChange={e => setGstFile(e.target.files[0])} style={inputStyle} />
               </div>
             </>
           )}
