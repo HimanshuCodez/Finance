@@ -178,6 +178,8 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
   const [panBackFile, setPanBackFile] = useState(null);
   const [policyFile, setPolicyFile] = useState(null);
   const [policyDocFile, setPolicyDocFile] = useState(null);
+  const [invoiceFile, setInvoiceFile] = useState(null);
+  const [gstFile, setGstFile] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -219,13 +221,15 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
       const currentMonth = (now.getMonth() + 1).toString().padStart(2, "0");
       const currentYear = now.getFullYear().toString();
 
-      const [aadhaarFrontUrl, aadhaarBackUrl, panFrontUrl, panBackUrl, policyUrl, policyDocUrl] = await Promise.all([
+      const [aadhaarFrontUrl, aadhaarBackUrl, panFrontUrl, panBackUrl, policyUrl, policyDocUrl, invoiceUrl, gstUrl] = await Promise.all([
         uploadFile(aadhaarFrontFile, `dataRecords/${form.category}/${timestamp}_${fileId}_aadhaar_front`),
         uploadFile(aadhaarBackFile, `dataRecords/${form.category}/${timestamp}_${fileId}_aadhaar_back`),
         uploadFile(panFrontFile, `dataRecords/${form.category}/${timestamp}_${fileId}_pan_front`),
         uploadFile(panBackFile, `dataRecords/${form.category}/${timestamp}_${fileId}_pan_back`),
         uploadFile(policyFile, `dataRecords/${form.category}/${timestamp}_${fileId}_policy`),
-        uploadFile(policyDocFile, `dataRecords/${form.category}/${timestamp}_${fileId}_policyDoc`)
+        uploadFile(policyDocFile, `dataRecords/${form.category}/${timestamp}_${fileId}_policyDoc`),
+        uploadFile(invoiceFile, `dataRecords/${form.category}/${timestamp}_${fileId}_invoice`),
+        uploadFile(gstFile, `dataRecords/${form.category}/${timestamp}_${fileId}_gst`)
       ]);
 
       const finalCompany = form.company === "OTHERS" ? form.customCompany : form.company;
@@ -249,6 +253,8 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
       if (panBackUrl) dataToSave.panBackPhoto = panBackUrl;
       if (policyUrl) dataToSave.policyPhoto = policyUrl;
       if (policyDocUrl) dataToSave.policyDocPhoto = policyDocUrl;
+      if (invoiceUrl) dataToSave.invoicePhoto = invoiceUrl;
+      if (gstUrl) dataToSave.gstPhoto = gstUrl;
 
       if (recordToEdit) {
         await updateDoc(doc(db, "dataEntries", recordToEdit.id), {
@@ -288,6 +294,8 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
         setPanBackFile(null);
         setPolicyFile(null);
         setPolicyDocFile(null);
+        setInvoiceFile(null);
+        setGstFile(null);
       }
     } catch (e) {
       toast.error(`Error ${recordToEdit ? "updating" : "adding"} record: ` + e.message);
@@ -459,6 +467,19 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
             <label style={labelStyle}>{form.category === "Motor" ? "Misc Document" : "Policy Document"}</label>
             <input type="file" accept="image/*,application/pdf" onChange={e => setPolicyFile(e.target.files[0])} style={inputStyle} />
           </div>
+
+          {form.category === "SME" && (
+            <>
+              <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                <label style={labelStyle}>Invoice PDF</label>
+                <input type="file" accept="image/*,application/pdf" onChange={e => setInvoiceFile(e.target.files[0])} style={inputStyle} />
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                <label style={labelStyle}>GST PDF</label>
+                <input type="file" accept="image/*,application/pdf" onChange={e => setGstFile(e.target.files[0])} style={inputStyle} />
+              </div>
+            </>
+          )}
 
           <button type="submit" disabled={loading} style={{ gridColumn: "1 / -1", background: "#1e90ff", color: "#fff", border: "none", borderRadius: 8, padding: 16, fontWeight: 700, fontSize: 16, cursor: loading ? "not-allowed" : "pointer", marginTop: 10 }}>
             {loading ? "Uploading & Saving..." : "Save Record"}
@@ -756,7 +777,9 @@ const UserRecord = ({ isMobile, currentUser }) => {
                 {viewingDocs.panBackPhoto && <a href={viewingDocs.panBackPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 13, fontWeight: 700, textDecoration: "none", background: "#f0f9ff", padding: "12px 16px", borderRadius: 8, border: "1px solid #e0f2fe", textAlign: "center" }}>PAN CARD (BACK)</a>}
                 {viewingDocs.policyDocPhoto && <a href={viewingDocs.policyDocPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 13, fontWeight: 700, textDecoration: "none", background: "#f0f9ff", padding: "12px 16px", borderRadius: 8, border: "1px solid #e0f2fe", textAlign: "center" }}>POLICY DOCUMENT</a>}
                 {viewingDocs.policyPhoto && <a href={viewingDocs.policyPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 13, fontWeight: 700, textDecoration: "none", background: "#f0f9ff", padding: "12px 16px", borderRadius: 8, border: "1px solid #e0f2fe", textAlign: "center" }}>{filter === "Motor" ? "MISC DOCUMENT" : "POLICY DOCUMENT"}</a>}
-                {(!viewingDocs.aadhaarFrontPhoto && !viewingDocs.aadhaarBackPhoto && !viewingDocs.panFrontPhoto && !viewingDocs.panBackPhoto && !viewingDocs.policyDocPhoto && !viewingDocs.policyPhoto) && (
+                {viewingDocs.invoicePhoto && <a href={viewingDocs.invoicePhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 13, fontWeight: 700, textDecoration: "none", background: "#f0f9ff", padding: "12px 16px", borderRadius: 8, border: "1px solid #e0f2fe", textAlign: "center" }}>INVOICE PDF</a>}
+                {viewingDocs.gstPhoto && <a href={viewingDocs.gstPhoto} target="_blank" rel="noreferrer" style={{ color: "#1e90ff", fontSize: 13, fontWeight: 700, textDecoration: "none", background: "#f0f9ff", padding: "12px 16px", borderRadius: 8, border: "1px solid #e0f2fe", textAlign: "center" }}>GST PDF</a>}
+                {(!viewingDocs.aadhaarFrontPhoto && !viewingDocs.aadhaarBackPhoto && !viewingDocs.panFrontPhoto && !viewingDocs.panBackPhoto && !viewingDocs.policyDocPhoto && !viewingDocs.policyPhoto && !viewingDocs.invoicePhoto && !viewingDocs.gstPhoto) && (
                   <p style={{ textAlign: "center", color: "#64748b", fontSize: 14 }}>No documents uploaded for this record.</p>
                 )}
               </div>
