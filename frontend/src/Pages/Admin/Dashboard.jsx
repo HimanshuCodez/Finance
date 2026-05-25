@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { db, storage } from "../../firebase";
-import { collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, getDocs, updateDoc, doc, deleteDoc, where, limit } from "firebase/firestore";
+import { collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, getDocs, updateDoc, doc, deleteDoc, where, limit, getDoc, setDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import toast, { Toaster } from "react-hot-toast";
+import { syncToGoogleSheets, syncAllToGoogleSheets } from "../../utils/googleSheets";
 
 const SMR_LOGO = "https://i.postimg.cc/Fsbgy6sQ/smr.png";
 
@@ -264,6 +265,21 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
           ...dataToSave,
           updatedAt: serverTimestamp()
         });
+        
+        // Sync to Google Sheets
+        try {
+          const settingsSnap = await getDoc(doc(db, "settings", "googleSheets"));
+          if (settingsSnap.exists() && settingsSnap.data().webAppUrl) {
+            const syncData = { ...dataToSave };
+            Object.keys(syncData).forEach(key => {
+              if (key.toLowerCase().includes("photo") || key.toLowerCase().includes("pdf") || key.toLowerCase().includes("doc")) {
+                delete syncData[key];
+              }
+            });
+            await syncToGoogleSheets(syncData, form.category, settingsSnap.data().webAppUrl);
+          }
+        } catch (err) { console.error("Sheet Sync Error:", err); }
+
         toast.success("Record Updated Successfully!");
         if (onFinished) onFinished();
       } else {
@@ -289,6 +305,26 @@ const DataRecord = ({ isMobile, currentUser, recordToEdit, onFinished }) => {
           entryYear: currentYear,
           createdAt: serverTimestamp()
         });
+
+        // Sync to Google Sheets
+        try {
+          const settingsSnap = await getDoc(doc(db, "settings", "googleSheets"));
+          if (settingsSnap.exists() && settingsSnap.data().webAppUrl) {
+            const syncData = { 
+              ...dataToSave, 
+              slNo: nextSlNo, 
+              entryMonth: currentMonth, 
+              entryYear: currentYear 
+            };
+            Object.keys(syncData).forEach(key => {
+              if (key.toLowerCase().includes("photo") || key.toLowerCase().includes("pdf") || key.toLowerCase().includes("doc")) {
+                delete syncData[key];
+              }
+            });
+            await syncToGoogleSheets(syncData, form.category, settingsSnap.data().webAppUrl);
+          }
+        } catch (err) { console.error("Sheet Sync Error:", err); }
+
         toast.success("Record Added Successfully!");
         setForm(initialFormState);
         setAadhaarFrontFile(null);
@@ -883,6 +919,130 @@ const Login = ({ onLogin }) => {
   );
 };
 
+const SyncSettings = ({ isMobile }) => {
+  const [url, setUrl] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [syncingAll, setSyncingAll] = useState(false);
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const docSnap = await getDoc(doc(db, "settings", "googleSheets"));
+        if (docSnap.exists()) {
+          setUrl(docSnap.data().webAppUrl || "");
+        }
+      } catch (e) {
+        console.error("Error fetching sync settings:", e);
+      }
+      setLoading(false);
+    };
+    fetchSettings();
+  }, []);
+
+  const handleSave = async () => {
+    if (!url.startsWith("https://script.google.com")) {
+      return toast.error("Please enter a valid Google Apps Script URL.");
+    }
+    setSaving(true);
+    try {
+      await setDoc(doc(db, "settings", "googleSheets"), { webAppUrl: url }, { merge: true });
+      toast.success("Google Sheets URL saved!");
+    } catch (e) {
+      toast.error("Error saving URL: " + e.message);
+    }
+    setSaving(false);
+  };
+
+  const handleSyncAll = async () => {
+    if (!url) return toast.error("Please save the Web App URL first.");
+    if (!window.confirm("This will sync ALL existing records from database to Google Sheets. Continue?")) return;
+    
+    setSyncingAll(true);
+    try {
+      const q = query(collection(db, "dataEntries"), orderBy("createdAt", "asc"));
+      const snapshot = await getDocs(q);
+      const allEntries = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      
+      const categories = ["Motor", "Health", "SME", "Life", "MutualFund"];
+      
+      for (const cat of categories) {
+        const catEntries = allEntries.filter(e => e.category === cat);
+        if (catEntries.length > 0) {
+          const recordsToSync = catEntries.map(e => {
+            const { id, createdAt, updatedAt, ...rest } = e;
+            Object.keys(rest).forEach(key => {
+              if (key.toLowerCase().includes("photo") || key.toLowerCase().includes("pdf") || key.toLowerCase().includes("doc")) {
+                delete rest[key];
+              }
+            });
+            return rest;
+          });
+          await syncAllToGoogleSheets(recordsToSync, cat, url);
+        }
+      }
+      toast.success("All data synced successfully!");
+    } catch (e) {
+      toast.error("Error syncing data: " + e.message);
+    }
+    setSyncingAll(false);
+  };
+
+  if (loading) return <div style={{ padding: 40, textAlign: "center" }}>Loading settings...</div>;
+
+  return (
+    <div style={{ background: "#fff", borderRadius: 16, border: "1px solid #e2e8f0", padding: isMobile ? 20 : 32, boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)" }}>
+      <h1 style={{ color: "#1e293b", fontSize: isMobile ? 22 : 26, fontWeight: 800, marginBottom: 20 }}>Google Sheets Synchronization</h1>
+      <p style={{ color: "#64748b", marginBottom: 24, fontSize: 14, lineHeight: 1.5 }}>
+        Automatically sync database records to your Google Sheet. When you add or edit a record, it will immediately reflect in the corresponding sheet tab.
+      </p>
+      
+      <div style={{ marginBottom: 24 }}>
+        <label style={{ fontSize: 12, color: "#475569", marginBottom: 8, display: "block", fontWeight: 700 }}>Google Apps Script Web App URL</label>
+        <input 
+          type="text" 
+          value={url} 
+          onChange={e => setUrl(e.target.value)} 
+          placeholder="https://script.google.com/macros/s/.../exec"
+          style={{ width: "100%", padding: 12, borderRadius: 8, border: "1px solid #cbd5e1", outline: "none", fontSize: 14 }}
+        />
+      </div>
+      
+      <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+        <button 
+          onClick={handleSave} 
+          disabled={saving}
+          style={{ background: "#1e90ff", color: "#fff", border: "none", borderRadius: 8, padding: "12px 24px", fontWeight: 700, cursor: "pointer", transition: "0.2s" }}
+        >
+          {saving ? "Saving..." : "Save Settings"}
+        </button>
+        
+        <button 
+          onClick={handleSyncAll} 
+          disabled={syncingAll || !url}
+          style={{ background: "#10b981", color: "#fff", border: "none", borderRadius: 8, padding: "12px 24px", fontWeight: 700, cursor: syncingAll || !url ? "not-allowed" : "pointer", opacity: syncingAll || !url ? 0.7 : 1 }}
+        >
+          {syncingAll ? "Syncing All Records..." : "Sync All Existing Data to Sheets"}
+        </button>
+      </div>
+
+      <div style={{ marginTop: 40, borderTop: "1px solid #e2e8f0", paddingTop: 24 }}>
+        <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 12, color: "#1e293b" }}>Setup Instructions:</h3>
+        <ol style={{ fontSize: 14, color: "#475569", lineHeight: 1.8, paddingLeft: 20 }}>
+          <li>Open your Google Sheet: <a href="https://docs.google.com/spreadsheets/d/1XpV8SUJaQakqmprgYaOS6tNONgDHGe_bD7nFfve8dHA/edit" target="_blank" rel="noreferrer" style={{ color: "#1e90ff" }}>Open Sheet</a></li>
+          <li>Go to <b>Extensions > Apps Script</b>.</li>
+          <li>Paste the Apps Script code provided by the administrator.</li>
+          <li>Click <b>Deploy > New Deployment</b>.</li>
+          <li>Select <b>Type: Web App</b>.</li>
+          <li>Set "Execute as" to <b>Me</b> and "Who has access" to <b>Anyone</b>.</li>
+          <li>Click Deploy and authorize the permissions.</li>
+          <li>Copy the <b>Web App URL</b> and paste it into the field above.</li>
+        </ol>
+      </div>
+    </div>
+  );
+};
+
 export default function Dashboard() {
   const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem("adminUser")));
   const [active, setActive] = useState("records");
@@ -916,6 +1076,7 @@ export default function Dashboard() {
     { key: "create", label: "Create User", icon: "➕", admin: true },
     { key: "records", label: "Record Data", icon: "📊", admin: false },
     { key: "userrecord", label: "Find Data", icon: "🗂️", admin: true },
+    { key: "sync", label: "Sync Settings", icon: "⚙️", admin: true },
   ];
 
   const filteredNavItems = currentUser.role === "Admin" ? navItems : navItems.filter(item => !item.admin);
@@ -975,6 +1136,7 @@ export default function Dashboard() {
           {active === "records" && <DataRecord isMobile={isMobile} currentUser={currentUser} />}
           {active === "create" && <CreateUser isMobile={isMobile} />}
           {active === "userrecord" && <UserRecord isMobile={isMobile} currentUser={currentUser} />}
+          {active === "sync" && <SyncSettings isMobile={isMobile} />}
         </main>
       </div>
     </div>
